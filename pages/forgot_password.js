@@ -35,10 +35,15 @@ export default function ForgotPassword() {
                     </>
                 )}
             </Disclosure>
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" style={{ height: 'calc(100vh - 4rem)' }}>
-                <div className="max-w-3xl mx-auto bg-black h-full flex items-center">
+            <div style={{
+                height: 'calc(100vh - 4rem)',
+                backgroundRepeat: 'no-repeat',
+                backgroundSize: 'cover',
+                backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.527),rgba(0, 0, 0, 0.5)) , url(/img/login_bg.png)'
+            }}>
+                <div className="max-w-3xl mx-auto h-full flex items-center">
                     <div className="h-full w-full relative">
-                        <div className="text-center text-2xl text-white absolute left-0 right-0 p-6 ">Admin Portal</div>
+                        <div className="text-center text-2xl text-white absolute left-0 right-0 p-6 ">Forgot Password ?</div>
                         <div className="lg:px-32 sm:p-4 w-full h- absolute top-1/2 transform -translate-y-1/2">
                             <div className="text-white text-sm">Registered Email ID</div>
                             <input
