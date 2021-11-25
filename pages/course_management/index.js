@@ -1,3 +1,5 @@
+import cookies from 'next-cookies'
+import moment from 'moment'
 import { Fragment, useState } from 'react'
 import { Dialog, Menu, Transition } from '@headlessui/react'
 import {
@@ -98,8 +100,8 @@ const navigation = [
         i: <svg
             width="20"
             height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" clip-rule="evenodd" d="M11.983 15.3457C8.11536 15.3457 4.8125 15.9305 4.8125 18.2724C4.8125 20.6143 8.0944 21.22 11.983 21.22C15.8506 21.22 19.1525 20.6343 19.1525 18.2933C19.1525 15.9524 15.8715 15.3457 11.983 15.3457Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-            <path fill-rule="evenodd" clip-rule="evenodd" d="M11.9829 12.0059C14.521 12.0059 16.5782 9.94779 16.5782 7.40969C16.5782 4.8716 14.521 2.81445 11.9829 2.81445C9.44484 2.81445 7.38675 4.8716 7.38675 7.40969C7.37817 9.93922 9.42198 11.9973 11.9506 12.0059H11.9829Z" stroke="currentColor" stroke-width="1.42857" stroke-linecap="round" stroke-linejoin="round" />
+            <path fillRule="evenodd" clipRule="evenodd" d="M11.983 15.3457C8.11536 15.3457 4.8125 15.9305 4.8125 18.2724C4.8125 20.6143 8.0944 21.22 11.983 21.22C15.8506 21.22 19.1525 20.6343 19.1525 18.2933C19.1525 15.9524 15.8715 15.3457 11.983 15.3457Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <path fillRule="evenodd" clipRule="evenodd" d="M11.9829 12.0059C14.521 12.0059 16.5782 9.94779 16.5782 7.40969C16.5782 4.8716 14.521 2.81445 11.9829 2.81445C9.44484 2.81445 7.38675 4.8716 7.38675 7.40969C7.37817 9.93922 9.42198 11.9973 11.9506 12.0059H11.9829Z" stroke="currentColor" strokeWidth="1.42857" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
 
 
@@ -110,12 +112,12 @@ const navigation = [
         i: <svg
             width="20"
             height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M17.8867 10.8977C19.2817 10.7017 20.3557 9.5057 20.3587 8.0567C20.3587 6.6287 19.3177 5.4447 17.9527 5.2207" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-            <path d="M19.7305 14.25C21.0815 14.452 22.0245 14.925 22.0245 15.9C22.0245 16.571 21.5805 17.007 20.8625 17.281" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-            <path fill-rule="evenodd" clip-rule="evenodd" d="M11.8887 14.6641C8.67469 14.6641 5.92969 15.1511 5.92969 17.0961C5.92969 19.0401 8.65769 19.5411 11.8887 19.5411C15.1027 19.5411 17.8467 19.0591 17.8467 17.1131C17.8467 15.1671 15.1197 14.6641 11.8887 14.6641Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-            <path fill-rule="evenodd" clip-rule="evenodd" d="M11.8854 11.888C13.9944 11.888 15.7044 10.179 15.7044 8.069C15.7044 5.96 13.9944 4.25 11.8854 4.25C9.77643 4.25 8.06643 5.96 8.06643 8.069C8.05843 10.171 9.75543 11.881 11.8574 11.888H11.8854Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-            <path d="M5.88606 10.8977C4.49006 10.7017 3.41706 9.5057 3.41406 8.0567C3.41406 6.6287 4.45506 5.4447 5.82006 5.2207" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-            <path d="M4.044 14.25C2.693 14.452 1.75 14.925 1.75 15.9C1.75 16.571 2.194 17.007 2.912 17.281" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M17.8867 10.8977C19.2817 10.7017 20.3557 9.5057 20.3587 8.0567C20.3587 6.6287 19.3177 5.4447 17.9527 5.2207" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M19.7305 14.25C21.0815 14.452 22.0245 14.925 22.0245 15.9C22.0245 16.571 21.5805 17.007 20.8625 17.281" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <path fillRule="evenodd" clipRule="evenodd" d="M11.8887 14.6641C8.67469 14.6641 5.92969 15.1511 5.92969 17.0961C5.92969 19.0401 8.65769 19.5411 11.8887 19.5411C15.1027 19.5411 17.8467 19.0591 17.8467 17.1131C17.8467 15.1671 15.1197 14.6641 11.8887 14.6641Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <path fillRule="evenodd" clipRule="evenodd" d="M11.8854 11.888C13.9944 11.888 15.7044 10.179 15.7044 8.069C15.7044 5.96 13.9944 4.25 11.8854 4.25C9.77643 4.25 8.06643 5.96 8.06643 8.069C8.05843 10.171 9.75543 11.881 11.8574 11.888H11.8854Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M5.88606 10.8977C4.49006 10.7017 3.41706 9.5057 3.41406 8.0567C3.41406 6.6287 4.45506 5.4447 5.82006 5.2207" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M4.044 14.25C2.693 14.452 1.75 14.925 1.75 15.9C1.75 16.571 2.194 17.007 2.912 17.281" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
 
     },
@@ -124,7 +126,7 @@ const navigation = [
         i: <svg
             width="20"
             height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" clip-rule="evenodd" d="M4.95313 1.56928C4.97872 1.55924 5.00476 1.55024 5.03119 1.54232C5.13428 1.51135 5.23881 1.49787 5.34146 1.50027H18.6586C18.7609 1.49787 18.8651 1.51127 18.9679 1.54203C18.9946 1.55002 19.021 1.55912 19.0469 1.56928C19.2682 1.6559 19.4422 1.81368 19.5517 2.00691L23.3585 8.6372C23.4373 8.76874 23.4867 8.91991 23.4977 9.08162C23.4987 9.09729 23.4995 9.11298 23.4998 9.12867C23.5001 9.14363 23.5001 9.15859 23.4997 9.17354C23.4943 9.41359 23.4042 9.63274 23.2582 9.80236L12.7686 22.1401C12.7418 22.1723 12.7131 22.2026 12.6827 22.231C12.6312 22.2791 12.5748 22.3216 12.5145 22.3578C12.3625 22.449 12.1857 22.5003 12 22.5003C11.6971 22.5003 11.4178 22.3638 11.2315 22.1402L0.741894 9.80242C0.595786 9.63272 0.505681 9.41344 0.500268 9.17324C0.499738 9.15033 0.499994 9.12739 0.50104 9.10446C0.50872 8.93414 0.559005 8.77492 0.641491 8.63719L4.44831 2.00698C4.5578 1.81371 4.73179 1.65591 4.95313 1.56928ZM10.1636 3.50027H6.7299L7.94034 6.94221L10.1636 3.50027ZM9.54096 8.15027H14.4591L12 4.3433L9.54096 8.15027ZM16.0597 6.94221L13.8364 3.50027H17.2701L16.0597 6.94221ZM18.9012 4.8907L20.7727 8.15027H17.7549L18.9012 4.8907ZM12 18.486L14.9315 10.1503H9.06854L12 18.486ZM5.09881 4.8907L6.24512 8.15027H3.22728L5.09881 4.8907ZM6.94847 10.1503H3.66278L9.26628 16.741L6.94847 10.1503ZM20.3372 10.1503H17.0516L14.7337 16.741L20.3372 10.1503Z" fill="currentColor" />
+            <path fillRule="evenodd" clipRule="evenodd" d="M4.95313 1.56928C4.97872 1.55924 5.00476 1.55024 5.03119 1.54232C5.13428 1.51135 5.23881 1.49787 5.34146 1.50027H18.6586C18.7609 1.49787 18.8651 1.51127 18.9679 1.54203C18.9946 1.55002 19.021 1.55912 19.0469 1.56928C19.2682 1.6559 19.4422 1.81368 19.5517 2.00691L23.3585 8.6372C23.4373 8.76874 23.4867 8.91991 23.4977 9.08162C23.4987 9.09729 23.4995 9.11298 23.4998 9.12867C23.5001 9.14363 23.5001 9.15859 23.4997 9.17354C23.4943 9.41359 23.4042 9.63274 23.2582 9.80236L12.7686 22.1401C12.7418 22.1723 12.7131 22.2026 12.6827 22.231C12.6312 22.2791 12.5748 22.3216 12.5145 22.3578C12.3625 22.449 12.1857 22.5003 12 22.5003C11.6971 22.5003 11.4178 22.3638 11.2315 22.1402L0.741894 9.80242C0.595786 9.63272 0.505681 9.41344 0.500268 9.17324C0.499738 9.15033 0.499994 9.12739 0.50104 9.10446C0.50872 8.93414 0.559005 8.77492 0.641491 8.63719L4.44831 2.00698C4.5578 1.81371 4.73179 1.65591 4.95313 1.56928ZM10.1636 3.50027H6.7299L7.94034 6.94221L10.1636 3.50027ZM9.54096 8.15027H14.4591L12 4.3433L9.54096 8.15027ZM16.0597 6.94221L13.8364 3.50027H17.2701L16.0597 6.94221ZM18.9012 4.8907L20.7727 8.15027H17.7549L18.9012 4.8907ZM12 18.486L14.9315 10.1503H9.06854L12 18.486ZM5.09881 4.8907L6.24512 8.15027H3.22728L5.09881 4.8907ZM6.94847 10.1503H3.66278L9.26628 16.741L6.94847 10.1503ZM20.3372 10.1503H17.0516L14.7337 16.741L20.3372 10.1503Z" fill="currentColor" />
         </svg>
 
     },
@@ -133,7 +135,7 @@ const navigation = [
         i: <svg
             width="20"
             height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" clip-rule="evenodd" d="M3.72436 8.452L7.29036 7.194C6.5541 8.18515 5.92177 9.24942 5.40336 10.37L3.72436 8.452ZM1.24736 8.659L4.55036 12.433L4.07236 13.629C3.99961 13.8105 3.98168 14.0094 4.02078 14.201C4.05989 14.3926 4.15431 14.5685 4.29236 14.707L4.60736 15.021C2.90336 16.941 1.96336 18.95 1.05136 21.684C0.992602 21.8602 0.984074 22.0493 1.02673 22.23C1.0694 22.4108 1.16156 22.5761 1.29289 22.7075C1.42423 22.8388 1.58955 22.931 1.77032 22.9736C1.95109 23.0163 2.14017 23.0078 2.31636 22.949C5.05036 22.037 7.05936 21.097 8.97936 19.393L9.29336 19.707C9.43174 19.8452 9.60762 19.9398 9.79923 19.9791C9.99084 20.0184 10.1898 20.0006 10.3714 19.928L11.5674 19.45L15.3414 22.753C15.4643 22.8607 15.6118 22.9366 15.7708 22.974C15.9299 23.0115 16.0957 23.0095 16.2538 22.968C16.4119 22.9266 16.5574 22.847 16.6776 22.7363C16.7978 22.6256 16.8891 22.4871 16.9434 22.333L19.9294 13.873C21.9127 11.5261 23.0007 8.55267 23.0004 5.48V2C23.0004 1.73478 22.895 1.48043 22.7075 1.29289C22.5199 1.10536 22.2656 1 22.0004 1H18.5204C15.4481 0.99957 12.4751 2.0872 10.1284 4.07L1.66836 7.057C1.5144 7.11136 1.3761 7.2026 1.26553 7.32274C1.15496 7.44287 1.07549 7.58826 1.03406 7.74619C0.992625 7.90412 0.990495 8.06979 1.02785 8.22874C1.06521 8.38768 1.14092 8.53506 1.24836 8.658L1.24736 8.659ZM3.68536 20.315C4.31336 18.799 5.01736 17.593 6.02436 16.438L7.56236 17.976C6.40736 18.983 5.20136 19.687 3.68536 20.315ZM10.2414 17.827L9.70736 17.293L6.70736 14.293L6.17336 13.759L6.88336 11.984C7.53493 10.3556 8.4498 8.84551 9.59136 7.514L10.1674 6.841C11.2002 5.63612 12.4815 4.66898 13.9233 4.00598C15.3652 3.34297 16.9334 2.99979 18.5204 3H21.0004V5.48C21.0006 7.06697 20.6574 8.63519 19.9944 10.077C19.3314 11.5189 18.3642 12.8002 17.1594 13.833L16.4864 14.409C15.1548 15.5505 13.6447 16.4654 12.0164 17.117L10.2414 17.827ZM15.5484 20.276L13.6304 18.598C14.751 18.0796 15.8152 17.4473 16.8064 16.711L15.5484 20.276ZM15.0004 8C15.0004 7.73478 15.1057 7.48043 15.2933 7.29289C15.4808 7.10536 15.7351 7 16.0004 7C16.2656 7 16.5199 7.10536 16.7075 7.29289C16.895 7.48043 17.0004 7.73478 17.0004 8C17.0004 8.26522 16.895 8.51957 16.7075 8.70711C16.5199 8.89464 16.2656 9 16.0004 9C15.7351 9 15.4808 8.89464 15.2933 8.70711C15.1057 8.51957 15.0004 8.26522 15.0004 8ZM16.0004 5C15.2047 5 14.4416 5.31607 13.879 5.87868C13.3164 6.44129 13.0004 7.20435 13.0004 8C13.0004 8.79565 13.3164 9.55871 13.879 10.1213C14.4416 10.6839 15.2047 11 16.0004 11C16.796 11 17.5591 10.6839 18.1217 10.1213C18.6843 9.55871 19.0004 8.79565 19.0004 8C19.0004 7.20435 18.6843 6.44129 18.1217 5.87868C17.5591 5.31607 16.796 5 16.0004 5Z" fill="currentColor" />
+            <path fillRule="evenodd" clipRule="evenodd" d="M3.72436 8.452L7.29036 7.194C6.5541 8.18515 5.92177 9.24942 5.40336 10.37L3.72436 8.452ZM1.24736 8.659L4.55036 12.433L4.07236 13.629C3.99961 13.8105 3.98168 14.0094 4.02078 14.201C4.05989 14.3926 4.15431 14.5685 4.29236 14.707L4.60736 15.021C2.90336 16.941 1.96336 18.95 1.05136 21.684C0.992602 21.8602 0.984074 22.0493 1.02673 22.23C1.0694 22.4108 1.16156 22.5761 1.29289 22.7075C1.42423 22.8388 1.58955 22.931 1.77032 22.9736C1.95109 23.0163 2.14017 23.0078 2.31636 22.949C5.05036 22.037 7.05936 21.097 8.97936 19.393L9.29336 19.707C9.43174 19.8452 9.60762 19.9398 9.79923 19.9791C9.99084 20.0184 10.1898 20.0006 10.3714 19.928L11.5674 19.45L15.3414 22.753C15.4643 22.8607 15.6118 22.9366 15.7708 22.974C15.9299 23.0115 16.0957 23.0095 16.2538 22.968C16.4119 22.9266 16.5574 22.847 16.6776 22.7363C16.7978 22.6256 16.8891 22.4871 16.9434 22.333L19.9294 13.873C21.9127 11.5261 23.0007 8.55267 23.0004 5.48V2C23.0004 1.73478 22.895 1.48043 22.7075 1.29289C22.5199 1.10536 22.2656 1 22.0004 1H18.5204C15.4481 0.99957 12.4751 2.0872 10.1284 4.07L1.66836 7.057C1.5144 7.11136 1.3761 7.2026 1.26553 7.32274C1.15496 7.44287 1.07549 7.58826 1.03406 7.74619C0.992625 7.90412 0.990495 8.06979 1.02785 8.22874C1.06521 8.38768 1.14092 8.53506 1.24836 8.658L1.24736 8.659ZM3.68536 20.315C4.31336 18.799 5.01736 17.593 6.02436 16.438L7.56236 17.976C6.40736 18.983 5.20136 19.687 3.68536 20.315ZM10.2414 17.827L9.70736 17.293L6.70736 14.293L6.17336 13.759L6.88336 11.984C7.53493 10.3556 8.4498 8.84551 9.59136 7.514L10.1674 6.841C11.2002 5.63612 12.4815 4.66898 13.9233 4.00598C15.3652 3.34297 16.9334 2.99979 18.5204 3H21.0004V5.48C21.0006 7.06697 20.6574 8.63519 19.9944 10.077C19.3314 11.5189 18.3642 12.8002 17.1594 13.833L16.4864 14.409C15.1548 15.5505 13.6447 16.4654 12.0164 17.117L10.2414 17.827ZM15.5484 20.276L13.6304 18.598C14.751 18.0796 15.8152 17.4473 16.8064 16.711L15.5484 20.276ZM15.0004 8C15.0004 7.73478 15.1057 7.48043 15.2933 7.29289C15.4808 7.10536 15.7351 7 16.0004 7C16.2656 7 16.5199 7.10536 16.7075 7.29289C16.895 7.48043 17.0004 7.73478 17.0004 8C17.0004 8.26522 16.895 8.51957 16.7075 8.70711C16.5199 8.89464 16.2656 9 16.0004 9C15.7351 9 15.4808 8.89464 15.2933 8.70711C15.1057 8.51957 15.0004 8.26522 15.0004 8ZM16.0004 5C15.2047 5 14.4416 5.31607 13.879 5.87868C13.3164 6.44129 13.0004 7.20435 13.0004 8C13.0004 8.79565 13.3164 9.55871 13.879 10.1213C14.4416 10.6839 15.2047 11 16.0004 11C16.796 11 17.5591 10.6839 18.1217 10.1213C18.6843 9.55871 19.0004 8.79565 19.0004 8C19.0004 7.20435 18.6843 6.44129 18.1217 5.87868C17.5591 5.31607 16.796 5 16.0004 5Z" fill="currentColor" />
         </svg>
 
     },
@@ -153,10 +155,10 @@ const navigation = [
         i: <svg
             width="20"
             height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" clip-rule="evenodd" d="M14.7379 2.76175H8.08493C6.00493 2.75375 4.29993 4.41175 4.25093 6.49075V17.2037C4.20493 19.3167 5.87993 21.0677 7.99293 21.1147C8.02393 21.1147 8.05393 21.1157 8.08493 21.1147H16.0739C18.1679 21.0297 19.8179 19.2997 19.8029 17.2037V8.03775L14.7379 2.76175Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-            <path d="M14.4766 2.75V5.659C14.4766 7.079 15.6246 8.23 17.0446 8.234H19.7996" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-            <path d="M14.2867 15.3594H8.88672" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-            <path d="M12.2427 11.6055H8.88672" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            <path fillRule="evenodd" clipRule="evenodd" d="M14.7379 2.76175H8.08493C6.00493 2.75375 4.29993 4.41175 4.25093 6.49075V17.2037C4.20493 19.3167 5.87993 21.0677 7.99293 21.1147C8.02393 21.1147 8.05393 21.1157 8.08493 21.1147H16.0739C18.1679 21.0297 19.8179 19.2997 19.8029 17.2037V8.03775L14.7379 2.76175Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M14.4766 2.75V5.659C14.4766 7.079 15.6246 8.23 17.0446 8.234H19.7996" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M14.2867 15.3594H8.88672" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M12.2427 11.6055H8.88672" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
 
     },
@@ -253,8 +255,20 @@ const userNavigation = [
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
+const people = [
+    {
+        name: 'Jane Cooper',
+        title: 'Regional Paradigm Technician',
+        department: 'Optimization',
+        role: 'Admin',
+        email: 'jane.cooper@example.com',
+        image:
+            'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
+    },
+    // More people...
+]
 
-export default function Login() {
+export default function Login({ data }) {
     const [sidebarOpen, setSidebarOpen] = useState(false)
     return (
         <>
@@ -472,16 +486,121 @@ export default function Login() {
                     </div>
 
                     <main className="flex-1">
-                        <div className="py-6">
-                            <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-                                <h1 className="text-2xl font-semibold text-gray-900">Dashboard</h1>
-                            </div>
-                            <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-                                {/* Replace with your content */}
-                                <div className="py-4">
-                                    <div className="border-4 border-dashed border-gray-200 rounded-lg h-96" />
+                        <div className="p-4">
+                            <div className="flex flex-col">
+                                <div className="my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                                    <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+                                        <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+                                            <table className="min-w-full divide-y divide-gray-200">
+                                                <thead className="bg-gray-50">
+                                                    <tr>
+                                                        <th
+                                                            scope="col"
+                                                            className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                                                        >
+                                                            S. No
+                                                        </th>
+                                                        <th
+                                                            scope="col"
+                                                            className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                                                        >
+                                                            Course Name
+                                                        </th>
+                                                        <th
+                                                            scope="col"
+                                                            className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                                                        >
+                                                            Price
+                                                        </th>
+                                                        <th
+                                                            scope="col"
+                                                            className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                                                        >
+                                                            Language
+                                                        </th>
+                                                        <th
+                                                            scope="col"
+                                                            className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                                                        >
+                                                            Last Updated on
+                                                        </th>
+                                                        <th
+                                                            scope="col"
+                                                            className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                                                        >
+                                                            Last Updated by
+                                                        </th>
+                                                        <th
+                                                            scope="col"
+                                                            className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                                                        >
+                                                            Purchases
+                                                        </th>
+                                                        <th
+                                                            scope="col"
+                                                            className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                                                        >
+                                                            Duration
+                                                        </th>
+                                                        <th
+                                                            scope="col"
+                                                            className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                                                        >
+                                                            Status
+                                                        </th>
+                                                        <th scope="col" className="relative px-2 py-3">
+                                                            <span className="sr-only">Edit</span>
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody className="bg-white divide-y divide-gray-200 text-sm">
+                                                    {
+                                                        data.map((d, i) => {
+                                                            const createdAtString = moment(d.created_at).format('DD MMM YYYY');
+                                                            const updatedAtString = moment(d.updated_at).format('DD MMM YYYY');
+                                                            return (
+                                                                <tr key={d.course_id}>
+                                                                    <td className="p-2 whitespace-nowrap">
+                                                                        {i + 1}
+                                                                    </td>
+                                                                    <td className="p-2 whitespace-nowrap">
+                                                                        {d.course_name}
+                                                                    </td>
+                                                                    <td className="p-2 whitespace-nowrap">
+                                                                        {d.price_subscriber + ', ' + d.price_non_subscriber}
+                                                                    </td>
+                                                                    <td className="p-2 whitespace-nowrap">
+                                                                        {d.language}
+                                                                    </td>
+                                                                    <td className="p-2 whitespace-nowrap">
+                                                                        {createdAtString}
+                                                                    </td>
+                                                                    <td className="p-2 whitespace-nowrap">
+                                                                        {updatedAtString}
+                                                                    </td>
+                                                                    <td className="p-2 whitespace-nowrap">
+                                                                        {d.purchase_count}
+                                                                    </td>
+                                                                    <td className="p-2 whitespace-nowrap">
+                                                                        {d.duration}
+                                                                    </td>
+                                                                    <td className="p-2 whitespace-nowrap">
+                                                                        {d.status}
+                                                                    </td>
+                                                                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                                                        <a href="#" className="text-indigo-600 hover:text-indigo-900">
+                                                                            Edit
+                                                                        </a>
+                                                                    </td>
+                                                                </tr>
+                                                            )
+                                                        })
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
                                 </div>
-                                {/* /End replace */}
                             </div>
                         </div>
                     </main>
@@ -489,4 +608,38 @@ export default function Login() {
             </div>
         </>
     )
+}
+export async function getServerSideProps(context) {
+    const { token } = cookies(context)
+
+    if (token == null || token == '') {
+        return {
+            redirect: {
+                permanent: false,
+                destination: "/login"
+            }
+        }
+    }
+
+    const fetch = require("node-fetch")
+
+
+    const data = await fetch("http://54.245.144.158:6689/api/admin/courseLists", {
+        method: "post",
+        headers: {
+            "Content-Type": "application/json",
+            "accesstoken": token
+        }
+    })
+        .then(res => res.json())
+        .then(json => json.result)
+        .catch(err => {
+            console.log(err)
+        })
+    console.log(data)
+    return {
+        props: {
+            data
+        },
+    };
 }
