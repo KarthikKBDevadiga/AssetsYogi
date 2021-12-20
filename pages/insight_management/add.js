@@ -1,7 +1,7 @@
 import cookies from 'next-cookies'
 import moment from 'moment'
 import { Fragment, useState } from 'react'
-import { Dialog, Menu, Transition } from '@headlessui/react'
+import { Dialog, Menu, Transition, Listbox } from '@headlessui/react'
 import {
     BellIcon,
     CalendarIcon,
@@ -10,10 +10,11 @@ import {
     HomeIcon,
     InboxIcon,
     MenuAlt2Icon,
+    PaperClipIcon,
     UsersIcon,
     XIcon,
 } from '@heroicons/react/outline'
-import { SearchIcon } from '@heroicons/react/solid'
+import { CheckIcon, SelectorIcon, SearchIcon } from '@heroicons/react/solid'
 
 const navigation = [
     {
@@ -57,7 +58,7 @@ const navigation = [
 
     },
     {
-        name: 'Course Management', href: 'course_management', icon: FolderIcon, current: true,
+        name: 'Course Management', href: 'course_management', icon: FolderIcon, current: false,
         i: <svg
             xmlns="http://www.w3.org/2000/svg"
             width="20"
@@ -78,7 +79,7 @@ const navigation = [
 
     },
     {
-        name: 'Insights Management', href: 'insight_management', icon: CalendarIcon, current: false,
+        name: 'Insights Management', href: 'insight_management', icon: CalendarIcon, current: true,
         i: <svg
             xmlns="http://www.w3.org/2000/svg"
             width="20"
@@ -247,28 +248,24 @@ const navigation = [
 
     },
 ]
-const userNavigation = [
-    { name: 'Your Profile', href: '#' },
-    { name: 'Settings', href: '#' },
-    { name: 'Sign out', href: '#' },
+const videoAvailabilities = [
+    {
+        name: 'Free Members',
+        id: 'free'
+    },
+    {
+        name: 'Premium Members',
+        id: 'premium'
+    }
 ]
+
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
-const people = [
-    {
-        name: 'Jane Cooper',
-        title: 'Regional Paradigm Technician',
-        department: 'Optimization',
-        role: 'Admin',
-        email: 'jane.cooper@example.com',
-        image:
-            'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
-    },
-    // More people...
-]
 
-export default function Login({ data }) {
+
+export default function Login({ insightTypes }) {
+    const [selectedInsightType, setSelectedInsightType] = useState(insightTypes[0])
     const [sidebarOpen, setSidebarOpen] = useState(false)
     return (
         <>
@@ -486,121 +483,113 @@ export default function Login({ data }) {
                     </div>
 
                     <main className="flex-1">
-                        <div className="p-4">
-                            <div className="flex flex-col">
-                                <div className="my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                                    <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-                                        <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-                                            <table className="min-w-full divide-y divide-gray-200">
-                                                <thead className="bg-gray-50">
-                                                    <tr>
-                                                        <th
-                                                            scope="col"
-                                                            className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                                                        >
-                                                            S. No
-                                                        </th>
-                                                        <th
-                                                            scope="col"
-                                                            className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                                                        >
-                                                            Course Name
-                                                        </th>
-                                                        <th
-                                                            scope="col"
-                                                            className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                                                        >
-                                                            Price
-                                                        </th>
-                                                        <th
-                                                            scope="col"
-                                                            className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                                                        >
-                                                            Language
-                                                        </th>
-                                                        <th
-                                                            scope="col"
-                                                            className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                                                        >
-                                                            Last Updated on
-                                                        </th>
-                                                        <th
-                                                            scope="col"
-                                                            className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                                                        >
-                                                            Last Updated by
-                                                        </th>
-                                                        <th
-                                                            scope="col"
-                                                            className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                                                        >
-                                                            Purchases
-                                                        </th>
-                                                        <th
-                                                            scope="col"
-                                                            className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                                                        >
-                                                            Duration
-                                                        </th>
-                                                        <th
-                                                            scope="col"
-                                                            className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                                                        >
-                                                            Status
-                                                        </th>
-                                                        <th scope="col" className="relative px-2 py-3">
-                                                            <span className="sr-only">Edit</span>
-                                                        </th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody className="bg-white divide-y divide-gray-200 text-sm">
-                                                    {
-                                                        data.map((d, i) => {
-                                                            const createdAtString = moment(d.created_at).format('DD MMM YYYY');
-                                                            const updatedAtString = moment(d.updated_at).format('DD MMM YYYY');
-                                                            return (
-                                                                <tr key={d.course_id}>
-                                                                    <td className="p-2 whitespace-nowrap">
-                                                                        {i + 1}
-                                                                    </td>
-                                                                    <td className="p-2 whitespace-nowrap">
-                                                                        {d.course_name}
-                                                                    </td>
-                                                                    <td className="p-2 whitespace-nowrap">
-                                                                        {d.price_subscriber + ', ' + d.price_non_subscriber}
-                                                                    </td>
-                                                                    <td className="p-2 whitespace-nowrap">
-                                                                        {d.language}
-                                                                    </td>
-                                                                    <td className="p-2 whitespace-nowrap">
-                                                                        {createdAtString}
-                                                                    </td>
-                                                                    <td className="p-2 whitespace-nowrap">
-                                                                        {updatedAtString}
-                                                                    </td>
-                                                                    <td className="p-2 whitespace-nowrap">
-                                                                        {d.purchase_count}
-                                                                    </td>
-                                                                    <td className="p-2 whitespace-nowrap">
-                                                                        {d.duration}
-                                                                    </td>
-                                                                    <td className="p-2 whitespace-nowrap">
-                                                                        {d.status}
-                                                                    </td>
-                                                                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                                                        <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                                                                            Edit
-                                                                        </a>
-                                                                    </td>
-                                                                </tr>
-                                                            )
-                                                        })
-                                                    }
-                                                </tbody>
-                                            </table>
-                                        </div>
+                        <div className="bg-white shadow overflow-hidden sm:rounded-lg">
+                            {/* <div className="px-4 py-5 sm:px-6">
+                                <h3 className="text-lg leading-6 font-medium text-gray-900">Applicant Information</h3>
+                                <p className="mt-1 max-w-2xl text-sm text-gray-500">Personal details and application.</p>
+                            </div> */}
+                            <div className="border-t border-gray-200 px-4 py-5 sm:p-0">
+                                <dl className="sm:divide-y sm:divide-gray-200">
+                                    <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                        <dt className="text-sm font-medium text-gray-500 self-center">Insight Title</dt>
+                                        <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                            <input
+                                                id="name"
+                                                name="name"
+                                                type='text'
+                                                className="rounded-full bg-gray-100 px-4 py-2 pr-14 text-sm w-full outline-none border focus:border-fgreen-700 duration-500"
+                                            />
+                                        </dd>
                                     </div>
-                                </div>
+                                    <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                        <dt className="text-sm font-medium text-gray-500 self-center">Insight Description</dt>
+                                        <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                            <input
+                                                id="name"
+                                                name="name"
+                                                type='text'
+                                                className="rounded-full bg-gray-100 px-4 py-2 pr-14 text-sm w-full outline-none border focus:border-fgreen-700 duration-500"
+                                            />
+                                        </dd>
+                                    </div>
+                                    <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                        <dt className="text-sm font-medium text-gray-500 self-center">Author Name</dt>
+                                        <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                            <input
+                                                id="name"
+                                                name="name"
+                                                type='text'
+                                                className="rounded-full bg-gray-100 px-4 py-2 pr-14 text-sm w-full outline-none border focus:border-fgreen-700 duration-500"
+                                            />
+                                        </dd>
+                                    </div>
+                                    <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                        <dt className="text-sm font-medium text-gray-500">Type</dt>
+                                        <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                            <Listbox value={selectedInsightType} onChange={setSelectedInsightType}>
+                                                {({ open }) => (
+                                                    <>
+                                                        <div className="mt-1 relative">
+                                                            <Listbox.Button className="relative w-full bg-white border border-gray-300 rounded-full shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                                                <span className="flex items-center">
+                                                                    <span className="ml-3 block truncate">{selectedInsightType.name}</span>
+                                                                </span>
+                                                                <span className="ml-3 absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                                                                    <SelectorIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                                                                </span>
+                                                            </Listbox.Button>
+
+                                                            <Transition
+                                                                show={open}
+                                                                as={Fragment}
+                                                                leave="transition ease-in duration-100"
+                                                                leaveFrom="opacity-100"
+                                                                leaveTo="opacity-0"
+                                                            >
+                                                                <Listbox.Options className="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-56 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm">
+                                                                    {insightTypes.map((insightType) => (
+                                                                        <Listbox.Option
+                                                                            key={insightType.id}
+                                                                            className={({ active }) =>
+                                                                                classNames(
+                                                                                    active ? 'text-white bg-indigo-600' : 'text-gray-900',
+                                                                                    'cursor-default select-none relative py-2 pl-3 pr-9'
+                                                                                )
+                                                                            }
+                                                                            value={insightType}
+                                                                        >
+                                                                            {({ selected, active }) => (
+                                                                                <>
+                                                                                    <div className="flex items-center">
+                                                                                        <span
+                                                                                            className={classNames(selected ? 'font-semibold' : 'font-normal', 'ml-3 block truncate')}
+                                                                                        >
+                                                                                            {insightType.name}
+                                                                                        </span>
+                                                                                    </div>
+
+                                                                                    {selected ? (
+                                                                                        <span
+                                                                                            className={classNames(
+                                                                                                active ? 'text-white' : 'text-indigo-600',
+                                                                                                'absolute inset-y-0 right-0 flex items-center pr-4'
+                                                                                            )}
+                                                                                        >
+                                                                                            <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                                                                                        </span>
+                                                                                    ) : null}
+                                                                                </>
+                                                                            )}
+                                                                        </Listbox.Option>
+                                                                    ))}
+                                                                </Listbox.Options>
+                                                            </Transition>
+                                                        </div>
+                                                    </>
+                                                )}
+                                            </Listbox></dd>
+                                    </div>
+                                </dl>
                             </div>
                         </div>
                     </main>
@@ -620,12 +609,11 @@ export async function getServerSideProps(context) {
             }
         }
     }
+    console.log(token)
 
     const fetch = require("node-fetch")
-
-
-    const data = await fetch("http://54.245.144.158:6689/api/admin/courseLists", {
-        method: "post",
+    const insightTypes = await fetch('http://54.245.144.158:6689/api/admin/insight_types', {
+        method: "get",
         headers: {
             "Content-Type": "application/json",
             "accesstoken": token
@@ -636,10 +624,23 @@ export async function getServerSideProps(context) {
         .catch(err => {
             console.log(err)
         })
-    console.log(data)
+    console.log(insightTypes)
+    // const data = await fetch("http://54.245.144.158:6689/api/admin/insight_list", {
+    //     method: "get",
+    //     headers: {
+    //         "Content-Type": "application/json",
+    //         "accesstoken": token
+    //     }
+    // })
+    //     .then(res => res.json())
+    //     .then(json => json.result)
+    //     .catch(err => {
+    //         console.log(err)
+    //     })
+    // console.log(data)
     return {
         props: {
-            data
+            insightTypes
         },
     };
 }

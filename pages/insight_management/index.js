@@ -57,7 +57,7 @@ const navigation = [
 
     },
     {
-        name: 'Course Management', href: 'course_management', icon: FolderIcon, current: true,
+        name: 'Course Management', href: 'course_management', icon: FolderIcon, current: false,
         i: <svg
             xmlns="http://www.w3.org/2000/svg"
             width="20"
@@ -78,7 +78,7 @@ const navigation = [
 
     },
     {
-        name: 'Insights Management', href: 'insight_management', icon: CalendarIcon, current: false,
+        name: 'Insights Management', href: 'insight_management', icon: CalendarIcon, current: true,
         i: <svg
             xmlns="http://www.w3.org/2000/svg"
             width="20"
@@ -504,43 +504,25 @@ export default function Login({ data }) {
                                                             scope="col"
                                                             className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                                                         >
-                                                            Course Name
+                                                            Insight Title
                                                         </th>
                                                         <th
                                                             scope="col"
                                                             className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                                                         >
-                                                            Price
+                                                            Tag
                                                         </th>
                                                         <th
                                                             scope="col"
                                                             className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                                                         >
-                                                            Language
+                                                            Published On
                                                         </th>
                                                         <th
                                                             scope="col"
                                                             className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                                                         >
-                                                            Last Updated on
-                                                        </th>
-                                                        <th
-                                                            scope="col"
-                                                            className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                                                        >
-                                                            Last Updated by
-                                                        </th>
-                                                        <th
-                                                            scope="col"
-                                                            className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                                                        >
-                                                            Purchases
-                                                        </th>
-                                                        <th
-                                                            scope="col"
-                                                            className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                                                        >
-                                                            Duration
+                                                            Insight Type
                                                         </th>
                                                         <th
                                                             scope="col"
@@ -549,12 +531,44 @@ export default function Login({ data }) {
                                                             Status
                                                         </th>
                                                         <th scope="col" className="relative px-2 py-3">
-                                                            <span className="sr-only">Edit</span>
+                                                            <span className="sr-only">Action</span>
                                                         </th>
                                                     </tr>
                                                 </thead>
                                                 <tbody className="bg-white divide-y divide-gray-200 text-sm">
                                                     {
+                                                        data.map((d, i) => {
+                                                            const publishedOnString = moment(d.created_at).format('DD MMM YYYY');
+                                                            return (
+                                                                <tr key={d.course_id}>
+                                                                    <td className="p-2 whitespace-nowrap">
+                                                                        {i + 1}
+                                                                    </td>
+                                                                    <td className="p-2 whitespace-nowrap">
+                                                                        {d.insight_title}
+                                                                    </td>
+                                                                    <td className="p-2 whitespace-nowrap">
+                                                                        Tags
+                                                                    </td>
+                                                                    <td className="p-2 whitespace-nowrap">
+                                                                        {publishedOnString}
+                                                                    </td>
+                                                                    <td className="p-2 whitespace-nowrap">
+                                                                        {d.type}
+                                                                    </td>
+                                                                    <td className="p-2 whitespace-nowrap">
+                                                                        {d.status}
+                                                                    </td>
+                                                                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                                                        <a href="#" className="text-indigo-600 hover:text-indigo-900">
+                                                                            Edit
+                                                                        </a>
+                                                                    </td>
+                                                                </tr>
+                                                            )
+                                                        })
+                                                    }
+                                                    {/* {
                                                         data.map((d, i) => {
                                                             const createdAtString = moment(d.created_at).format('DD MMM YYYY');
                                                             const updatedAtString = moment(d.updated_at).format('DD MMM YYYY');
@@ -595,7 +609,7 @@ export default function Login({ data }) {
                                                                 </tr>
                                                             )
                                                         })
-                                                    }
+                                                    } */}
                                                 </tbody>
                                             </table>
                                         </div>
@@ -620,12 +634,12 @@ export async function getServerSideProps(context) {
             }
         }
     }
+    console.log(token)
 
     const fetch = require("node-fetch")
 
-
-    const data = await fetch("http://54.245.144.158:6689/api/admin/courseLists", {
-        method: "post",
+    const data = await fetch("http://54.245.144.158:6689/api/admin/insight_list", {
+        method: "get",
         headers: {
             "Content-Type": "application/json",
             "accesstoken": token
