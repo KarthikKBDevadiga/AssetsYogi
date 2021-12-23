@@ -5,6 +5,7 @@ import LoadingDialog from '../components/LoadingDialog'
 import NextNprogress from 'nextjs-progressbar';
 import localforage from "localforage"
 import { useRouter } from 'next/router'
+import Constants from '../helpers/Constants';
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -25,7 +26,7 @@ export default function Login() {
             "password": event.target.password.value
         }
 
-        fetch("http://54.245.144.158:6689/api/admin/login", {
+        fetch(Constants.BASE_URL + "api/admin/login", {
             method: "post",
             body: JSON.stringify(body),
             headers: { "Content-Type": "application/json" }
