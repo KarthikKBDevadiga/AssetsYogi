@@ -115,12 +115,10 @@ const NavigationLayout = ({ show, setShow, selectedId }) => {
                                         'group flex items-center px-2 py-2 text-sm font-medium rounded-md'
                                     )}
                                 >
-                                    <div className={classNames(
+                                    <item.icon className={classNames(
                                         item.id == selectedId ? 'text-blue-800' : 'text-gray-400 group-hover:text-gray-500',
                                         'mr-3 flex-shrink-0 h-6 w-6'
-                                    )}>
-                                        {item.icon}
-                                    </div>
+                                    )} />
                                     {item.name}
                                 </a>
                             ))}

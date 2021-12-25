@@ -8,6 +8,7 @@ import Constants from '../../helpers/Constants'
 
 export default function CourseManagementList({ data }) {
     const [sidebarOpen, setSidebarOpen] = useState(false)
+    const [searchText, setSearchText] = useState('')
     return (
         <>
             {/*
@@ -24,6 +25,39 @@ export default function CourseManagementList({ data }) {
                     <HeaderLayout show={sidebarOpen} setShow={setSidebarOpen} />
 
                     <main className="flex-1">
+                        <div className="bg-white px-4 py-5 sm:px-6">
+                            <div className="-ml-4 -mt-2 flex items-center justify-between flex-wrap sm:flex-nowrap">
+                                <div className="ml-4 mt-2">
+                                    <div className="mt-1 flex ">
+                                        <div className="relative flex items-stretch">
+                                            <input
+                                                type="text"
+                                                name="search"
+                                                id="search"
+                                                className="block w-full rounded-md rounded-md pl-4 sm:text-sm border border-gray-900"
+                                                placeholder="Search Course Here"
+                                                onChange={(e) => setSearchText(e.target.value)}
+                                            />
+                                        </div>
+                                        <button
+                                            type="button"
+                                            className="relative inline-flex items-center space-x-2 ml-4 px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-gray-50 hover:bg-gray-100"
+                                        >
+                                            <span>Search</span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div className="ml-4 mt-2 flex-shrink-0">
+                                    <a
+                                        href='course_management/add'
+                                        type="button"
+                                        className="relative inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                    >
+                                        Add New Course
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
                         <div className="p-4">
                             <div className="flex flex-col">
                                 <div className="my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -93,7 +127,7 @@ export default function CourseManagementList({ data }) {
                                                 </thead>
                                                 <tbody className="bg-white divide-y divide-gray-200 text-sm">
                                                     {
-                                                        data.map((d, i) => {
+                                                        data.filter(i => i.course_name.toLowerCase().includes(searchText.toLowerCase())).map((d, i) => {
                                                             const createdAtString = moment(d.created_at).format('DD MMM YYYY');
                                                             const updatedAtString = moment(d.updated_at).format('DD MMM YYYY');
                                                             return (
