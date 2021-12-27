@@ -3,6 +3,7 @@ import { useState } from 'react'
 import NavigationLayout from '../../components/NavigationLayout'
 import HeaderLayout from '../../components/HeaderLayout'
 import Constants from '../../helpers/Constants'
+import MetaLayout from '../../components/ MetaLayout'
 
 const videoAvailabilities = [
     {
@@ -20,7 +21,8 @@ export default function AddInsightManagement({ insightTypes }) {
     const [sidebarOpen, setSidebarOpen] = useState(false)
     return (
         <>
-            <div>
+        <MetaLayout/>
+        <div className='font-raleway'>
                 <NavigationLayout show={sidebarOpen} setShow={setSidebarOpen} selectedId={4} />
 
 

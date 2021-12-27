@@ -4,6 +4,7 @@ import { useState } from 'react'
 import NavigationLayout from '../../components/NavigationLayout'
 import HeaderLayout from '../../components/HeaderLayout'
 import Constants from '../../helpers/Constants'
+import MetaLayout from '../../components/ MetaLayout'
 
 
 export default function CourseManagementList({ data }) {
@@ -11,15 +12,8 @@ export default function CourseManagementList({ data }) {
     const [searchText, setSearchText] = useState('')
     return (
         <>
-            {/*
-        This example requires updating your template:
-
-        ```
-        <html class="h-full bg-gray-100">
-        <body class="h-full">
-        ```
-      */}
-            <div>
+            <MetaLayout/>
+            <div className='font-raleway'>
                 <NavigationLayout show={sidebarOpen} setShow={setSidebarOpen} selectedId={3} />
                 <div className="md:pl-64 flex flex-col flex-1">
                     <HeaderLayout show={sidebarOpen} setShow={setSidebarOpen} />

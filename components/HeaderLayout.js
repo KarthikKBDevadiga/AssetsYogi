@@ -4,6 +4,9 @@ import {
     MenuAlt2Icon,
 } from '@heroicons/react/outline'
 
+function classNames(...classes) {
+    return classes.filter(Boolean).join(' ')
+}
 const HeaderLayout = ({ show, setShow }) => {
     return (
         <div className="sticky top-0 z-10 flex-shrink-0 flex h-16 bg-white shadow">

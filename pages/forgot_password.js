@@ -1,6 +1,7 @@
 import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
+import MetaLayout from '../components/ MetaLayout'
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -34,12 +35,13 @@ export default function ForgotPassword() {
                     </>
                 )}
             </Disclosure>
+            <MetaLayout/> 
             <div style={{
                 height: 'calc(100vh - 4rem)',
                 backgroundRepeat: 'no-repeat',
                 backgroundSize: 'cover',
                 backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.527),rgba(0, 0, 0, 0.5)) , url(/img/login_bg.png)'
-            }}>
+            }} className='font-raleway'>
                 <div className="max-w-3xl mx-auto h-full flex items-center">
                     <div className="h-full w-full relative">
                         <div className="text-center text-2xl text-white absolute left-0 right-0 p-6 ">Forgot Password ?</div>

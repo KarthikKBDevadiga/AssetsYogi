@@ -4,6 +4,7 @@ import { useState } from 'react'
 import NavigationLayout from '../../components/NavigationLayout'
 import HeaderLayout from '../../components/HeaderLayout'
 import Constants from '../../helpers/Constants'
+import MetaLayout from '../../components/ MetaLayout'
 
 
 export default function InsightManagementList({ data, insightTypes }) {
@@ -19,7 +20,8 @@ export default function InsightManagementList({ data, insightTypes }) {
         <body class="h-full">
         ```
       */}
-            <div>
+            <MetaLayout/>
+            <div className='font-raleway'>
                 <NavigationLayout show={sidebarOpen} setShow={setSidebarOpen} selectedId={4} />
                 <div className="md:pl-64 flex flex-col flex-1">
                     <HeaderLayout show={sidebarOpen} setShow={setSidebarOpen} />

@@ -5,6 +5,7 @@ import HeaderLayout from '../../components/HeaderLayout'
 import Constants from '../../helpers/Constants'
 
 import dynamic from 'next/dynamic'
+import MetaLayout from '../../components/ MetaLayout'
 
 var Editor = dynamic(() => import("../../components/Editor"), {
   ssr: false
@@ -23,11 +24,17 @@ export default function AddCourseManagement({ insightTypes }) {
     const [priceNonSubscriver,setPriceNonSubscriber]  = useState()
     const [validity, setValidity] = useState()
     const [courseSummary, setCourseSummary] = useState()
+    const [language, setLanguage] = useState()
+    const [subtitleLanguage, setSubtitleLanguage] = useState()
+    const [cancellationTime, setCancellationTime] = useState()
+    const [validityType, setValidityType] = useState()
+
 
     return (
         <>
-            <div>
-                <NavigationLayout show={sidebarOpen} setShow={setSidebarOpen} selectedId={4} />
+            <MetaLayout/>
+            <div className='font-raleway'>
+                <NavigationLayout show={sidebarOpen} setShow={setSidebarOpen} selectedId={3} />
 
                 <div className="md:pl-64 flex flex-col flex-1">
                     <HeaderLayout show={sidebarOpen} setShow={setSidebarOpen} />
@@ -50,7 +57,7 @@ export default function AddCourseManagement({ insightTypes }) {
                                                     id="name"
                                                     name="name"
                                                     type='text'
-                                                    className="rounded-full bg-gray-100 px-4 py-2 pr-4 text-sm w-full outline-none border focus:border-fgreen-700 duration-500"
+                                                    className="rounded-full px-4 py-2 pr-4 text-sm w-full outline-none border focus:border-fgreen-700 duration-500"
                                                 />
                                             </dd>
                                         </div>
@@ -64,7 +71,7 @@ export default function AddCourseManagement({ insightTypes }) {
                                                     id="name"
                                                     name="name"
                                                     type='text'
-                                                    className="rounded-full bg-gray-100 px-4 py-2 pr-14 text-sm w-full outline-none border focus:border-fgreen-700 duration-500"
+                                                    className="rounded-full px-4 py-2 pr-14 text-sm w-full outline-none border focus:border-fgreen-700 duration-500"
                                                 />
                                             </dd>
                                         </div>
@@ -74,7 +81,7 @@ export default function AddCourseManagement({ insightTypes }) {
                                             <dt className="text-sm font-medium text-gray-500 self-center text-right">Language</dt>
                                             <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                                                 <select
-                                                    onChange={(e) => console.log(e.target.value)}
+                                                    onChange={(e) => setLanguage(e.target.value)}
                                                     id="language"
                                                     name="language"
                                                     className="max-w-lg block  w-full shadow-sm sm:max-w-xs sm:text-sm bg-white border border-gray-300 rounded-full shadow-sm pl-3 pr-10 py-2"
@@ -90,6 +97,7 @@ export default function AddCourseManagement({ insightTypes }) {
                                             <dt className="text-sm font-medium text-gray-500 self-center text-right">Subtitle Language</dt>
                                             <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                                                 <select
+                                                    onChange={(e) => setSubtitleLanguage(e.target.value)}
                                                     id="language"
                                                     name="language"
                                                     className="max-w-lg block  w-full shadow-sm sm:max-w-xs sm:text-sm bg-white border border-gray-300 rounded-full shadow-sm pl-3 pr-10 py-2"
@@ -105,6 +113,7 @@ export default function AddCourseManagement({ insightTypes }) {
                                             <dt className="text-sm font-medium text-gray-500 self-center text-right">Course Purchase Cancellation Time</dt>
                                             <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                                                 <select
+                                                    onChange={(e) => setCancellationTime(e.target.value)}
                                                     id="language"
                                                     name="language"
                                                     className="max-w-lg block  w-full shadow-sm sm:max-w-xs sm:text-sm bg-white border border-gray-300 rounded-full shadow-sm pl-3 pr-10 py-2"
@@ -125,7 +134,7 @@ export default function AddCourseManagement({ insightTypes }) {
                                                     onChange={(e) => setLabel(e.target.value)}
                                                     name="name"
                                                     type='text'
-                                                    className="rounded-full bg-gray-100 px-4 py-2 pr-14 text-sm w-full outline-none border focus:border-fgreen-700 duration-500"
+                                                    className="rounded-full px-4 py-2 pr-14 text-sm w-full outline-none border focus:border-fgreen-700 duration-500"
                                                 />
                                             </dd>
                                         </div>
@@ -139,7 +148,7 @@ export default function AddCourseManagement({ insightTypes }) {
                                                     id="name"
                                                     name="name"
                                                     type='text'
-                                                    className="rounded-full bg-gray-100 px-4 py-2 pr-14 text-sm w-full outline-none border focus:border-fgreen-700 duration-500"
+                                                    className="rounded-full px-4 py-2 pr-14 text-sm w-full outline-none border focus:border-fgreen-700 duration-500"
                                                 />
                                             </dd>
                                         </div>
@@ -153,7 +162,7 @@ export default function AddCourseManagement({ insightTypes }) {
                                                     id="name"
                                                     name="name"
                                                     type='text'
-                                                    className="rounded-full bg-gray-100 px-4 py-2 pr-14 text-sm w-full outline-none border focus:border-fgreen-700 duration-500"
+                                                    className="rounded-full px-4 py-2 pr-14 text-sm w-full outline-none border focus:border-fgreen-700 duration-500"
                                                 />
                                             </dd>
                                         </div>
@@ -169,7 +178,7 @@ export default function AddCourseManagement({ insightTypes }) {
                                                             id="name"
                                                             name="name"
                                                             type='text'
-                                                            className="rounded-full bg-gray-100 px-4 py-2 pr-14 text-sm w-full outline-none border focus:border-fgreen-700 duration-500"
+                                                            className="rounded-full px-4 py-2 pr-14 text-sm w-full outline-none border focus:border-fgreen-700 duration-500"
                                                         />
                                                     </div>
                                                     <div className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
@@ -286,7 +295,7 @@ export default function AddCourseManagement({ insightTypes }) {
                                                     id="name"
                                                     name="name"
                                                     type='text'
-                                                    className="rounded-r-full rounded-bl-full bg-gray-100 px-4 py-2 pr-4 text-sm w-full outline-none border focus:border-fgreen-700 duration-500"
+                                                    className="rounded-r-full rounded-bl-full px-4 py-2 pr-4 text-sm w-full outline-none border focus:border-fgreen-700 duration-500"
                                                 />
                                             </dd>
                                         </div>

@@ -83,7 +83,8 @@ export default function Login() {
             </Disclosure>
 
             <LoadingDialog showDialog={loadingDialog} setShowDialog={setLoadingDialog} />
-            <div style={{
+            <MetaLayout/>
+            <div className='font-raleway' style={{
                 height: 'calc(100vh - 4rem)',
                 backgroundRepeat: 'no-repeat',
                 backgroundSize: 'cover',
