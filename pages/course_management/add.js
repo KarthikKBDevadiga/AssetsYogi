@@ -4,15 +4,25 @@ import NavigationLayout from '../../components/NavigationLayout'
 import HeaderLayout from '../../components/HeaderLayout'
 import Constants from '../../helpers/Constants'
 
-// import Editor from '../../components/Editor'
+import dynamic from 'next/dynamic'
 
 var Editor = dynamic(() => import("../../components/Editor"), {
-    ssr: false
+  ssr: false
 })
 
 export default function AddCourseManagement({ insightTypes }) {
     const [selectedInsightType, setSelectedInsightType] = useState(insightTypes[0])
     const [sidebarOpen, setSidebarOpen] = useState(false)
+    const [wywtl,setWywtl] = useState();
+    const [description, setDescription]=useState();
+    const [about, setAbout] = useState();
+    const [courseName,setCourseName] = useState()
+    const [creatorName, setCreatorName] = useState()
+    const [label, setLabel] = useState()
+    const [priceSubscriber, setPriceSubscriber] = useState()
+    const [priceNonSubscriver,setPriceNonSubscriber]  = useState()
+    const [validity, setValidity] = useState()
+    const [courseSummary, setCourseSummary] = useState()
 
     return (
         <>
@@ -36,6 +46,7 @@ export default function AddCourseManagement({ insightTypes }) {
                                             <dt className="text-sm font-medium text-gray-500 self-center text-right">Course Name</dt>
                                             <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                                                 <input
+                                                    onChange={(e) => setCourseName(e.target.value)}
                                                     id="name"
                                                     name="name"
                                                     type='text'
@@ -49,6 +60,7 @@ export default function AddCourseManagement({ insightTypes }) {
                                             <dt className="text-sm font-medium text-gray-500 self-center text-right">Creator Name</dt>
                                             <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                                                 <input
+                                                    onChange={(e) => setCreatorName(e.target.value)}
                                                     id="name"
                                                     name="name"
                                                     type='text'
@@ -62,6 +74,7 @@ export default function AddCourseManagement({ insightTypes }) {
                                             <dt className="text-sm font-medium text-gray-500 self-center text-right">Language</dt>
                                             <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                                                 <select
+                                                    onChange={(e) => console.log(e.target.value)}
                                                     id="language"
                                                     name="language"
                                                     className="max-w-lg block  w-full shadow-sm sm:max-w-xs sm:text-sm bg-white border border-gray-300 rounded-full shadow-sm pl-3 pr-10 py-2"
@@ -107,7 +120,9 @@ export default function AddCourseManagement({ insightTypes }) {
                                             <dt className="text-sm font-medium text-gray-500 self-center text-right">Label</dt>
                                             <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                                                 <input
+
                                                     id="name"
+                                                    onChange={(e) => setLabel(e.target.value)}
                                                     name="name"
                                                     type='text'
                                                     className="rounded-full bg-gray-100 px-4 py-2 pr-14 text-sm w-full outline-none border focus:border-fgreen-700 duration-500"
@@ -120,6 +135,7 @@ export default function AddCourseManagement({ insightTypes }) {
                                             <dt className="text-sm font-medium text-gray-500 self-center text-right">Price for Subscriber (₹)</dt>
                                             <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                                                 <input
+                                                    onChange={(e) => setPriceSubscriber(e.target.value)}
                                                     id="name"
                                                     name="name"
                                                     type='text'
@@ -133,6 +149,7 @@ export default function AddCourseManagement({ insightTypes }) {
                                             <dt className="text-sm font-medium text-gray-500 self-center text-right">Price for Non Subscriber (₹)</dt>
                                             <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                                                 <input
+                                                    onChange={(e) => setPriceNonSubscriber(e.target.value)}
                                                     id="name"
                                                     name="name"
                                                     type='text'
@@ -146,15 +163,16 @@ export default function AddCourseManagement({ insightTypes }) {
                                             <dt className="text-sm font-medium text-gray-500 self-center text-right">Course Validity</dt>
                                             <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                                                 <div className="grid grid-cols-4 gap-4">
-                                                    <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                                    <div className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                                                         <input
+                                                    onChange={(e) => setValidity(e.target.value)}
                                                             id="name"
                                                             name="name"
                                                             type='text'
                                                             className="rounded-full bg-gray-100 px-4 py-2 pr-14 text-sm w-full outline-none border focus:border-fgreen-700 duration-500"
                                                         />
-                                                    </dd>
-                                                    <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                                    </div>
+                                                    <div className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                                                         <select
                                                             id="language"
                                                             name="language"
@@ -163,7 +181,7 @@ export default function AddCourseManagement({ insightTypes }) {
                                                             <option>Days</option>
                                                             <option>Month</option>
                                                         </select>
-                                                    </dd>
+                                                    </div>
                                                 </div>
                                             </dd>
 
@@ -197,7 +215,7 @@ export default function AddCourseManagement({ insightTypes }) {
                                                             type="button"
                                                             className="bg-white ml-2  shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50"
                                                         >
-                                                            <svg className="self-center" xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor"><g><rect fill="none" height="24" width="24" /></g><g><path d="M7.4,10h1.59v5c0,0.55,0.45,1,1,1h4c0.55,0,1-0.45,1-1v-5h1.59c0.89,0,1.34-1.08,0.71-1.71L12.7,3.7 c-0.39-0.39-1.02-0.39-1.41,0L6.7,8.29C6.07,8.92,6.51,10,7.4,10z M5,19c0,0.55,0.45,1,1,1h12c0.55,0,1-0.45,1-1s-0.45-1-1-1H6 C5.45,18,5,18.45,5,19z" /></g></svg>
+                                                            <svg className="self-center" xmlns="http://www.w3.org/2000/svg" enableBackground="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor"><g><rect fill="none" height="24" width="24" /></g><g><path d="M7.4,10h1.59v5c0,0.55,0.45,1,1,1h4c0.55,0,1-0.45,1-1v-5h1.59c0.89,0,1.34-1.08,0.71-1.71L12.7,3.7 c-0.39-0.39-1.02-0.39-1.41,0L6.7,8.29C6.07,8.92,6.51,10,7.4,10z M5,19c0,0.55,0.45,1,1,1h12c0.55,0,1-0.45,1-1s-0.45-1-1-1H6 C5.45,18,5,18.45,5,19z" /></g></svg>
                                                         </button>
                                                         <button
                                                             type="button"
@@ -245,7 +263,7 @@ export default function AddCourseManagement({ insightTypes }) {
                                                             type="button"
                                                             className="bg-white ml-2  shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50"
                                                         >
-                                                            <svg className="self-center" xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor"><g><rect fill="none" height="24" width="24" /></g><g><path d="M7.4,10h1.59v5c0,0.55,0.45,1,1,1h4c0.55,0,1-0.45,1-1v-5h1.59c0.89,0,1.34-1.08,0.71-1.71L12.7,3.7 c-0.39-0.39-1.02-0.39-1.41,0L6.7,8.29C6.07,8.92,6.51,10,7.4,10z M5,19c0,0.55,0.45,1,1,1h12c0.55,0,1-0.45,1-1s-0.45-1-1-1H6 C5.45,18,5,18.45,5,19z" /></g></svg>
+                                                            <svg className="self-center" xmlns="http://www.w3.org/2000/svg" enableBackground="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor"><g><rect fill="none" height="24" width="24" /></g><g><path d="M7.4,10h1.59v5c0,0.55,0.45,1,1,1h4c0.55,0,1-0.45,1-1v-5h1.59c0.89,0,1.34-1.08,0.71-1.71L12.7,3.7 c-0.39-0.39-1.02-0.39-1.41,0L6.7,8.29C6.07,8.92,6.51,10,7.4,10z M5,19c0,0.55,0.45,1,1,1h12c0.55,0,1-0.45,1-1s-0.45-1-1-1H6 C5.45,18,5,18.45,5,19z" /></g></svg>
                                                         </button>
                                                         <button
                                                             type="button"
@@ -264,6 +282,7 @@ export default function AddCourseManagement({ insightTypes }) {
                                             <dt className="text-sm font-medium text-gray-500 self-top text-right col-span-2 sm:col-span-2">Course Summary</dt>
                                             <dd className="mt-1 text-sm text-gray-900 sm:mt-0 col-span-10 sm:col-span-10">
                                                 <textarea
+                                                    onChange={(e) => setCourseSummary(e.target.value)}
                                                     id="name"
                                                     name="name"
                                                     type='text'
@@ -272,18 +291,33 @@ export default function AddCourseManagement({ insightTypes }) {
                                             </dd>
                                         </div>
                                     </div>
-                                    <div className="col-span-12">
-                                        <label htmlFor="url" className="block text-sm font-medium text-gray-700">
-                                            Course Summary
-                                        </label>
-                                        <input
-                                            type="text"
-                                            name="url"
-                                            id="url"
-                                            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm"
-                                        />
+                                    <div className="col-span-12 sm:col-span-12">
+                                        <div className="py-1 sm:py-1 sm:grid sm:grid-cols-12 sm:gap-4 sm:px-6">
+                                            <dt className="text-sm font-medium text-gray-500 self-top text-right col-span-2 sm:col-span-2">What you want to learn</dt>
+                                            <dd className="mt-1 text-sm text-gray-900 sm:mt-0 col-span-10 sm:col-span-10">
+                                                
+                                                <Editor setData={setWywtl}/>
+                                            </dd>
+                                        </div>
                                     </div>
-                                    <Editor />
+                                    <div className="col-span-12 sm:col-span-12">
+                                        <div className="py-1 sm:py-1 sm:grid sm:grid-cols-12 sm:gap-4 sm:px-6">
+                                            <dt className="text-sm font-medium text-gray-500 self-top text-right col-span-2 sm:col-span-2">Description</dt>
+                                            <dd className="mt-1 text-sm text-gray-900 sm:mt-0 col-span-10 sm:col-span-10">
+                                                
+                                                <Editor setData={setDescription}/>
+                                            </dd>
+                                        </div>
+                                    </div>
+                                    <div className="col-span-12 sm:col-span-12">
+                                        <div className="py-1 sm:py-1 sm:grid sm:grid-cols-12 sm:gap-4 sm:px-6">
+                                            <dt className="text-sm font-medium text-gray-500 self-top text-right col-span-2 sm:col-span-2">About the Courses</dt>
+                                            <dd className="mt-1 text-sm text-gray-900 sm:mt-0 col-span-10 sm:col-span-10">
+                                                
+                                                <Editor setData={setAbout}/>
+                                            </dd>
+                                        </div>
+                                    </div>
 
                                 </div>
                             </div>
@@ -299,7 +333,7 @@ export default function AddCourseManagement({ insightTypes }) {
                                         type="submit"
                                         className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                                     >
-                                        Post
+                                        Add
                                     </button>
                                 </div>
                             </div>
