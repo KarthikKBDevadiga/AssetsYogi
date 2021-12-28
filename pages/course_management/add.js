@@ -6,6 +6,7 @@ import Constants from '../../helpers/Constants'
 
 import dynamic from 'next/dynamic'
 import MetaLayout from '../../components/ MetaLayout'
+import LoadingDialog from '../../components/LoadingDialog'
 
 var Editor = dynamic(() => import("../../components/Editor"), {
   ssr: false
@@ -28,7 +29,45 @@ export default function AddCourseManagement({ insightTypes }) {
     const [subtitleLanguage, setSubtitleLanguage] = useState()
     const [cancellationTime, setCancellationTime] = useState()
     const [validityType, setValidityType] = useState()
+    const [loadingDialog, setLoadingDialog] = useState(false)
 
+    const add = ()=>{
+        setLoadingDialog(true)
+        const fetch = require("node-fetch")
+        const formData = new FormData();
+        formData.append('course_name', courseName);
+        formData.append('creator_name', creatorName);
+        formData.append('label', label);
+        formData.append('price_subscriber', priceSubscriber);
+        formData.append('price_non_subscriber', priceNonSubscriver);
+        formData.append('subtitle', subtitleLanguage);
+        formData.append('language', language);
+        formData.append('course_validity_time', validity);
+        formData.append('course_validity_type', validityType);
+        formData.append('summary', courseSummary);
+        formData.append('what_you_learn', wywtl);
+        formData.append('description', description);
+        formData.append('about', about);
+        formData.append('what_you_learn', wywtl);
+        // setLoadingDialog(false)
+        fetch(Constants.BASE_URL + "api/admin/addCourse", {
+            method: "post",
+            body: formData,
+            headers: { "Content-Type": "application/json" }
+        }).then(res => res.json())
+        .then(
+            json => {
+                setLoadingDialog(false)
+                console.log(json)
+                
+            }
+        )
+        .catch(err => {
+            console.log('erro')
+            setLoadingDialog(false)
+            console.log(err)
+        })
+    }
 
     return (
         <>
@@ -50,41 +89,41 @@ export default function AddCourseManagement({ insightTypes }) {
                                 <div className="mt-6 grid grid-cols-12 gap-4">
                                     <div className="col-span-12 sm:col-span-6">
                                         <div className="py-1 sm:py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                            <dt className="text-sm font-medium text-gray-500 self-center text-right">Course Name</dt>
+                                            <dt className="text-sm font-bold text-gray-500 self-center text-right">Course Name</dt>
                                             <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                                                 <input
                                                     onChange={(e) => setCourseName(e.target.value)}
                                                     id="name"
                                                     name="name"
                                                     type='text'
-                                                    className="rounded-full px-4 py-2 pr-4 text-sm w-full outline-none border focus:border-fgreen-700 duration-500"
+                                                    className="rounded-md px-4 py-2 pr-4 text-sm w-full outline-none border focus:border-fgreen-700 duration-500"
                                                 />
                                             </dd>
                                         </div>
                                     </div>
                                     <div className="col-span-12 sm:col-span-6">
                                         <div className="py-1 sm:py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                            <dt className="text-sm font-medium text-gray-500 self-center text-right">Creator Name</dt>
+                                            <dt className="text-sm font-bold text-gray-500 self-center text-right">Creator Name</dt>
                                             <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                                                 <input
                                                     onChange={(e) => setCreatorName(e.target.value)}
                                                     id="name"
                                                     name="name"
                                                     type='text'
-                                                    className="rounded-full px-4 py-2 pr-14 text-sm w-full outline-none border focus:border-fgreen-700 duration-500"
+                                                    className="rounded-md px-4 py-2 pr-14 text-sm w-full outline-none border focus:border-fgreen-700 duration-500"
                                                 />
                                             </dd>
                                         </div>
                                     </div>
                                     <div className="col-span-12 sm:col-span-6">
                                         <div className="py-1 sm:py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                            <dt className="text-sm font-medium text-gray-500 self-center text-right">Language</dt>
+                                            <dt className="text-sm font-bold text-gray-500 self-center text-right">Language</dt>
                                             <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                                                 <select
                                                     onChange={(e) => setLanguage(e.target.value)}
                                                     id="language"
                                                     name="language"
-                                                    className="max-w-lg block  w-full shadow-sm sm:max-w-xs sm:text-sm bg-white border border-gray-300 rounded-full shadow-sm pl-3 pr-10 py-2"
+                                                    className="max-w-lg block  w-full shadow-sm sm:max-w-xs sm:text-sm bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2"
                                                 >
                                                     <option>English</option>
                                                     <option>Hindi</option>
@@ -94,13 +133,13 @@ export default function AddCourseManagement({ insightTypes }) {
                                     </div>
                                     <div className="col-span-12 sm:col-span-6">
                                         <div className="py-1 sm:py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                            <dt className="text-sm font-medium text-gray-500 self-center text-right">Subtitle Language</dt>
+                                            <dt className="text-sm font-bold text-gray-500 self-center text-right">Subtitle Language</dt>
                                             <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                                                 <select
                                                     onChange={(e) => setSubtitleLanguage(e.target.value)}
                                                     id="language"
                                                     name="language"
-                                                    className="max-w-lg block  w-full shadow-sm sm:max-w-xs sm:text-sm bg-white border border-gray-300 rounded-full shadow-sm pl-3 pr-10 py-2"
+                                                    className="max-w-lg block  w-full shadow-sm sm:max-w-xs sm:text-sm bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2"
                                                 >
                                                     <option>English</option>
                                                     <option>Hindi</option>
@@ -110,13 +149,13 @@ export default function AddCourseManagement({ insightTypes }) {
                                     </div>
                                     <div className="col-span-12 sm:col-span-6">
                                         <div className="py-1 sm:py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                            <dt className="text-sm font-medium text-gray-500 self-center text-right">Course Purchase Cancellation Time</dt>
+                                            <dt className="text-sm font-bold text-gray-500 self-center text-right">Course Purchase Cancellation Time</dt>
                                             <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                                                 <select
                                                     onChange={(e) => setCancellationTime(e.target.value)}
                                                     id="language"
                                                     name="language"
-                                                    className="max-w-lg block  w-full shadow-sm sm:max-w-xs sm:text-sm bg-white border border-gray-300 rounded-full shadow-sm pl-3 pr-10 py-2"
+                                                    className="max-w-lg block  w-full shadow-sm sm:max-w-xs sm:text-sm bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2"
                                                 >
                                                     <option>8 hours</option>
                                                     <option>6 hours</option>
@@ -126,7 +165,7 @@ export default function AddCourseManagement({ insightTypes }) {
                                     </div>
                                     <div className="col-span-12 sm:col-span-6">
                                         <div className="py-1 sm:py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                            <dt className="text-sm font-medium text-gray-500 self-center text-right">Label</dt>
+                                            <dt className="text-sm font-bold text-gray-500 self-center text-right">Label</dt>
                                             <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                                                 <input
 
@@ -134,42 +173,42 @@ export default function AddCourseManagement({ insightTypes }) {
                                                     onChange={(e) => setLabel(e.target.value)}
                                                     name="name"
                                                     type='text'
-                                                    className="rounded-full px-4 py-2 pr-14 text-sm w-full outline-none border focus:border-fgreen-700 duration-500"
+                                                    className="rounded-md px-4 py-2 pr-14 text-sm w-full outline-none border focus:border-fgreen-700 duration-500"
                                                 />
                                             </dd>
                                         </div>
                                     </div>
                                     <div className="col-span-12 sm:col-span-6">
                                         <div className="py-1 sm:py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                            <dt className="text-sm font-medium text-gray-500 self-center text-right">Price for Subscriber (₹)</dt>
+                                            <dt className="text-sm font-bold text-gray-500 self-center text-right">Price for Subscriber (₹)</dt>
                                             <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                                                 <input
                                                     onChange={(e) => setPriceSubscriber(e.target.value)}
                                                     id="name"
                                                     name="name"
                                                     type='text'
-                                                    className="rounded-full px-4 py-2 pr-14 text-sm w-full outline-none border focus:border-fgreen-700 duration-500"
+                                                    className="rounded-md px-4 py-2 pr-14 text-sm w-full outline-none border focus:border-fgreen-700 duration-500"
                                                 />
                                             </dd>
                                         </div>
                                     </div>
                                     <div className="col-span-12 sm:col-span-6">
                                         <div className="py-1 sm:py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                            <dt className="text-sm font-medium text-gray-500 self-center text-right">Price for Non Subscriber (₹)</dt>
+                                            <dt className="text-sm font-bold text-gray-500 self-center text-right">Price for Non Subscriber (₹)</dt>
                                             <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                                                 <input
                                                     onChange={(e) => setPriceNonSubscriber(e.target.value)}
                                                     id="name"
                                                     name="name"
                                                     type='text'
-                                                    className="rounded-full px-4 py-2 pr-14 text-sm w-full outline-none border focus:border-fgreen-700 duration-500"
+                                                    className="rounded-md px-4 py-2 pr-14 text-sm w-full outline-none border focus:border-fgreen-700 duration-500"
                                                 />
                                             </dd>
                                         </div>
                                     </div>
                                     <div className="col-span-12 sm:col-span-6">
                                         <div className="py-1 sm:py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                            <dt className="text-sm font-medium text-gray-500 self-center text-right">Course Validity</dt>
+                                            <dt className="text-sm font-bold text-gray-500 self-center text-right">Course Validity</dt>
                                             <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                                                 <div className="grid grid-cols-4 gap-4">
                                                     <div className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
@@ -178,14 +217,14 @@ export default function AddCourseManagement({ insightTypes }) {
                                                             id="name"
                                                             name="name"
                                                             type='text'
-                                                            className="rounded-full px-4 py-2 pr-14 text-sm w-full outline-none border focus:border-fgreen-700 duration-500"
+                                                            className="rounded-md px-4 py-2 pr-14 text-sm w-full outline-none border focus:border-fgreen-700 duration-500"
                                                         />
                                                     </div>
                                                     <div className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                                                         <select
                                                             id="language"
                                                             name="language"
-                                                            className="max-w-lg block  w-full shadow-sm sm:max-w-xs sm:text-sm bg-white border border-gray-300 rounded-full shadow-sm pl-3 pr-10 py-2"
+                                                            className="max-w-lg block  w-full shadow-sm sm:max-w-xs sm:text-sm bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2"
                                                         >
                                                             <option>Days</option>
                                                             <option>Month</option>
@@ -198,14 +237,14 @@ export default function AddCourseManagement({ insightTypes }) {
                                     </div>
                                     <div className="col-span-12 sm:col-span-6">
                                         <div className="py-1 sm:py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                            <dt className="text-sm font-medium text-gray-500 self-center text-right">Course Preview</dt>
+                                            <dt className="text-sm font-bold text-gray-500 self-center text-right">Course Preview</dt>
                                             <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                                                 <div className="grid grid-cols-4 gap-4">
                                                     <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                                                         <select
                                                             id="language"
                                                             name="language"
-                                                            className="max-w-lg block  w-full shadow-sm sm:max-w-xs sm:text-sm bg-white border border-gray-300 rounded-full shadow-sm pl-3 pr-10 py-2"
+                                                            className="max-w-lg block  w-full shadow-sm sm:max-w-xs sm:text-sm bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2"
                                                         >
                                                             <option>Video</option>
                                                             <option>Image</option>
@@ -240,12 +279,12 @@ export default function AddCourseManagement({ insightTypes }) {
                                     </div>
                                     <div className="col-span-12 sm:col-span-6">
                                         <div className="py-1 sm:py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                            <dt className="text-sm font-medium text-gray-500 self-center text-right">Similar Courses</dt>
+                                            <dt className="text-sm font-bold text-gray-500 self-center text-right">Similar Courses</dt>
                                             <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                                                 <select
                                                     id="language"
                                                     name="language"
-                                                    className="max-w-lg block  w-full shadow-sm sm:max-w-xs sm:text-sm bg-white border border-gray-300 rounded-full shadow-sm pl-3 pr-10 py-2"
+                                                    className="max-w-lg block  w-full shadow-sm sm:max-w-xs sm:text-sm bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2"
                                                 >
                                                     <option>8 hours</option>
                                                     <option>6 hours</option>
@@ -255,7 +294,7 @@ export default function AddCourseManagement({ insightTypes }) {
                                     </div>
                                     <div className="col-span-12 sm:col-span-6">
                                         <div className="py-1 sm:py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                            <dt className="text-sm font-medium text-gray-500 self-center text-right">Course Preview</dt>
+                                            <dt className="text-sm font-bold text-gray-500 self-center text-right">Course Preview</dt>
                                             <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                                                 <div className="grid grid-cols-4 gap-4">
 
@@ -288,21 +327,21 @@ export default function AddCourseManagement({ insightTypes }) {
                                     </div>
                                     <div className="col-span-12 sm:col-span-12">
                                         <div className="py-1 sm:py-1 sm:grid sm:grid-cols-12 sm:gap-4 sm:px-6">
-                                            <dt className="text-sm font-medium text-gray-500 self-top text-right col-span-2 sm:col-span-2">Course Summary</dt>
+                                            <dt className="text-sm font-bold text-gray-500 self-top text-right col-span-2 sm:col-span-2">Course Summary</dt>
                                             <dd className="mt-1 text-sm text-gray-900 sm:mt-0 col-span-10 sm:col-span-10">
                                                 <textarea
                                                     onChange={(e) => setCourseSummary(e.target.value)}
                                                     id="name"
                                                     name="name"
                                                     type='text'
-                                                    className="rounded-r-full rounded-bl-full px-4 py-2 pr-4 text-sm w-full outline-none border focus:border-fgreen-700 duration-500"
+                                                    className="rounded-md px-4 py-2 pr-4 text-sm w-full outline-none border focus:border-fgreen-700 duration-500"
                                                 />
                                             </dd>
                                         </div>
                                     </div>
                                     <div className="col-span-12 sm:col-span-12">
                                         <div className="py-1 sm:py-1 sm:grid sm:grid-cols-12 sm:gap-4 sm:px-6">
-                                            <dt className="text-sm font-medium text-gray-500 self-top text-right col-span-2 sm:col-span-2">What you want to learn</dt>
+                                            <dt className="text-sm font-bold text-gray-500 self-top text-right col-span-2 sm:col-span-2">What you want to learn</dt>
                                             <dd className="mt-1 text-sm text-gray-900 sm:mt-0 col-span-10 sm:col-span-10">
                                                 
                                                 <Editor setData={setWywtl}/>
@@ -311,7 +350,7 @@ export default function AddCourseManagement({ insightTypes }) {
                                     </div>
                                     <div className="col-span-12 sm:col-span-12">
                                         <div className="py-1 sm:py-1 sm:grid sm:grid-cols-12 sm:gap-4 sm:px-6">
-                                            <dt className="text-sm font-medium text-gray-500 self-top text-right col-span-2 sm:col-span-2">Description</dt>
+                                            <dt className="text-sm font-bold text-gray-500 self-top text-right col-span-2 sm:col-span-2">Description</dt>
                                             <dd className="mt-1 text-sm text-gray-900 sm:mt-0 col-span-10 sm:col-span-10">
                                                 
                                                 <Editor setData={setDescription}/>
@@ -320,8 +359,8 @@ export default function AddCourseManagement({ insightTypes }) {
                                     </div>
                                     <div className="col-span-12 sm:col-span-12">
                                         <div className="py-1 sm:py-1 sm:grid sm:grid-cols-12 sm:gap-4 sm:px-6">
-                                            <dt className="text-sm font-medium text-gray-500 self-top text-right col-span-2 sm:col-span-2">About the Courses</dt>
-                                            <dd className="mt-1 text-sm text-gray-900 sm:mt-0 col-span-10 sm:col-span-10">
+                                            <dt className="text-sm font-bold text-gray-500 self-top text-right col-span-2 sm:col-span-2">About the Courses</dt>
+                                            <dd className="mt-1 text-sm text-gray-900 sm:mt-0 col-span-10 sm:col-span-10 ">
                                                 
                                                 <Editor setData={setAbout}/>
                                             </dd>
@@ -338,18 +377,22 @@ export default function AddCourseManagement({ insightTypes }) {
                                     >
                                         Cancel
                                     </button>
-                                    <button
+                                    <a
+                                    onClick={
+                                        e=>add()                                        
+                                    }
                                         type="submit"
                                         className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                                     >
                                         Add
-                                    </button>
+                                    </a>
                                 </div>
                             </div>
                         </div>
                     </main>
                 </div >
             </div >
+            <LoadingDialog showDialog={loadingDialog} setShowDialog={setLoadingDialog} />
         </>
     )
 }

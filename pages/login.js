@@ -6,6 +6,7 @@ import NextNprogress from 'nextjs-progressbar';
 import localforage from "localforage"
 import { useRouter } from 'next/router'
 import Constants from '../helpers/Constants';
+import MetaLayout from  '../components/ MetaLayout'
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -15,6 +16,7 @@ export default function Login() {
 
     const [loadingDialog, setLoadingDialog] = useState(false)
     const router = useRouter()
+    
 
     const login = event => {
         event.preventDefault()
