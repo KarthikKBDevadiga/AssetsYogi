@@ -6,7 +6,7 @@ import NextNprogress from 'nextjs-progressbar';
 import localforage from "localforage"
 import { useRouter } from 'next/router'
 import Constants from '../helpers/Constants';
-import MetaLayout from  '../components/ MetaLayout'
+import MetaLayout from '../components/ MetaLayout'
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -16,7 +16,7 @@ export default function Login() {
 
     const [loadingDialog, setLoadingDialog] = useState(false)
     const router = useRouter()
-    
+
 
     const login = event => {
         event.preventDefault()
@@ -85,7 +85,7 @@ export default function Login() {
             </Disclosure>
 
             <LoadingDialog showDialog={loadingDialog} setShowDialog={setLoadingDialog} />
-            <MetaLayout/>
+            <MetaLayout />
             <div className='font-raleway' style={{
                 height: 'calc(100vh - 4rem)',
                 backgroundRepeat: 'no-repeat',
@@ -105,7 +105,7 @@ export default function Login() {
                                 className="mt-1 bg-white block w-full px-3 py-2 sm:text-sm rounded outline-none border focus:border-indigo-700 duration-500"
                                 placeholder="Enter your registered email address"
                                 onKeyPress={() => {
-                                    setError('')
+                                    //     setError('')
                                 }}
                             />
                             <div className="mt-4 text-white text-sm">Password</div>
