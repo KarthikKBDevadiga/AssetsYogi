@@ -9,20 +9,20 @@ import MetaLayout from '../../components/ MetaLayout'
 import LoadingDialog from '../../components/LoadingDialog'
 
 var Editor = dynamic(() => import("../../components/Editor"), {
-  ssr: false
+    ssr: false
 })
 
 export default function AddCourseManagement({ insightTypes }) {
     const [selectedInsightType, setSelectedInsightType] = useState(insightTypes[0])
     const [sidebarOpen, setSidebarOpen] = useState(false)
-    const [wywtl,setWywtl] = useState();
-    const [description, setDescription]=useState();
+    const [wywtl, setWywtl] = useState();
+    const [description, setDescription] = useState();
     const [about, setAbout] = useState();
-    const [courseName,setCourseName] = useState()
+    const [courseName, setCourseName] = useState()
     const [creatorName, setCreatorName] = useState()
     const [label, setLabel] = useState()
     const [priceSubscriber, setPriceSubscriber] = useState()
-    const [priceNonSubscriver,setPriceNonSubscriber]  = useState()
+    const [priceNonSubscriver, setPriceNonSubscriber] = useState()
     const [validity, setValidity] = useState()
     const [courseSummary, setCourseSummary] = useState()
     const [language, setLanguage] = useState()
@@ -31,7 +31,7 @@ export default function AddCourseManagement({ insightTypes }) {
     const [validityType, setValidityType] = useState()
     const [loadingDialog, setLoadingDialog] = useState(false)
 
-    const add = ()=>{
+    const add = () => {
         setLoadingDialog(true)
         const fetch = require("node-fetch")
         const formData = new FormData();
@@ -55,23 +55,23 @@ export default function AddCourseManagement({ insightTypes }) {
             body: formData,
             headers: { "Content-Type": "application/json" }
         }).then(res => res.json())
-        .then(
-            json => {
+            .then(
+                json => {
+                    setLoadingDialog(false)
+                    console.log(json)
+
+                }
+            )
+            .catch(err => {
+                console.log('erro')
                 setLoadingDialog(false)
-                console.log(json)
-                
-            }
-        )
-        .catch(err => {
-            console.log('erro')
-            setLoadingDialog(false)
-            console.log(err)
-        })
+                console.log(err)
+            })
     }
 
     return (
         <>
-            <MetaLayout/>
+            <MetaLayout />
             <div className='font-raleway'>
                 <NavigationLayout show={sidebarOpen} setShow={setSidebarOpen} selectedId={3} />
 
@@ -213,7 +213,7 @@ export default function AddCourseManagement({ insightTypes }) {
                                                 <div className="grid grid-cols-4 gap-4">
                                                     <div className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                                                         <input
-                                                    onChange={(e) => setValidity(e.target.value)}
+                                                            onChange={(e) => setValidity(e.target.value)}
                                                             id="name"
                                                             name="name"
                                                             type='text'
@@ -343,8 +343,7 @@ export default function AddCourseManagement({ insightTypes }) {
                                         <div className="py-1 sm:py-1 sm:grid sm:grid-cols-12 sm:gap-4 sm:px-6">
                                             <dt className="text-sm font-bold text-gray-500 self-top text-right col-span-2 sm:col-span-2">What you want to learn</dt>
                                             <dd className="mt-1 text-sm text-gray-900 sm:mt-0 col-span-10 sm:col-span-10">
-                                                
-                                                <Editor setData={setWywtl}/>
+                                                <Editor setData={setWywtl} />
                                             </dd>
                                         </div>
                                     </div>
@@ -352,8 +351,7 @@ export default function AddCourseManagement({ insightTypes }) {
                                         <div className="py-1 sm:py-1 sm:grid sm:grid-cols-12 sm:gap-4 sm:px-6">
                                             <dt className="text-sm font-bold text-gray-500 self-top text-right col-span-2 sm:col-span-2">Description</dt>
                                             <dd className="mt-1 text-sm text-gray-900 sm:mt-0 col-span-10 sm:col-span-10">
-                                                
-                                                <Editor setData={setDescription}/>
+                                                <Editor setData={setDescription} />
                                             </dd>
                                         </div>
                                     </div>
@@ -361,8 +359,7 @@ export default function AddCourseManagement({ insightTypes }) {
                                         <div className="py-1 sm:py-1 sm:grid sm:grid-cols-12 sm:gap-4 sm:px-6">
                                             <dt className="text-sm font-bold text-gray-500 self-top text-right col-span-2 sm:col-span-2">About the Courses</dt>
                                             <dd className="mt-1 text-sm text-gray-900 sm:mt-0 col-span-10 sm:col-span-10 ">
-                                                
-                                                <Editor setData={setAbout}/>
+                                                <Editor setData={setAbout} />
                                             </dd>
                                         </div>
                                     </div>
@@ -378,9 +375,9 @@ export default function AddCourseManagement({ insightTypes }) {
                                         Cancel
                                     </button>
                                     <a
-                                    onClick={
-                                        e=>add()                                        
-                                    }
+                                        onClick={
+                                            e => add()
+                                        }
                                         type="submit"
                                         className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                                     >
