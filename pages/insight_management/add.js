@@ -7,46 +7,97 @@ import Constants from '../../helpers/Constants'
 import dynamic from 'next/dynamic'
 import MetaLayout from '../../components/ MetaLayout'
 import LoadingDialog from '../../components/LoadingDialog'
+import { useRouter } from 'next/dist/client/router'
 
-var Editor = dynamic(() => import("../../components/Editor"), {
-    ssr: false
-})
-
-export default function AddInsightManagement({ insightTypes }) {
+export default function AddInsightManagement({ insightTypes, token }) {
 
     const [selectedInsightType, setSelectedInsightType] = useState(insightTypes[0])
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [type, setType] = useState(0);
     const [onClickType, setOnClickType] = useState(0);
     const [loadingDialog, setLoadingDialog] = useState(false)
-    const [title, setTitle] = useState();
-    const [description, setDescription] = useState();
-    const [authorName, setAuthorName] = useState();
-    const [tags, setTags] = useState();
-    const [link, setLink] = useState();
+    const [title, setTitle] = useState()
+    const [description, setDescription] = useState()
+    const [authorName, setAuthorName] = useState()
+    const [tags, setTags] = useState()
+    const [link, setLink] = useState()
+    const [insightFile, setInsightFile] = useState()
+    const [thumbnail, setThumbnail] = useState()
+    const [subtitle, setSubtitle] = useState()
+    // const [advFile, setAdvFile] = useState()
+    // const [srtFile, setSRTFile] = useState()
 
+    const router = useRouter()
 
     const add = () => {
         setLoadingDialog(true)
+
         const fetch = require("node-fetch")
-        const formData = new FormData();
-        formData.append('insight_title', title);
-        formData.append('insight_desc', description);
-        formData.append('author_name', authorName);
-        formData.append('tags', tags);
-        formData.append('type', 1);
-        formData.append('video_availablity', 'free');
-        formData.append('insight_type', 1);
-        formData.append('on_click', onClickType);
-        formData.append('insight_type', 1);
-        formData.append('video_url', link);
+
+        var myHeaders = new Headers()
+        myHeaders.append("accesstoken", token)
+
+        if (title == null || description == null || authorName == null || tags == null || type == null || insightFile == null || thumbnail == null) {
+            setLoadingDialog(false)
+            return
+        }
+
+        var formdata = new FormData();
+        formdata.append("insight_title", title);
+        formdata.append("insight_desc", description);
+        formdata.append("author_name", authorName);
+        formdata.append("tags", tags);
+        formdata.append("type", type);
+        formdata.append("preview_non_subscribers", "40");
+        if (insightFile != null)
+            formdata.append("file", insightFile, insightFile.name);
+        if (subtitle != null)
+            formdata.append("subtitle_file", subtitle, subtitle.name);
+        if (thumbnail != null)
+            formdata.append("thumbnail", thumbnail, thumbnail.name);
+        formdata.append("video_availablity", "free");
+        formdata.append("insight_type", "0");
+        formdata.append("on_click", "1");
+        formdata.append("video_url", link);
+
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: formdata,
+            redirect: 'follow'
+        };
+
+        fetch(Constants.BASE_URL + "api/admin/add_insight", requestOptions)
+            .then(res => res.json())
+            .then(
+                json => {
+                    setLoadingDialog(false)
+                    console.log(json)
+                    if (json.code == 200) {
+                        router.back()
+                    }
+
+                }
+            )
+            .catch(err => {
+                console.log('erro')
+                setLoadingDialog(false)
+                console.log(err)
+            })
+    }
+
+    const readFile = (event, set) => {
+        const fileList = event.target.files;
+        if (fileList != null && fileList.length == 1) {
+            set(fileList[0])
+        }
     }
 
     return (
         <>
             <MetaLayout />
             <div className='font-raleway'>
-                <NavigationLayout show={sidebarOpen} setShow={setSidebarOpen} selectedId={3} />
+                <NavigationLayout show={sidebarOpen} setShow={setSidebarOpen} selectedId={4} />
 
                 <div className="md:pl-64 flex flex-col flex-1">
                     <HeaderLayout show={sidebarOpen} setShow={setSidebarOpen} />
@@ -145,7 +196,10 @@ export default function AddInsightManagement({ insightTypes }) {
                                                                     <div className="flex text-sm text-gray-600">
                                                                         <label htmlFor="insight-file-upload" className=" w-full relative inline-flex items-center space-x-2 px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-gray-50 hover:bg-gray-100">
                                                                             <span>Browse</span>
-                                                                            <input id="insight-file-upload" name="file-upload" type="file" className="sr-only" />
+                                                                            <input id="insight-file-upload" name="file-upload" type="file" className="sr-only" onChange={(event) => {
+                                                                                readFile(event, setInsightFile)
+                                                                                event.target.value = null
+                                                                            }} />
                                                                         </label>
                                                                     </div>
                                                                 </dd>
@@ -177,7 +231,10 @@ export default function AddInsightManagement({ insightTypes }) {
                                                                     <div className="flex text-sm text-gray-600">
                                                                         <label htmlFor="subtitle-file-upload" className=" w-full relative inline-flex items-center space-x-2 px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-gray-50 hover:bg-gray-100">
                                                                             <span>SRT File</span>
-                                                                            <input id="subtitle-file-upload" name="file-upload" type="file" className="sr-only" />
+                                                                            <input id="subtitle-file-upload" name="file-upload" type="file" className="sr-only" onChange={(event) => {
+                                                                                readFile(event, setSubtitle)
+                                                                                event.target.value = null
+                                                                            }} />
                                                                         </label>
                                                                     </div>
                                                                 </dd>
@@ -251,7 +308,10 @@ export default function AddInsightManagement({ insightTypes }) {
                                                                     <div className="flex text-sm text-gray-600">
                                                                         <label htmlFor="thumbnail-file-upload" className=" w-full relative inline-flex items-center space-x-2 px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-gray-50 hover:bg-gray-100">
                                                                             <span>Browse</span>
-                                                                            <input id="thumbnail-file-upload" name="file-upload" type="file" className="sr-only" />
+                                                                            <input id="thumbnail-file-upload" name="file-upload" type="file" className="sr-only" onChange={(event) => {
+                                                                                readFile(event, setThumbnail)
+                                                                                event.target.value = null
+                                                                            }} />
                                                                         </label>
                                                                     </div>
                                                                 </dd>
@@ -303,7 +363,11 @@ export default function AddInsightManagement({ insightTypes }) {
                                                                     <div className="flex text-sm text-gray-600">
                                                                         <label htmlFor="adv-file-upload" className=" w-full relative inline-flex items-center space-x-2 px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-gray-50 hover:bg-gray-100">
                                                                             <span>Browse</span>
-                                                                            <input id="adv-file-upload" name="file-upload" type="file" className="sr-only" />
+                                                                            <input id="adv-file-upload" name="file-upload" type="file" className="sr-only"
+                                                                                onChange={(event) => {
+                                                                                    readFile(event, setInsightFile)
+                                                                                    event.target.value = null
+                                                                                }} />
                                                                         </label>
                                                                     </div>
                                                                 </dd>
@@ -314,12 +378,12 @@ export default function AddInsightManagement({ insightTypes }) {
                                                                     >
                                                                         <svg className="self-center" xmlns="http://www.w3.org/2000/svg" enableBackground="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor"><g><rect fill="none" height="24" width="24" /></g><g><path d="M7.4,10h1.59v5c0,0.55,0.45,1,1,1h4c0.55,0,1-0.45,1-1v-5h1.59c0.89,0,1.34-1.08,0.71-1.71L12.7,3.7 c-0.39-0.39-1.02-0.39-1.41,0L6.7,8.29C6.07,8.92,6.51,10,7.4,10z M5,19c0,0.55,0.45,1,1,1h12c0.55,0,1-0.45,1-1s-0.45-1-1-1H6 C5.45,18,5,18.45,5,19z" /></g></svg>
                                                                     </button>
-                                                                    <button
+                                                                    <div
                                                                         type="button"
-                                                                        className="bg-white ml-2 shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50"
+                                                                        className="bg-white m-2 text-sm leading-4 font-medium text-gray-700"
                                                                     >
                                                                         <svg className="self-center" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor"><path d="M0 0h24v24H0V0z" fill="none" /><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v10zM9 9h6c.55 0 1 .45 1 1v8c0 .55-.45 1-1 1H9c-.55 0-1-.45-1-1v-8c0-.55.45-1 1-1zm6.5-5l-.71-.71c-.18-.18-.44-.29-.7-.29H9.91c-.26 0-.52.11-.7.29L8.5 4H6c-.55 0-1 .45-1 1s.45 1 1 1h12c.55 0 1-.45 1-1s-.45-1-1-1h-2.5z" /></svg>
-                                                                    </button>
+                                                                    </div>
                                                                 </dd>
                                                             </div>
                                                         </dd>
@@ -335,7 +399,11 @@ export default function AddInsightManagement({ insightTypes }) {
                                                                     <div className="flex text-sm text-gray-600">
                                                                         <label htmlFor="srt-file-upload" className=" w-full relative inline-flex items-center space-x-2 px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-gray-50 hover:bg-gray-100">
                                                                             <span>SRT File</span>
-                                                                            <input id="srt-file-upload" name="file-upload" type="file" className="sr-only" />
+                                                                            <input id="srt-file-upload" name="file-upload" type="file" className="sr-only"
+                                                                                onChange={(event) => {
+                                                                                    readFile(event, setThumbnail)
+                                                                                    event.target.value = null
+                                                                                }} />
                                                                         </label>
                                                                     </div>
 
@@ -453,7 +521,7 @@ export async function getServerSideProps(context) {
         })
     return {
         props: {
-            insightTypes
+            insightTypes, token
         },
     };
 }

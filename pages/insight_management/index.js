@@ -20,7 +20,7 @@ export default function InsightManagementList({ data, insightTypes }) {
         <body class="h-full">
         ```
       */}
-            <MetaLayout/>
+            <MetaLayout />
             <div className='font-raleway'>
                 <NavigationLayout show={sidebarOpen} setShow={setSidebarOpen} selectedId={4} />
                 <div className="md:pl-64 flex flex-col flex-1">
@@ -128,7 +128,7 @@ export default function InsightManagementList({ data, insightTypes }) {
                                                                         {publishedOnString}
                                                                     </td>
                                                                     <td className="p-2 whitespace-nowrap">
-                                                                        {insightTypes.find(i => i.id == d.type).name}
+                                                                        {insightTypes.find(i => i.id == d.type)?.name}
                                                                     </td>
                                                                     <td className="p-2 whitespace-nowrap">
                                                                         {d.status}
