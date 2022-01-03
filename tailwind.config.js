@@ -7,6 +7,14 @@ module.exports = {
       fontFamily: {
         raleway: ['Raleway'],
       },
+      colors: {
+        bcolor: {
+          DEFAULT: '#828282'
+        },
+        tcolor: {
+          DEFAULT: '#4F4F4F'
+        }
+      }
     },
   },
   variants: {
