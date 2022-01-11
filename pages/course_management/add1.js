@@ -17,8 +17,6 @@ export default function AddCourseManagement({ insightTypes, token }) {
 
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [type, setType] = useState(0);
-  const [insightFile, setInsightFile] = useState()
-  const [thumbnail, setThumbnail] = useState()
 
   const [wywtl, setWywtl] = useState();
   const [description, setDescription] = useState();
@@ -30,11 +28,14 @@ export default function AddCourseManagement({ insightTypes, token }) {
   const [priceNonSubscriver, setPriceNonSubscriber] = useState()
   const [validity, setValidity] = useState()
   const [courseSummary, setCourseSummary] = useState()
-  const [language, setLanguage] = useState()
-  const [subtitleLanguage, setSubtitleLanguage] = useState()
+  const [language, setLanguage] = useState('english')
+  const [subtitleLanguage, setSubtitleLanguage] = useState('english')
   const [cancellationTime, setCancellationTime] = useState()
   const [validityType, setValidityType] = useState()
   const [loadingDialog, setLoadingDialog] = useState(false)
+  const [coursePreviewType, setCoursePreviewType] = useState('image')
+  const [coursePreview, setCoursePreview] = useState()
+  const [thumbnail, setThumbnail] = useState()
   // const [advFile, setAdvFile] = useState()
   // const [srtFile, setSRTFile] = useState()
 
@@ -62,12 +63,19 @@ export default function AddCourseManagement({ insightTypes, token }) {
     formdata.append("price_non_subscriber", priceNonSubscriver);
     formdata.append("language", language);
     formdata.append("subtitle", subtitleLanguage);
+    formdata.append('purchase', cancellationTime)
     formdata.append("course_validity_time", validity);
     formdata.append("course_validity_type", validityType);
     formdata.append("summary", courseSummary);
     formdata.append("what_you_learn", wywtl);
     formdata.append("description", description);
     formdata.append("about", about);
+    formdata.append('course_preview_type', coursePreviewType)
+    if (coursePreview != null)
+      formdata.append('course_preview', coursePreview, coursePreview.name)
+    if (thumbnail != null)
+      formdata.append('preview_thumbnail', thumbnail, thumbnail.name)
+
     // if (insightFile != null)
     //   formdata.append("file", insightFile, insightFile.name);
     // if (subtitle != null)
@@ -201,7 +209,7 @@ export default function AddCourseManagement({ insightTypes, token }) {
                       <div className="text-2xl font-bold text-tcolor self-top col-span-1 sm:col-span-1 self-center">Course Purchase Cancellation Time:</div>
                       <div className="mt-1 text-xl text-gray-900 sm:mt-0 col-span-2">
                         <select
-                          onChange={(e) => setType(e.target.value)}
+                          onChange={(e) => setCancellationTime(e.target.value)}
                           id="name"
                           name="name"
                           type='text'
@@ -306,21 +314,21 @@ export default function AddCourseManagement({ insightTypes, token }) {
 
                           <div className="mt-1 text-sm text-gray-900 sm:mt-0 col-span-1">
                             <select
-                              onChange={(e) => setType(e.target.value)}
+                              onChange={(e) => setCoursePreviewType(e.target.value)}
                               id="name"
                               name="name"
                               type='text'
                               className="rounded-lg px-4 py-2 pr-4 text-xl w-full outline-none border border-bcolor focus:border-fgreen-700 duration-500"
                             >
 
-                              <option value="0">Video</option>
-                              <option value="1">Image</option>
+                              <option value="image">Image</option>
+                              <option value="video">Video</option>
                             </select>
                           </div>
                           <label htmlFor="insight-file-upload" className="col-span-1 text-xl w-full relative inline-flex items-center space-x-2 px-4 py-2 border border-bcolor text-sm font-medium rounded-md text-gray-700 hover:bg-gray-50">
                             <span>Browse</span>
                             <input id="insight-file-upload" name="file-upload" type="file" className="sr-only" onChange={(event) => {
-                              readFile(event, setInsightFile)
+                              readFile(event, setCoursePreview)
                               event.target.value = null
                             }} />
                           </label>
