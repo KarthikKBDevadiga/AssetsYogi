@@ -13,7 +13,7 @@ var Editor = dynamic(() => import("../../components/Editor"), {
   ssr: false
 })
 
-export default function UpdateCourseManagement({ insightTypes, token }) {
+export default function UpdateCourseManagement({ insightTypes, course, token }) {
 
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [type, setType] = useState(0);
@@ -133,6 +133,7 @@ export default function UpdateCourseManagement({ insightTypes, token }) {
                           placeholder='Money Save Mantra'
                           onChange={(e) => setCourseName(e.target.value)}
                           id="name"
+                          defaultValue={course.course_name}
                           name="name"
                           type='text'
                           className="rounded-lg px-4 py-2 pr-4 text-xl w-full outline-none border border-bcolor focus:border-fgreen-700 duration-500"
@@ -147,6 +148,7 @@ export default function UpdateCourseManagement({ insightTypes, token }) {
                       <div className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                         <input
                           placeholder='Prateek Sharma'
+                          defaultValue={course.creator_name}
                           onChange={(e) => setCreatorName(e.target.value)}
                           id="name"
                           name="name"
@@ -169,8 +171,8 @@ export default function UpdateCourseManagement({ insightTypes, token }) {
                           className="rounded-lg px-4 py-2 pr-4 text-xl w-full outline-none border border-bcolor focus:border-fgreen-700 duration-500"
                         >
 
-                          <option value="0">English</option>
-                          <option value="1">Hindi</option>
+                          <option value="english">English</option>
+                          <option value="hindi">Hindi</option>
                         </select>
                       </div>
                     </div>
@@ -219,6 +221,7 @@ export default function UpdateCourseManagement({ insightTypes, token }) {
                       <div className="text-2xl font-bold text-tcolor self-top col-span-1 sm:col-span-1 self-center">Label:</div>
                       <div className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                         <input
+                          defaultValue={course.label}
                           placeholder='Bestseller'
                           onChange={(e) => setCreatorName(e.target.value)}
                           id="name"
@@ -240,6 +243,7 @@ export default function UpdateCourseManagement({ insightTypes, token }) {
                           onChange={(e) => setCourseName(e.target.value)}
                           id="name"
                           name="name"
+                          defaultValue={course.price_subscriber}
                           type='text'
                           className="rounded-lg px-4 py-2 pr-4 text-xl w-full outline-none border border-bcolor focus:border-fgreen-700 duration-500"
                         />
@@ -256,6 +260,7 @@ export default function UpdateCourseManagement({ insightTypes, token }) {
                           onChange={(e) => setCreatorName(e.target.value)}
                           id="name"
                           name="name"
+                          defaultValue={course.price_non_subscriber}
                           type='text'
                           className="rounded-lg px-4 py-2 pr-4 text-xl w-full outline-none border border-bcolor focus:border-fgreen-700 duration-500"
                         />
@@ -272,6 +277,7 @@ export default function UpdateCourseManagement({ insightTypes, token }) {
                           <div className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                             <input
                               placeholder='365'
+                              defaultValue={course.course_validity_time}
                               onChange={(e) => setCreatorName(e.target.value)}
                               id="name"
                               name="name"
@@ -430,6 +436,7 @@ export default function UpdateCourseManagement({ insightTypes, token }) {
                           placeholder='Selected ideas and opportunities to save money after 2 years of analysis'
                           onChange={(e) => setTitle(e.target.value)}
                           id="name"
+                          defaultValue={course.summary}
                           name="name"
                           type='text'
                           className="rounded-lg px-4 py-2 pr-4 text-xl w-full outline-none border border-bcolor focus:border-fgreen-700 duration-500"
@@ -440,9 +447,9 @@ export default function UpdateCourseManagement({ insightTypes, token }) {
 
                   <div className="col-span-6">
                     <div className="py-1 sm:py-1 sm:grid sm:grid-cols-12 sm:gap-4">
-                      <div className="text-2xl font-bold text-tcolor self-top col-span-2 sm:col-span-2 self-center">Course Summary:</div>
+                      <div className="text-2xl font-bold text-tcolor self-top col-span-2 sm:col-span-2 self-center">What you want to learn:</div>
                       <div className="mt-1 text-sm text-gray-900 sm:mt-0 col-span-10 sm:col-span-10">
-                        <Editor setData={setWywtl} />
+                        <Editor setData={setWywtl} initData={course.what_you_learn} />
                       </div>
                     </div>
                   </div>
@@ -450,7 +457,7 @@ export default function UpdateCourseManagement({ insightTypes, token }) {
                     <div className="py-1 sm:py-1 sm:grid sm:grid-cols-12 sm:gap-4">
                       <div className="text-2xl font-bold text-tcolor self-top col-span-2 sm:col-span-2 self-center">Description:</div>
                       <div className="mt-1 text-sm text-gray-900 sm:mt-0 col-span-10 sm:col-span-10">
-                        <Editor setData={setDescription} />
+                        <Editor setData={setDescription} initData={course.description} />
                       </div>
                     </div>
                   </div>
@@ -458,7 +465,7 @@ export default function UpdateCourseManagement({ insightTypes, token }) {
                     <div className="py-1 sm:py-1 sm:grid sm:grid-cols-12 sm:gap-4">
                       <div className="text-2xl font-bold text-tcolor self-top col-span-2 sm:col-span-2 self-center">About the Courses:</div>
                       <div className="mt-1 text-sm text-gray-900 sm:mt-0 col-span-10 sm:col-span-10">
-                        <Editor setData={setAbout} />
+                        <Editor setData={setAbout} initData={course.about} />
                       </div>
                     </div>
                   </div>
@@ -517,9 +524,22 @@ export async function getServerSideProps(context) {
     .catch(err => {
       console.log(err)
     })
+  const course = await fetch(Constants.BASE_URL + 'api/admin/courseDetails/' + context.query.id, {
+    method: "get",
+    headers: {
+      "Content-Type": "application/json",
+      "accesstoken": token
+    }
+  })
+    .then(res => res.json())
+    .then(json => json.result)
+    .catch(err => {
+      console.log(err)
+    })
+  console.log(course)
   return {
     props: {
-      insightTypes
+      insightTypes, course
     },
   };
 }

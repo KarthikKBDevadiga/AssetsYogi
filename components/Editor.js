@@ -5,7 +5,7 @@ import React, { useEffect, useState, useRef } from "react";
 // import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 // --- end
 
-function Editor({ setData }) {
+function Editor({ setData, initData }) {
   // Solution-2 start
   let editorRef = useRef();
   const { CKEditor, ClassicEditor } = editorRef.current || {};
@@ -24,7 +24,7 @@ function Editor({ setData }) {
     return (
       <CKEditor
         editor={ClassicEditor}
-        data=""
+        data={initData ? initData : ''}
         onReady={(editor) => {
           console.log("Editor is ready to use!");
         }}
