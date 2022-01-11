@@ -441,7 +441,7 @@ export default function AddCourseManagement({ insightTypes, token }) {
 
                   <div className="col-span-6">
                     <div className="py-1 sm:py-1 sm:grid sm:grid-cols-12 sm:gap-4">
-                      <div className="text-2xl font-bold text-tcolor self-top col-span-2 sm:col-span-2 self-center">Course Summary:</div>
+                      <div className="text-2xl font-bold text-tcolor self-top col-span-2 sm:col-span-2 self-center">What will you learn::</div>
                       <div className="mt-1 text-sm text-gray-900 sm:mt-0 col-span-10 sm:col-span-10">
                         <Editor setData={setWywtl} />
                       </div>
@@ -520,7 +520,7 @@ export async function getServerSideProps(context) {
     })
   return {
     props: {
-      insightTypes
+      insightTypes, token
     },
   };
 }

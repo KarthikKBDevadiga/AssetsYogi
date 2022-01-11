@@ -12,7 +12,7 @@ export default function CourseManagementList({ data }) {
     const [searchText, setSearchText] = useState('')
     return (
         <>
-            <MetaLayout/>
+            <MetaLayout />
             <div className='font-raleway'>
                 <NavigationLayout show={sidebarOpen} setShow={setSidebarOpen} selectedId={3} />
                 <div className="md:pl-64 flex flex-col flex-1">
@@ -154,7 +154,7 @@ export default function CourseManagementList({ data }) {
                                                                         {d.status}
                                                                     </td>
                                                                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                                                        <a href="#" className="text-indigo-600 hover:text-indigo-900">
+                                                                        <a href="course_management/update" className="text-indigo-600 hover:text-indigo-900">
                                                                             Edit
                                                                         </a>
                                                                     </td>
