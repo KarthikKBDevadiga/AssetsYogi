@@ -5,7 +5,7 @@ import React, { useEffect, useState, useRef } from "react";
 // import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 // --- end
 
-function Editor({setData}) {
+function Editor({ setData }) {
   // Solution-2 start
   let editorRef = useRef();
   const { CKEditor, ClassicEditor } = editorRef.current || {};
@@ -26,18 +26,15 @@ function Editor({setData}) {
         editor={ClassicEditor}
         data=""
         onReady={(editor) => {
-          console.log("Editor is ready to use!" );
+          console.log("Editor is ready to use!");
         }}
         onChange={(event, editor) => {
           const data = editor.getData();
-          console.log(data);
           setData(data);
         }}
         onBlur={(event, editor) => {
-          console.log("Blur.");
         }}
         onFocus={(event, editor) => {
-          console.log("Focus.");
         }}
       />
     );

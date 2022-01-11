@@ -169,7 +169,6 @@ export default function AddInsightManagement({ insightTypes, token }) {
 											</div>
 										</div>
 									</div>
-
 									<div className="col-span-6">
 										<div className="py-1 sm:py-1 sm:grid sm:grid-cols-12 sm:gap-4">
 											<div className="text-2xl font-bold text-tcolor self-top col-span-2 sm:col-span-2 self-center">Type:</div>
