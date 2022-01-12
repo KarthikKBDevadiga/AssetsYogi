@@ -53,7 +53,7 @@ export default function CourseManagementList({ data }) {
                                     <a
                                         href='course_management/add'
                                         type="button"
-                                        className="relative inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                        className="relative inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-bold rounded-md text-white bg-bluecolor"
                                     >
                                         Add New Course
                                     </a>
@@ -164,8 +164,8 @@ export default function CourseManagementList({ data }) {
                                                                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                                                         <Menu as="div" className="relative inline-block text-left">
                                                                             <div>
-                                                                                <Menu.Button className="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500">
-                                                                                    Options
+                                                                                <Menu.Button className="inline-flex justify-center w-full rounded-md border border-black shadow-sm px-4 py-2 bg-white text-sm font-bold text-gray-700 hover:bg-gray-50">
+                                                                                    Action
                                                                                     <ChevronDownIcon className="-mr-1 ml-2 h-5 w-5" aria-hidden="true" />
                                                                                 </Menu.Button>
                                                                             </div>
@@ -179,133 +179,143 @@ export default function CourseManagementList({ data }) {
                                                                                 leaveFrom="transform opacity-100 scale-100"
                                                                                 leaveTo="transform opacity-0 scale-95"
                                                                             >
-                                                                                <Menu.Items className="z-10 origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
-                                                                                    <div className="py-1">
+                                                                                <Menu.Items className="z-10 origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-yellow-300 ring-1 ring-black ring-opacity-5 focus:outline-none border border-black">
+                                                                                    <div>
                                                                                         <Menu.Item>
                                                                                             {({ active }) => (
                                                                                                 <a
                                                                                                     href="#"
                                                                                                     className={classNames(
-                                                                                                        active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                                                                                                        'block px-4 py-2 text-sm'
+                                                                                                        active ? 'bg-yellow-400 text-gray-900' : 'text-gray-700',
+                                                                                                        'block px-4 py-2 text-sm text-center duration-500 rounded-t-md font-bold'
                                                                                                     )}
                                                                                                 >
                                                                                                     View Course
                                                                                                 </a>
                                                                                             )}
                                                                                         </Menu.Item>
+
+                                                                                        <div className='w-full h-px bg-black'></div>
                                                                                         <Menu.Item>
                                                                                             {({ active }) => (
-                                                                                                <Link href={"/course_management/update?id=" + d.course_id}>
-                                                                                                    <a
-                                                                                                        className={classNames(
-                                                                                                            active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                                                                                                            'block px-4 py-2 text-sm'
-                                                                                                        )}
-                                                                                                    >
-                                                                                                        Edit Course
-                                                                                                    </a>
-                                                                                                </Link>
+                                                                                                <a
+                                                                                                    href={"/course_management/update?id=" + d.course_id}
+
+                                                                                                    className={classNames(
+                                                                                                        active ? 'bg-yellow-400 text-gray-900' : 'text-gray-700',
+                                                                                                        'block px-4 py-2 text-sm text-center duration-500 font-bold'
+                                                                                                    )}
+                                                                                                >
+                                                                                                    Edit Course
+                                                                                                </a>
                                                                                             )}
                                                                                         </Menu.Item>
+                                                                                        <div className='w-full h-px bg-black'></div>
                                                                                         <Menu.Item>
                                                                                             {({ active }) => (
                                                                                                 <a
                                                                                                     href="#"
                                                                                                     className={classNames(
-                                                                                                        active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                                                                                                        'block px-4 py-2 text-sm'
+                                                                                                        active ? 'bg-yellow-400 text-gray-900' : 'text-gray-700',
+                                                                                                        'block px-4 py-2 text-sm text-center duration-500 font-bold'
                                                                                                     )}
                                                                                                 >
                                                                                                     Delete Course
                                                                                                 </a>
                                                                                             )}
                                                                                         </Menu.Item>
+                                                                                        <div className='w-full h-px bg-black'></div>
                                                                                         <Menu.Item>
                                                                                             {({ active }) => (
                                                                                                 <a
                                                                                                     href="#"
                                                                                                     className={classNames(
-                                                                                                        active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                                                                                                        'block px-4 py-2 text-sm'
+                                                                                                        active ? 'bg-yellow-400 text-gray-900' : 'text-gray-700',
+                                                                                                        'block px-4 py-2 text-sm text-center duration-500 font-bold'
                                                                                                     )}
                                                                                                 >
                                                                                                     Publish Course
                                                                                                 </a>
                                                                                             )}
                                                                                         </Menu.Item>
+                                                                                        <div className='w-full h-px bg-black'></div>
                                                                                         <Menu.Item>
                                                                                             {({ active }) => (
                                                                                                 <a
                                                                                                     href="#"
                                                                                                     className={classNames(
-                                                                                                        active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                                                                                                        'block px-4 py-2 text-sm'
+                                                                                                        active ? 'bg-yellow-400 text-gray-900' : 'text-gray-700',
+                                                                                                        'block px-4 py-2 text-sm text-center duration-500 font-bold'
                                                                                                     )}
                                                                                                 >
                                                                                                     Curriculm
                                                                                                 </a>
                                                                                             )}
                                                                                         </Menu.Item>
+                                                                                        <div className='w-full h-px bg-black'></div>
                                                                                         <Menu.Item>
                                                                                             {({ active }) => (
                                                                                                 <a
                                                                                                     href="#"
                                                                                                     className={classNames(
-                                                                                                        active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                                                                                                        'block px-4 py-2 text-sm'
+                                                                                                        active ? 'bg-yellow-400 text-gray-900' : 'text-gray-700',
+                                                                                                        'block px-4 py-2 text-sm text-center duration-500 font-bold'
                                                                                                     )}
                                                                                                 >
                                                                                                     Ratings
                                                                                                 </a>
                                                                                             )}
                                                                                         </Menu.Item>
+                                                                                        <div className='w-full h-px bg-black'></div>
                                                                                         <Menu.Item>
                                                                                             {({ active }) => (
                                                                                                 <a
                                                                                                     href="#"
                                                                                                     className={classNames(
-                                                                                                        active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                                                                                                        'block px-4 py-2 text-sm'
+                                                                                                        active ? 'bg-yellow-400 text-gray-900' : 'text-gray-700',
+                                                                                                        'block px-4 py-2 text-sm text-center duration-500 font-bold'
                                                                                                     )}
                                                                                                 >
                                                                                                     Announcements
                                                                                                 </a>
                                                                                             )}
                                                                                         </Menu.Item>
+                                                                                        <div className='w-full h-px bg-black'></div>
                                                                                         <Menu.Item>
                                                                                             {({ active }) => (
                                                                                                 <a
                                                                                                     href="#"
                                                                                                     className={classNames(
-                                                                                                        active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                                                                                                        'block px-4 py-2 text-sm'
+                                                                                                        active ? 'bg-yellow-400 text-gray-900' : 'text-gray-700',
+                                                                                                        'block px-4 py-2 text-sm text-center duration-500 font-bold'
                                                                                                     )}
                                                                                                 >
                                                                                                     Resources
                                                                                                 </a>
                                                                                             )}
                                                                                         </Menu.Item>
+                                                                                        <div className='w-full h-px bg-black'></div>
                                                                                         <Menu.Item>
                                                                                             {({ active }) => (
                                                                                                 <a
                                                                                                     href="#"
                                                                                                     className={classNames(
-                                                                                                        active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                                                                                                        'block px-4 py-2 text-sm'
+                                                                                                        active ? 'bg-yellow-400 text-gray-900' : 'text-gray-700',
+                                                                                                        'block px-4 py-2 text-sm text-center duration-500 font-bold'
                                                                                                     )}
                                                                                                 >
                                                                                                     Course Assessment
                                                                                                 </a>
                                                                                             )}
                                                                                         </Menu.Item>
+                                                                                        <div className='w-full h-px bg-black'></div>
                                                                                         <Menu.Item>
                                                                                             {({ active }) => (
                                                                                                 <a
                                                                                                     href="#"
                                                                                                     className={classNames(
-                                                                                                        active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                                                                                                        'block px-4 py-2 text-sm'
+                                                                                                        active ? 'bg-yellow-400 text-gray-900' : 'text-gray-700',
+                                                                                                        'block px-4 py-2 text-sm text-center duration-500 font-bold rounded-b-md'
                                                                                                     )}
                                                                                                 >
                                                                                                     Disable Lectures Subtitle

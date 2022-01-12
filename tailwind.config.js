@@ -9,7 +9,10 @@ module.exports = {
       },
       colors: {
         bcolor: {
-          DEFAULT: '#828282'
+          DEFAULT: '#828282',
+        },
+        bluecolor: {
+          DEFAULT: '#2D9CDB'
         },
         tcolor: {
           DEFAULT: '#4F4F4F'

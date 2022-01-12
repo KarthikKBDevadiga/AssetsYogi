@@ -49,11 +49,6 @@ export default function AddCourseManagement({ insightTypes, token }) {
     var myHeaders = new Headers()
     myHeaders.append("accesstoken", token)
 
-    // if (title == null || description == null || authorName == null || tags == null || type == null || insightFile == null || thumbnail == null) {
-    // 	setLoadingDialog(false)
-    // 	return
-    // }
-
     console.log(wywtl)
     var formdata = new FormData();
     formdata.append("course_name", courseName);
@@ -75,17 +70,6 @@ export default function AddCourseManagement({ insightTypes, token }) {
       formdata.append('course_preview', coursePreview, coursePreview.name)
     if (thumbnail != null)
       formdata.append('preview_thumbnail', thumbnail, thumbnail.name)
-
-    // if (insightFile != null)
-    //   formdata.append("file", insightFile, insightFile.name);
-    // if (subtitle != null)
-    //   formdata.append("subtitle_file", subtitle, subtitle.name);
-    // if (thumbnail != null)
-    //   formdata.append("thumbnail", thumbnail, thumbnail.name);
-    // formdata.append("video_availablity", "free");
-    // formdata.append("insight_type", "0");
-    // formdata.append("on_click", "1");
-    // formdata.append("video_url", link);
 
     var requestOptions = {
       method: 'POST',

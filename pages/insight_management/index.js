@@ -6,6 +6,14 @@ import HeaderLayout from '../../components/HeaderLayout'
 import Constants from '../../helpers/Constants'
 import MetaLayout from '../../components/ MetaLayout'
 
+import { Fragment } from 'react'
+import { Menu, Transition } from '@headlessui/react'
+import { ChevronDownIcon } from '@heroicons/react/solid'
+import Link from 'next/link'
+
+function classNames(...classes) {
+    return classes.filter(Boolean).join(' ')
+}
 
 export default function InsightManagementList({ data, insightTypes }) {
     const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -53,7 +61,7 @@ export default function InsightManagementList({ data, insightTypes }) {
                                     <a
                                         href='insight_management/add'
                                         type="button"
-                                        className="relative inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                        className="relative inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-bold rounded-md text-white bg-bluecolor"
                                     >
                                         Add New Insight
                                     </a>
@@ -64,7 +72,7 @@ export default function InsightManagementList({ data, insightTypes }) {
                             <div className="flex flex-col">
                                 <div className="my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                                     <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-                                        <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+                                        <div className="shadow border-b border-gray-200 sm:rounded-lg">
                                             <table className="min-w-full divide-y divide-gray-200">
                                                 <thead className="bg-gray-50">
                                                     <tr>
@@ -134,9 +142,85 @@ export default function InsightManagementList({ data, insightTypes }) {
                                                                         {d.status}
                                                                     </td>
                                                                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                                                        <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                                                                            Edit
-                                                                        </a>
+                                                                        <Menu as="div" className="relative inline-block text-left">
+                                                                            <div>
+                                                                                <Menu.Button className="inline-flex justify-center w-full rounded-md border border-black shadow-sm px-4 py-2 bg-white text-sm font-bold text-gray-700 hover:bg-gray-50">
+                                                                                    Action
+                                                                                    <ChevronDownIcon className="-mr-1 ml-2 h-5 w-5" aria-hidden="true" />
+                                                                                </Menu.Button>
+                                                                            </div>
+
+                                                                            <Transition
+                                                                                as={Fragment}
+                                                                                enter="transition ease-out duration-100"
+                                                                                enterFrom="transform opacity-0 scale-95"
+                                                                                enterTo="transform opacity-100 scale-100"
+                                                                                leave="transition ease-in duration-75"
+                                                                                leaveFrom="transform opacity-100 scale-100"
+                                                                                leaveTo="transform opacity-0 scale-95"
+                                                                            >
+                                                                                <Menu.Items className="z-10 origin-top-right absolute right-0 mt-2 w-40 rounded-md shadow-lg bg-yellow-300 ring-1 ring-black ring-opacity-5 focus:outline-none border border-black">
+                                                                                    <div>
+                                                                                        <Menu.Item>
+                                                                                            {({ active }) => (
+                                                                                                <a
+                                                                                                    href="#"
+                                                                                                    className={classNames(
+                                                                                                        active ? 'bg-yellow-400 text-gray-900' : 'text-gray-700',
+                                                                                                        'block px-4 py-2 text-sm text-center duration-500 rounded-t-md font-bold'
+                                                                                                    )}
+                                                                                                >
+                                                                                                    View
+                                                                                                </a>
+                                                                                            )}
+                                                                                        </Menu.Item>
+                                                                                        <div className='w-full h-px bg-black'></div>
+                                                                                        <Menu.Item>
+                                                                                            {({ active }) => (
+                                                                                                <a
+                                                                                                    href={"/insight_management/update?id=" + d.insight_id}
+                                                                                                    className={classNames(
+                                                                                                        active ? 'hover:bg-yellow-400 text-gray-900' : 'text-gray-700',
+                                                                                                        'block px-4 py-2 text-sm text-center duration-500 font-bold'
+                                                                                                    )}
+                                                                                                >
+                                                                                                    Edit
+                                                                                                </a>
+                                                                                            )}
+                                                                                        </Menu.Item>
+                                                                                        <div className='w-full h-px bg-black'></div>
+                                                                                        <Menu.Item>
+                                                                                            {({ active }) => (
+                                                                                                <a
+                                                                                                    href="#"
+                                                                                                    className={classNames(
+                                                                                                        active ? 'bg-yellow-400 text-gray-900' : 'text-gray-700',
+                                                                                                        'block px-4 py-2 text-sm text-center duration-500 font-bold'
+                                                                                                    )}
+                                                                                                >
+                                                                                                    Delete
+                                                                                                </a>
+                                                                                            )}
+                                                                                        </Menu.Item>
+                                                                                        <div className='w-full h-px bg-black'></div>
+                                                                                        <Menu.Item>
+                                                                                            {({ active }) => (
+                                                                                                <a
+                                                                                                    href="#"
+                                                                                                    className={classNames(
+                                                                                                        active ? 'bg-yellow-400 text-gray-900' : 'text-gray-700',
+                                                                                                        'block px-4 py-2 text-sm text-center duration-500 rounded-b-md font-bold'
+                                                                                                    )}
+                                                                                                >
+                                                                                                    Unpublish
+                                                                                                </a>
+                                                                                            )}
+                                                                                        </Menu.Item>
+
+                                                                                    </div>
+                                                                                </Menu.Items>
+                                                                            </Transition>
+                                                                        </Menu>
                                                                     </td>
                                                                 </tr>
                                                             )

@@ -17,16 +17,7 @@ export default function UpdateCourseManagement({ insightTypes, course, token }) 
 
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [type, setType] = useState(0);
-  const [onClickType, setOnClickType] = useState(0);
-  const [title, setTitle] = useState()
-  const [authorName, setAuthorName] = useState()
-  const [tags, setTags] = useState()
-  const [link, setLink] = useState()
-  const [insightFile, setInsightFile] = useState()
-  const [thumbnail, setThumbnail] = useState()
-  const [subtitle, setSubtitle] = useState()
 
-  const [selectedInsightType, setSelectedInsightType] = useState(insightTypes[0])
   const [wywtl, setWywtl] = useState();
   const [description, setDescription] = useState();
   const [about, setAbout] = useState();
@@ -37,11 +28,14 @@ export default function UpdateCourseManagement({ insightTypes, course, token }) 
   const [priceNonSubscriver, setPriceNonSubscriber] = useState()
   const [validity, setValidity] = useState()
   const [courseSummary, setCourseSummary] = useState()
-  const [language, setLanguage] = useState()
-  const [subtitleLanguage, setSubtitleLanguage] = useState()
+  const [language, setLanguage] = useState(course.language)
+  const [subtitleLanguage, setSubtitleLanguage] = useState(course.subtitle)
   const [cancellationTime, setCancellationTime] = useState()
   const [validityType, setValidityType] = useState()
   const [loadingDialog, setLoadingDialog] = useState(false)
+  const [coursePreviewType, setCoursePreviewType] = useState('image')
+  const [coursePreview, setCoursePreview] = useState()
+  const [thumbnail, setThumbnail] = useState()
   // const [advFile, setAdvFile] = useState()
   // const [srtFile, setSRTFile] = useState()
 
@@ -55,28 +49,27 @@ export default function UpdateCourseManagement({ insightTypes, course, token }) 
     var myHeaders = new Headers()
     myHeaders.append("accesstoken", token)
 
-    // if (title == null || description == null || authorName == null || tags == null || type == null || insightFile == null || thumbnail == null) {
-    // 	setLoadingDialog(false)
-    // 	return
-    // }
-
+    console.log(wywtl)
     var formdata = new FormData();
-    formdata.append("insight_title", title);
-    formdata.append("insight_desc", description);
-    formdata.append("author_name", authorName);
-    formdata.append("tags", tags);
-    formdata.append("type", type);
-    formdata.append("preview_non_subscribers", "40");
-    if (insightFile != null)
-      formdata.append("file", insightFile, insightFile.name);
-    if (subtitle != null)
-      formdata.append("subtitle_file", subtitle, subtitle.name);
-    if (thumbnail != null)
-      formdata.append("thumbnail", thumbnail, thumbnail.name);
-    formdata.append("video_availablity", "free");
-    formdata.append("insight_type", "0");
-    formdata.append("on_click", "1");
-    formdata.append("video_url", link);
+    formdata.append("course_name", courseName);
+    formdata.append("creator_name", creatorName);
+    formdata.append("label", label);
+    formdata.append("price_subscriber", priceSubscriber);
+    formdata.append("price_non_subscriber", priceNonSubscriver);
+    formdata.append("language", language);
+    formdata.append("subtitle", subtitleLanguage);
+    formdata.append('purchase', cancellationTime)
+    formdata.append("course_validity_time", validity);
+    formdata.append("course_validity_type", validityType);
+    formdata.append("summary", courseSummary);
+    formdata.append("what_you_learn", wywtl);
+    formdata.append("description", description);
+    formdata.append("about", about);
+    formdata.append('course_preview_type', coursePreviewType)
+    // if (coursePreview != null)
+    //   formdata.append('course_preview', coursePreview, coursePreview.name)
+    // if (thumbnail != null)
+    //   formdata.append('preview_thumbnail', thumbnail, thumbnail.name)
 
     var requestOptions = {
       method: 'POST',
@@ -85,7 +78,7 @@ export default function UpdateCourseManagement({ insightTypes, course, token }) 
       redirect: 'follow'
     };
 
-    fetch(Constants.BASE_URL + "api/admin/add_insight", requestOptions)
+    fetch(Constants.BASE_URL + "api/admin/editCourse", requestOptions)
       .then(res => res.json())
       .then(
         json => {
@@ -164,7 +157,7 @@ export default function UpdateCourseManagement({ insightTypes, course, token }) 
                       <div className="text-2xl font-bold text-tcolor self-top col-span-1 sm:col-span-1 self-center">Language:</div>
                       <div className="mt-1 text-xl text-gray-900 sm:mt-0 col-span-2">
                         <select
-                          onChange={(e) => setType(e.target.value)}
+                          onChange={(e) => setLanguage(e.target.value)}
                           id="name"
                           name="name"
                           type='text'
@@ -183,15 +176,15 @@ export default function UpdateCourseManagement({ insightTypes, course, token }) 
                       <div className="text-2xl font-bold text-tcolor self-top col-span-1 sm:col-span-1 self-center">Subtitle Language:</div>
                       <div className="mt-1 text-xl text-gray-900 sm:mt-0 col-span-2">
                         <select
-                          onChange={(e) => setType(e.target.value)}
+                          onChange={(e) => setSubtitleLanguage(e.target.value)}
                           id="name"
                           name="name"
                           type='text'
                           className="rounded-lg px-4 py-2 pr-4 text-xl w-full outline-none border border-bcolor focus:border-fgreen-700 duration-500"
                         >
 
-                          <option value="0">English</option>
-                          <option value="1">Hindi</option>
+                          <option value="english">English</option>
+                          <option value="hindi">Hindi</option>
                         </select>
                       </div>
                     </div>
@@ -202,7 +195,7 @@ export default function UpdateCourseManagement({ insightTypes, course, token }) 
                       <div className="text-2xl font-bold text-tcolor self-top col-span-1 sm:col-span-1 self-center">Course Purchase Cancellation Time:</div>
                       <div className="mt-1 text-xl text-gray-900 sm:mt-0 col-span-2">
                         <select
-                          onChange={(e) => setType(e.target.value)}
+                          onChange={(e) => setCancellationTime(e.target.value)}
                           id="name"
                           name="name"
                           type='text'
@@ -223,7 +216,7 @@ export default function UpdateCourseManagement({ insightTypes, course, token }) 
                         <input
                           defaultValue={course.label}
                           placeholder='Bestseller'
-                          onChange={(e) => setCreatorName(e.target.value)}
+                          onChange={(e) => setLabel(e.target.value)}
                           id="name"
                           name="name"
                           type='text'
@@ -240,7 +233,7 @@ export default function UpdateCourseManagement({ insightTypes, course, token }) 
                       <div className="mt-1 text-sm text-gray-900 sm:mt-0 col-span-2">
                         <input
                           placeholder='5000'
-                          onChange={(e) => setCourseName(e.target.value)}
+                          onChange={(e) => setPriceSubscriber(e.target.value)}
                           id="name"
                           name="name"
                           defaultValue={course.price_subscriber}
@@ -257,7 +250,7 @@ export default function UpdateCourseManagement({ insightTypes, course, token }) 
                       <div className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                         <input
                           placeholder='5600'
-                          onChange={(e) => setCreatorName(e.target.value)}
+                          onChange={(e) => setPriceNonSubscriber(e.target.value)}
                           id="name"
                           name="name"
                           defaultValue={course.price_non_subscriber}
@@ -278,7 +271,7 @@ export default function UpdateCourseManagement({ insightTypes, course, token }) 
                             <input
                               placeholder='365'
                               defaultValue={course.course_validity_time}
-                              onChange={(e) => setCreatorName(e.target.value)}
+                              onChange={(e) => setValidity(e.target.value)}
                               id="name"
                               name="name"
                               type='text'
@@ -287,15 +280,15 @@ export default function UpdateCourseManagement({ insightTypes, course, token }) 
                           </div>
                           <div className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex">
                             <select
-                              onChange={(e) => setType(e.target.value)}
+                              onChange={(e) => setValidityType(e.target.value)}
                               id="name"
                               name="name"
                               type='text'
                               className="rounded-lg px-4 py-2 pr-4 text-xl w-full outline-none border border-bcolor focus:border-fgreen-700 duration-500"
                             >
 
-                              <option value="0">Days</option>
-                              <option value="1">Months</option>
+                              <option value="days">Days</option>
+                              <option value="month">Months</option>
                             </select>
                           </div>
                         </div>
@@ -311,21 +304,21 @@ export default function UpdateCourseManagement({ insightTypes, course, token }) 
 
                           <div className="mt-1 text-sm text-gray-900 sm:mt-0 col-span-1">
                             <select
-                              onChange={(e) => setType(e.target.value)}
+                              onChange={(e) => setCoursePreviewType(e.target.value)}
                               id="name"
                               name="name"
                               type='text'
                               className="rounded-lg px-4 py-2 pr-4 text-xl w-full outline-none border border-bcolor focus:border-fgreen-700 duration-500"
                             >
 
-                              <option value="0">Video</option>
-                              <option value="1">Image</option>
+                              <option value="video">Video</option>
+                              <option value="image">Image</option>
                             </select>
                           </div>
                           <label htmlFor="insight-file-upload" className="col-span-1 text-xl w-full relative inline-flex items-center space-x-2 px-4 py-2 border border-bcolor text-sm font-medium rounded-md text-gray-700 hover:bg-gray-50">
                             <span>Browse</span>
                             <input id="insight-file-upload" name="file-upload" type="file" className="sr-only" onChange={(event) => {
-                              readFile(event, setInsightFile)
+                              readFile(event, setCoursePreview)
                               event.target.value = null
                             }} />
                           </label>
@@ -381,7 +374,7 @@ export default function UpdateCourseManagement({ insightTypes, course, token }) 
 
                   <div className="col-span-6 sm:col-span-3 sm:mr-2">
                     <div className="py-1 sm:py-1 sm:grid sm:grid-cols-3 sm:gap-4">
-                      <div className="text-2xl font-bold text-tcolor self-top col-span-1 sm:col-span-1 self-center">Course Preview:</div>
+                      <div className="text-2xl font-bold text-tcolor self-top col-span-1 sm:col-span-1 self-center">Thumbnail Preview:</div>
                       <div className="mt-1 text-sm text-gray-900 sm:mt-0 col-span-2">
                         <div className="grid grid-cols-4 gap-4">
 
@@ -434,7 +427,7 @@ export default function UpdateCourseManagement({ insightTypes, course, token }) 
                       <div className="mt-1 text-sm text-gray-900 sm:mt-0 col-span-10 sm:col-span-10">
                         <textarea
                           placeholder='Selected ideas and opportunities to save money after 2 years of analysis'
-                          onChange={(e) => setTitle(e.target.value)}
+                          onChange={(e) => setCourseSummary(e.target.value)}
                           id="name"
                           defaultValue={course.summary}
                           name="name"
@@ -485,7 +478,7 @@ export default function UpdateCourseManagement({ insightTypes, course, token }) 
                     }
                   }
                 >
-                  Add
+                  Update
                 </a>
                 <a href="#"
                   className="cursor-pointer w-32 ml-4 bg-bcolor border border-transparent rounded-xl shadow-sm py-2 px-4 inline-flex justify-center text-xl font-bold text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
@@ -539,7 +532,7 @@ export async function getServerSideProps(context) {
   console.log(course)
   return {
     props: {
-      insightTypes, course
+      insightTypes, course, token
     },
   };
 }
