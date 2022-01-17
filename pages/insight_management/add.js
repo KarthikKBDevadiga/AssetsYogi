@@ -11,7 +11,6 @@ import { useRouter } from 'next/dist/client/router'
 
 export default function AddInsightManagement({ insightTypes, token }) {
 
-    const [selectedInsightType, setSelectedInsightType] = useState(insightTypes[0])
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [type, setType] = useState(0);
     const [onClickType, setOnClickType] = useState(0);
@@ -37,10 +36,10 @@ export default function AddInsightManagement({ insightTypes, token }) {
         var myHeaders = new Headers()
         myHeaders.append("accesstoken", token)
 
-        if (title == null || description == null || authorName == null || tags == null || type == null || insightFile == null || thumbnail == null) {
-            setLoadingDialog(false)
-            return
-        }
+        // if (title == null || description == null || authorName == null || tags == null || type == null || insightFile == null || thumbnail == null) {
+        // 	setLoadingDialog(false)
+        // 	return
+        // }
 
         var formdata = new FormData();
         formdata.append("insight_title", title);
@@ -76,7 +75,6 @@ export default function AddInsightManagement({ insightTypes, token }) {
                     if (json.code == 200) {
                         router.back()
                     }
-
                 }
             )
             .catch(err => {
@@ -102,99 +100,105 @@ export default function AddInsightManagement({ insightTypes, token }) {
                 <div className="md:pl-64 flex flex-col flex-1">
                     <HeaderLayout show={sidebarOpen} setShow={setSidebarOpen} />
 
-                    <main className="flex-1">
-                        <div className="bg-white shadow overflow-hidden sm:rounded-lg p-4 m-4">
+                    <main className="flex-1 p-4">
+                        <div className="shadow sm:rounded-md sm:overflow-hidden">
+                            <div className="bg-white py-6 px-4 space-y-6 sm:p-6">
 
-                            <div className="px-4 py-5 sm:p-0">
-                                <div className="mt-6 grid grid-cols-12 gap-4">
-                                    <div className="col-span-12 sm:col-span-12">
-                                        <div className="py-1 sm:py-1 sm:grid sm:grid-cols-12 sm:gap-4 sm:px-6">
-                                            <dt className="text-sm font-bold text-gray-500 self-top text-right col-span-2 sm:col-span-2 self-center">Insight Title</dt>
-                                            <dd className="mt-1 text-sm text-gray-900 sm:mt-0 col-span-10 sm:col-span-10">
+                                <div className="grid grid-cols-6 grid-row-9 gap-x-2 gap-y-4">
+
+
+                                    <div className="col-span-6">
+                                        <div className="py-1 sm:py-1 sm:grid sm:grid-cols-12 sm:gap-4">
+                                            <div className="text-2xl font-bold text-tcolor self-top col-span-2 sm:col-span-2 self-center">Insight Title:</div>
+                                            <div className="mt-1 text-sm text-gray-900 sm:mt-0 col-span-10 sm:col-span-10">
                                                 <input
                                                     onChange={(e) => setTitle(e.target.value)}
                                                     placeholder="Weekly insights for NSE Closing Bell by Aman"
                                                     id="name"
                                                     name="name"
                                                     type='text'
-                                                    className="rounded-md px-4 py-2 pr-4 text-sm w-full outline-none border focus:border-fgreen-700 duration-500"
+                                                    className="rounded-lg px-4 py-2 pr-4 text-xl w-full outline-none border border-bcolor focus:border-fgreen-700 duration-500"
                                                 />
-                                            </dd>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div className="col-span-12 sm:col-span-12">
-                                        <div className="py-1 sm:py-1 sm:grid sm:grid-cols-12 sm:gap-4 sm:px-6">
-                                            <dt className="text-sm font-bold text-gray-500 self-top text-right col-span-2 sm:col-span-2 self-center">Insight Desc:</dt>
-                                            <dd className="mt-1 text-sm text-gray-900 sm:mt-0 col-span-10 sm:col-span-10">
+
+                                    <div className="col-span-6">
+                                        <div className="py-1 sm:py-1 sm:grid sm:grid-cols-12 sm:gap-4">
+                                            <div className="text-2xl font-bold text-tcolor self-top col-span-2 sm:col-span-2 self-center">Insight Desc:</div>
+                                            <div className="mt-1 text-sm text-gray-900 sm:mt-0 col-span-10 sm:col-span-10">
                                                 <input
                                                     onChange={(e) => setDescription(e.target.value)}
                                                     placeholder="description about the insight"
                                                     id="name"
                                                     name="name"
                                                     type='text'
-                                                    className="rounded-md px-4 py-2 pr-4 text-sm w-full outline-none border focus:border-fgreen-700 duration-500"
+                                                    className="rounded-lg px-4 py-2 pr-4 text-xl w-full outline-none border border-bcolor focus:border-fgreen-700 duration-500"
                                                 />
-                                            </dd>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div className="col-span-12 sm:col-span-6">
-                                        <div className="py-1 sm:py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                            <dt className="text-sm font-bold text-gray-500 self-center text-right">Author Name</dt>
-                                            <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                    <div className="col-span-6 sm:col-span-3 sm:mr-2">
+                                        <div className="py-1 sm:py-1 sm:grid sm:grid-cols-3 sm:gap-4">
+                                            <div className="text-2xl font-bold text-tcolor self-top col-span-1 sm:col-span-1 self-center">Author Name:</div>
+                                            <div className="mt-1 text-sm text-gray-900 sm:mt-0 col-span-2">
                                                 <input
                                                     onChange={(e) => setAuthorName(e.target.value)}
                                                     placeholder='Aman Verma'
                                                     id="name"
                                                     name="name"
                                                     type='text'
-                                                    className="rounded-md px-4 py-2 pr-4 text-sm w-full outline-none border focus:border-fgreen-700 duration-500"
+                                                    className="rounded-lg px-4 py-2 pr-4 text-xl w-full outline-none border border-bcolor focus:border-fgreen-700 duration-500"
                                                 />
-                                            </dd>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div className="col-span-12 sm:col-span-6">
-                                        <div className="py-1 sm:py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                            <dt className="text-sm font-bold text-gray-500 self-center text-right">Tag</dt>
-                                            <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+
+                                    <div className="col-span-6 sm:col-span-3 sm:ml-2">
+                                        <div className="py-1 sm:py-1 sm:grid sm:grid-cols-3 sm:gap-4">
+                                            <div className="text-2xl font-bold text-tcolor self-top col-span-1 sm:col-span-1 self-center">Tag:</div>
+                                            <div className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                                                 <input
                                                     onChange={(e) => setTags(e.target.value)}
                                                     placeholder='Mutual funds'
                                                     id="name"
                                                     name="name"
                                                     type='text'
-                                                    className="rounded-md px-4 py-2 pr-14 text-sm w-full outline-none border focus:border-fgreen-700 duration-500"
+                                                    className="rounded-lg px-4 py-2 pr-4 text-xl w-full outline-none border border-bcolor focus:border-fgreen-700 duration-500"
                                                 />
-                                            </dd>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div className="col-span-12 sm:col-span-12">
-                                        <div className="py-1 sm:py-1 sm:grid sm:grid-cols-12 sm:gap-4 sm:px-6">
-                                            <dt className="text-sm font-bold text-gray-500 self-top text-right col-span-2 sm:col-span-2 self-center">Type</dt>
-                                            <dd className="mt-1 text-sm text-gray-900 sm:mt-0 col-span-10 sm:col-span-10">
+                                    <div className="col-span-6">
+                                        <div className="py-1 sm:py-1 sm:grid sm:grid-cols-12 sm:gap-4">
+                                            <div className="text-2xl font-bold text-tcolor self-top col-span-2 sm:col-span-2 self-center">Type:</div>
+                                            <div className="mt-1 text-sm text-gray-900 sm:mt-0 col-span-10 sm:col-span-10">
                                                 <select
                                                     onChange={(e) => setType(e.target.value)}
                                                     id="type"
                                                     name="type"
-                                                    className="max-w-lg block  w-full shadow-sm sm:max-w-xs sm:text-sm bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2"
+                                                    className="max-w-lg block  w-full shadow-sm sm:max-w-xs sm:text-xl bg-white border border-bcolor rounded-md shadow-sm pl-3 pr-10 py-2"
                                                 >
                                                     <option value="0">Post</option>
                                                     <option value="1">Advertisement</option>
                                                 </select>
-                                            </dd>
+
+                                            </div>
                                         </div>
                                     </div>
+
                                     {
                                         type == 0 ?
                                             <>
-                                                <div className="col-span-12 sm:col-span-6">
-                                                    <div className="py-1 sm:py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                                        <dt className="text-sm font-bold text-gray-500 self-center text-right">Insight File:</dt>
-                                                        <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                                <div className="col-span-6 sm:col-span-3 sm:mr-2">
+                                                    <div className="py-1 sm:py-1 sm:grid sm:grid-cols-3 sm:gap-4">
+                                                        <div className="text-2xl font-bold text-tcolor self-top col-span-1 sm:col-span-1 self-center">Insight File:</div>
+                                                        <div className="mt-1 text-sm text-gray-900 sm:mt-0 col-span-2">
                                                             <div className="grid grid-cols-4 gap-4">
 
-                                                                <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-3">
-                                                                    <div className="flex text-sm text-gray-600">
-                                                                        <label htmlFor="insight-file-upload" className=" w-full relative inline-flex items-center space-x-2 px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-gray-50 hover:bg-gray-100">
+                                                                <div className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-3">
+                                                                    <div className="flex text-xl text-gray-600">
+                                                                        <label htmlFor="insight-file-upload" className="text-xl w-full relative inline-flex items-center space-x-2 px-4 py-2 border border-bcolor text-sm font-medium rounded-md text-gray-700 hover:bg-gray-50 cursor-pointer">
                                                                             <span>Browse</span>
                                                                             <input id="insight-file-upload" name="file-upload" type="file" className="sr-only" onChange={(event) => {
                                                                                 readFile(event, setInsightFile)
@@ -202,251 +206,300 @@ export default function AddInsightManagement({ insightTypes, token }) {
                                                                             }} />
                                                                         </label>
                                                                     </div>
-                                                                </dd>
-                                                                <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-1 flex">
+                                                                </div>
+                                                                <div className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-1 flex">
                                                                     <button
                                                                         type="button"
-                                                                        className="bg-white ml-2  shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50"
+                                                                        className="bg-white ml-2 text-sm leading-4 font-medium text-gray-700 "
                                                                     >
-                                                                        <svg className="self-center" xmlns="http://www.w3.org/2000/svg" enableBackground="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor"><g><rect fill="none" height="24" width="24" /></g><g><path d="M7.4,10h1.59v5c0,0.55,0.45,1,1,1h4c0.55,0,1-0.45,1-1v-5h1.59c0.89,0,1.34-1.08,0.71-1.71L12.7,3.7 c-0.39-0.39-1.02-0.39-1.41,0L6.7,8.29C6.07,8.92,6.51,10,7.4,10z M5,19c0,0.55,0.45,1,1,1h12c0.55,0,1-0.45,1-1s-0.45-1-1-1H6 C5.45,18,5,18.45,5,19z" /></g></svg>
+                                                                        <svg width="26" height="27" viewBox="0 0 26 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                            <path d="M7.23734 10.2302H6.07109C3.52734 10.2302 1.46484 12.2927 1.46484 14.8364L1.46484 20.9302C1.46484 23.4727 3.52734 25.5352 6.07109 25.5352H19.9836C22.5273 25.5352 24.5898 23.4727 24.5898 20.9302V14.8239C24.5898 12.2877 22.5336 10.2302 19.9973 10.2302H18.8186" stroke="#130F26" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                                                            <path d="M13.0273 1.73781V16.7891" stroke="#130F26" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                                                            <path d="M9.38281 5.39844L13.0266 1.73844L16.6716 5.39844" stroke="#130F26" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                                                        </svg>
                                                                     </button>
                                                                     <button
                                                                         type="button"
-                                                                        className="bg-white ml-2 shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50"
+                                                                        className="bg-white ml-4 text-sm leading-4 font-medium text-gray-700 "
                                                                     >
-                                                                        <svg className="self-center" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor"><path d="M0 0h24v24H0V0z" fill="none" /><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v10zM9 9h6c.55 0 1 .45 1 1v8c0 .55-.45 1-1 1H9c-.55 0-1-.45-1-1v-8c0-.55.45-1 1-1zm6.5-5l-.71-.71c-.18-.18-.44-.29-.7-.29H9.91c-.26 0-.52.11-.7.29L8.5 4H6c-.55 0-1 .45-1 1s.45 1 1 1h12c.55 0 1-.45 1-1s-.45-1-1-1h-2.5z" /></svg>
+                                                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                            <g id="Iconly/Light/Delete">
+                                                                                <g id="Delete">
+                                                                                    <path id="Stroke 1" d="M19.3238 9.4668C19.3238 9.4668 18.7808 16.2018 18.4658 19.0388C18.3158 20.3938 17.4788 21.1878 16.1078 21.2128C13.4988 21.2598 10.8868 21.2628 8.27881 21.2078C6.95981 21.1808 6.13681 20.3768 5.98981 19.0458C5.67281 16.1838 5.13281 9.4668 5.13281 9.4668" stroke="#130F26" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                                                                    <path id="Stroke 3" d="M20.708 6.23828H3.75" stroke="#130F26" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                                                                    <path id="Stroke 5" d="M17.4386 6.239C16.6536 6.239 15.9776 5.684 15.8236 4.915L15.5806 3.699C15.4306 3.138 14.9226 2.75 14.3436 2.75H10.1106C9.53163 2.75 9.02363 3.138 8.87363 3.699L8.63063 4.915C8.47663 5.684 7.80063 6.239 7.01562 6.239" stroke="#130F26" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                                                                </g>
+                                                                            </g>
+                                                                        </svg>
                                                                     </button>
-                                                                </dd>
+                                                                </div>
                                                             </div>
-                                                        </dd>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div className="col-span-12 sm:col-span-6">
-                                                    <div className="py-1 sm:py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                                        <dt className="text-sm font-bold text-gray-500 self-center text-right">Subtitle File</dt>
-                                                        <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+
+                                                <div className="col-span-6 sm:col-span-3 sm:mr-2">
+                                                    <div className="py-1 sm:py-1 sm:grid sm:grid-cols-3 sm:gap-4">
+                                                        <div className="text-2xl font-bold text-tcolor self-top col-span-1 sm:col-span-1 self-center">Subtitle File:</div>
+                                                        <div className="mt-1 text-sm text-gray-900 sm:mt-0 col-span-2">
                                                             <div className="grid grid-cols-4 gap-4">
 
-                                                                <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-3">
-                                                                    <div className="flex text-sm text-gray-600">
-                                                                        <label htmlFor="subtitle-file-upload" className=" w-full relative inline-flex items-center space-x-2 px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-gray-50 hover:bg-gray-100">
+                                                                <div className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-3">
+                                                                    <div className="flex text-xl text-gray-600">
+                                                                        <label htmlFor="subtitle-file-upload" className="text-xl w-full relative inline-flex items-center space-x-2 px-4 py-2 border border-bcolor text-sm font-medium rounded-md text-gray-700 hover:bg-gray-50 cursor-pointer">
                                                                             <span>SRT File</span>
-                                                                            <input id="subtitle-file-upload" name="file-upload" type="file" className="sr-only" onChange={(event) => {
+                                                                            <input id="subtitle-file-upload" name="subtitle-file-upload" type="file" className="sr-only" onChange={(event) => {
                                                                                 readFile(event, setSubtitle)
                                                                                 event.target.value = null
                                                                             }} />
                                                                         </label>
                                                                     </div>
-                                                                </dd>
-                                                                <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-1 flex">
+                                                                </div>
+                                                                <div className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-1 flex">
                                                                     <button
                                                                         type="button"
-                                                                        className="bg-white ml-2  shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50"
+                                                                        className="bg-white ml-2 text-sm leading-4 font-medium text-gray-700 "
                                                                     >
-                                                                        <svg className="self-center" xmlns="http://www.w3.org/2000/svg" enableBackground="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor"><g><rect fill="none" height="24" width="24" /></g><g><path d="M7.4,10h1.59v5c0,0.55,0.45,1,1,1h4c0.55,0,1-0.45,1-1v-5h1.59c0.89,0,1.34-1.08,0.71-1.71L12.7,3.7 c-0.39-0.39-1.02-0.39-1.41,0L6.7,8.29C6.07,8.92,6.51,10,7.4,10z M5,19c0,0.55,0.45,1,1,1h12c0.55,0,1-0.45,1-1s-0.45-1-1-1H6 C5.45,18,5,18.45,5,19z" /></g></svg>
+                                                                        <svg width="26" height="27" viewBox="0 0 26 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                            <path d="M7.23734 10.2302H6.07109C3.52734 10.2302 1.46484 12.2927 1.46484 14.8364L1.46484 20.9302C1.46484 23.4727 3.52734 25.5352 6.07109 25.5352H19.9836C22.5273 25.5352 24.5898 23.4727 24.5898 20.9302V14.8239C24.5898 12.2877 22.5336 10.2302 19.9973 10.2302H18.8186" stroke="#130F26" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                                                            <path d="M13.0273 1.73781V16.7891" stroke="#130F26" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                                                            <path d="M9.38281 5.39844L13.0266 1.73844L16.6716 5.39844" stroke="#130F26" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                                                        </svg>
                                                                     </button>
                                                                     <button
                                                                         type="button"
-                                                                        className="bg-white ml-2 shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50"
+                                                                        className="bg-white ml-4 text-sm leading-4 font-medium text-gray-700 "
                                                                     >
-                                                                        <svg className="self-center" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor"><path d="M0 0h24v24H0V0z" fill="none" /><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v10zM9 9h6c.55 0 1 .45 1 1v8c0 .55-.45 1-1 1H9c-.55 0-1-.45-1-1v-8c0-.55.45-1 1-1zm6.5-5l-.71-.71c-.18-.18-.44-.29-.7-.29H9.91c-.26 0-.52.11-.7.29L8.5 4H6c-.55 0-1 .45-1 1s.45 1 1 1h12c.55 0 1-.45 1-1s-.45-1-1-1h-2.5z" /></svg>
+                                                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                            <g id="Iconly/Light/Delete">
+                                                                                <g id="Delete">
+                                                                                    <path id="Stroke 1" d="M19.3238 9.4668C19.3238 9.4668 18.7808 16.2018 18.4658 19.0388C18.3158 20.3938 17.4788 21.1878 16.1078 21.2128C13.4988 21.2598 10.8868 21.2628 8.27881 21.2078C6.95981 21.1808 6.13681 20.3768 5.98981 19.0458C5.67281 16.1838 5.13281 9.4668 5.13281 9.4668" stroke="#130F26" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                                                                    <path id="Stroke 3" d="M20.708 6.23828H3.75" stroke="#130F26" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                                                                    <path id="Stroke 5" d="M17.4386 6.239C16.6536 6.239 15.9776 5.684 15.8236 4.915L15.5806 3.699C15.4306 3.138 14.9226 2.75 14.3436 2.75H10.1106C9.53163 2.75 9.02363 3.138 8.87363 3.699L8.63063 4.915C8.47663 5.684 7.80063 6.239 7.01562 6.239" stroke="#130F26" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                                                                </g>
+                                                                            </g>
+                                                                        </svg>
                                                                     </button>
-                                                                </dd>
+                                                                </div>
                                                             </div>
-                                                        </dd>
-
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div className="col-span-12 sm:col-span-6">
-                                                    <div className="py-1 sm:py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                                        <dt className="text-sm font-bold text-gray-500 self-center text-right">Video preview for non-subscribers</dt>
-                                                        <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                                                            <div className="grid grid-cols-3 gap-4">
 
-                                                                <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-1 flex gap-2">
-                                                                    <input
-                                                                        placeholder="00"
-                                                                        id="name"
-                                                                        name="name"
-                                                                        type='text'
-                                                                        className="rounded-md px-4 py-2 pr-4 text-sm w-full outline-none border focus:border-fgreen-700 duration-500"
-                                                                    />
-                                                                    <div className='self-center'>hrs</div>
-                                                                </dd>
-                                                                <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-1 flex gap-2">
-                                                                    <input
-                                                                        placeholder="00"
-                                                                        id="name"
-                                                                        name="name"
-                                                                        type='text'
-                                                                        className="rounded-md px-4 py-2 pr-4 text-sm w-full outline-none border focus:border-fgreen-700 duration-500"
-                                                                    />
-                                                                    <div className='self-center'>min</div>
-                                                                </dd>
-                                                                <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-1 flex gap-2">
-                                                                    <input
-                                                                        placeholder="00"
-                                                                        id="name"
-                                                                        name="name"
-                                                                        type='text'
-                                                                        className="rounded-md px-4 py-2 pr-4 text-sm w-full outline-none border focus:border-fgreen-700 duration-500"
-                                                                    />
-                                                                    <div className='self-center'>sec</div>
-                                                                </dd>
+                                                <div className="col-span-6">
+                                                    <div className="py-1 sm:py-1 sm:grid sm:grid-cols-12 sm:gap-4">
+                                                        <div className="text-2xl font-bold text-tcolor self-top col-span-2 sm:col-span-2 self-center">Video preview for non-subscribers:</div>
+                                                        <div className="mt-1 text-sm text-gray-900 sm:mt-0 col-span-6 sm:col-span-6">
+                                                            <div className='flex'>
+                                                                <input
+                                                                    placeholder="00"
+                                                                    id="name"
+                                                                    name="name"
+                                                                    type='text' maxLength={2}
+                                                                    className="appearance-none rounded-md h-12 text-center text-xl w-14 outline-none border border-bcolor focus:border-fgreen-700 duration-500"
+                                                                />
+                                                                <div className='self-center px-4 text-xl'>hours</div>
+                                                                <input
+                                                                    placeholder="00"
+                                                                    id="name"
+                                                                    name="name"
+                                                                    type='text' maxLength={2}
+                                                                    className="appearance-none rounded-md h-12 text-center text-xl w-14 outline-none border border-bcolor focus:border-fgreen-700 duration-500"
+                                                                />
+                                                                <div className='self-center px-4 text-xl'>minutes</div>
+                                                                <input
+                                                                    placeholder="00"
+                                                                    id="name"
+                                                                    name="name"
+                                                                    type='text' maxLength={2}
+                                                                    className="appearance-none rounded-md h-12 text-center text-xl w-14 outline-none border border-bcolor focus:border-fgreen-700 duration-500"
+                                                                />
+                                                                <div className='self-center px-4 text-xl'>seconds</div>
                                                             </div>
-                                                        </dd>
 
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div className="col-span-12 sm:col-span-6">
-                                                    <div className="py-1 sm:py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                                        <dt className="text-sm font-bold text-gray-500 self-center text-right">Thumbnail</dt>
-                                                        <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+
+                                                <div className="col-span-6 sm:col-span-3 sm:mr-2">
+                                                    <div className="py-1 sm:py-1 sm:grid sm:grid-cols-3 sm:gap-4">
+                                                        <div className="text-2xl font-bold text-tcolor self-top col-span-1 sm:col-span-1 self-center">Thumbnail:</div>
+                                                        <div className="mt-1 text-sm text-gray-900 sm:mt-0 col-span-2">
                                                             <div className="grid grid-cols-4 gap-4">
 
-                                                                <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-3">
-                                                                    <div className="flex text-sm text-gray-600">
-                                                                        <label htmlFor="thumbnail-file-upload" className=" w-full relative inline-flex items-center space-x-2 px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-gray-50 hover:bg-gray-100">
+                                                                <div className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-3">
+                                                                    <div className="flex text-xl text-gray-600">
+                                                                        <label htmlFor="thumbnail-file-upload" className="text-xl w-full relative inline-flex items-center space-x-2 px-4 py-2 border border-bcolor text-sm font-medium rounded-md text-gray-700 hover:bg-gray-50 cursor-pointer">
                                                                             <span>Browse</span>
-                                                                            <input id="thumbnail-file-upload" name="file-upload" type="file" className="sr-only" onChange={(event) => {
+                                                                            <input id="thumbnail-file-upload" name="thumbnail-file-upload" type="file" className="sr-only" onChange={(event) => {
                                                                                 readFile(event, setThumbnail)
                                                                                 event.target.value = null
                                                                             }} />
                                                                         </label>
                                                                     </div>
-                                                                </dd>
-                                                                <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-1 flex">
+                                                                </div>
+                                                                <div className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-1 flex">
                                                                     <button
                                                                         type="button"
-                                                                        className="bg-white ml-2  shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50"
+                                                                        className="bg-white ml-2 text-sm leading-4 font-medium text-gray-700 "
                                                                     >
-                                                                        <svg className="self-center" xmlns="http://www.w3.org/2000/svg" enableBackground="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor"><g><rect fill="none" height="24" width="24" /></g><g><path d="M7.4,10h1.59v5c0,0.55,0.45,1,1,1h4c0.55,0,1-0.45,1-1v-5h1.59c0.89,0,1.34-1.08,0.71-1.71L12.7,3.7 c-0.39-0.39-1.02-0.39-1.41,0L6.7,8.29C6.07,8.92,6.51,10,7.4,10z M5,19c0,0.55,0.45,1,1,1h12c0.55,0,1-0.45,1-1s-0.45-1-1-1H6 C5.45,18,5,18.45,5,19z" /></g></svg>
+                                                                        <svg width="26" height="27" viewBox="0 0 26 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                            <path d="M7.23734 10.2302H6.07109C3.52734 10.2302 1.46484 12.2927 1.46484 14.8364L1.46484 20.9302C1.46484 23.4727 3.52734 25.5352 6.07109 25.5352H19.9836C22.5273 25.5352 24.5898 23.4727 24.5898 20.9302V14.8239C24.5898 12.2877 22.5336 10.2302 19.9973 10.2302H18.8186" stroke="#130F26" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                                                            <path d="M13.0273 1.73781V16.7891" stroke="#130F26" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                                                            <path d="M9.38281 5.39844L13.0266 1.73844L16.6716 5.39844" stroke="#130F26" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                                                        </svg>
                                                                     </button>
                                                                     <button
                                                                         type="button"
-                                                                        className="bg-white ml-2 shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50"
+                                                                        className="bg-white ml-4 text-sm leading-4 font-medium text-gray-700 "
                                                                     >
-                                                                        <svg className="self-center" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor"><path d="M0 0h24v24H0V0z" fill="none" /><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v10zM9 9h6c.55 0 1 .45 1 1v8c0 .55-.45 1-1 1H9c-.55 0-1-.45-1-1v-8c0-.55.45-1 1-1zm6.5-5l-.71-.71c-.18-.18-.44-.29-.7-.29H9.91c-.26 0-.52.11-.7.29L8.5 4H6c-.55 0-1 .45-1 1s.45 1 1 1h12c.55 0 1-.45 1-1s-.45-1-1-1h-2.5z" /></svg>
+                                                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                            <g id="Iconly/Light/Delete">
+                                                                                <g id="Delete">
+                                                                                    <path id="Stroke 1" d="M19.3238 9.4668C19.3238 9.4668 18.7808 16.2018 18.4658 19.0388C18.3158 20.3938 17.4788 21.1878 16.1078 21.2128C13.4988 21.2598 10.8868 21.2628 8.27881 21.2078C6.95981 21.1808 6.13681 20.3768 5.98981 19.0458C5.67281 16.1838 5.13281 9.4668 5.13281 9.4668" stroke="#130F26" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                                                                    <path id="Stroke 3" d="M20.708 6.23828H3.75" stroke="#130F26" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                                                                    <path id="Stroke 5" d="M17.4386 6.239C16.6536 6.239 15.9776 5.684 15.8236 4.915L15.5806 3.699C15.4306 3.138 14.9226 2.75 14.3436 2.75H10.1106C9.53163 2.75 9.02363 3.138 8.87363 3.699L8.63063 4.915C8.47663 5.684 7.80063 6.239 7.01562 6.239" stroke="#130F26" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                                                                </g>
+                                                                            </g>
+                                                                        </svg>
                                                                     </button>
-                                                                </dd>
+                                                                </div>
                                                             </div>
-                                                        </dd>
-
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div className="col-span-12 sm:col-span-12">
-                                                    <div className="py-1 sm:py-1 sm:grid sm:grid-cols-12 sm:gap-4 sm:px-6">
-                                                        <dt className="text-sm font-bold text-gray-500 self-top text-right col-span-2 sm:col-span-2 self-center">Video Availability</dt>
-                                                        <dd className="mt-1 text-sm text-gray-900 sm:mt-0 col-span-10 sm:col-span-10">
+
+                                                <div className="col-span-6 sm:col-span-3 sm:ml-2">
+                                                    <div className="py-1 sm:py-1 sm:grid sm:grid-cols-3 sm:gap-4">
+                                                        <div className="text-2xl font-bold text-tcolor self-top col-span-1 sm:col-span-1 self-center">Video Availability:</div>
+                                                        <div className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                                                             <select
                                                                 id="country"
                                                                 name="country"
                                                                 autoComplete="country-name"
-                                                                className="max-w-lg block  w-full shadow-sm sm:max-w-xs sm:text-sm bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2"
+                                                                className="max-w-lg block  w-full shadow-sm sm:max-w-xs sm:text-xl bg-white border border-bcolor rounded-md shadow-sm pl-3 pr-10 py-2"
                                                             >
                                                                 <option>Free Members</option>
                                                                 <option>Premium Members</option>
                                                             </select>
-                                                        </dd>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </>
-                                            :
-                                            <>
-                                                <div className="col-span-12 sm:col-span-6">
-                                                    <div className="py-1 sm:py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                                        <dt className="text-sm font-bold text-gray-500 self-center text-right">Adv. File:</dt>
-                                                        <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                            </> : <>
+                                                <div className="col-span-6 sm:col-span-3 sm:mr-2">
+                                                    <div className="py-1 sm:py-1 sm:grid sm:grid-cols-3 sm:gap-4">
+                                                        <div className="text-2xl font-bold text-tcolor self-top col-span-1 sm:col-span-1 self-center">Adv File:</div>
+                                                        <div className="mt-1 text-sm text-gray-900 sm:mt-0 col-span-2">
                                                             <div className="grid grid-cols-4 gap-4">
 
-                                                                <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-3">
-                                                                    <div className="flex text-sm text-gray-600">
-                                                                        <label htmlFor="adv-file-upload" className=" w-full relative inline-flex items-center space-x-2 px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-gray-50 hover:bg-gray-100">
+                                                                <div className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-3">
+                                                                    <div className="flex text-xl text-gray-600">
+                                                                        <label htmlFor="adv-file-upload" className="text-xl w-full relative inline-flex items-center space-x-2 px-4 py-2 border border-bcolor text-sm font-medium rounded-md text-gray-700 hover:bg-gray-50 cursor-pointer">
                                                                             <span>Browse</span>
-                                                                            <input id="adv-file-upload" name="file-upload" type="file" className="sr-only"
-                                                                                onChange={(event) => {
-                                                                                    readFile(event, setInsightFile)
-                                                                                    event.target.value = null
-                                                                                }} />
+                                                                            <input id="adv-file-upload" name="adv-file-upload" type="file" className="sr-only" onChange={(event) => {
+                                                                                readFile(event, setInsightFile)
+                                                                                event.target.value = null
+                                                                            }} />
                                                                         </label>
                                                                     </div>
-                                                                </dd>
-                                                                <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-1 flex">
+                                                                </div>
+                                                                <div className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-1 flex">
                                                                     <button
                                                                         type="button"
-                                                                        className="bg-white ml-2  shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50"
+                                                                        className="bg-white ml-2 text-sm leading-4 font-medium text-gray-700 "
                                                                     >
-                                                                        <svg className="self-center" xmlns="http://www.w3.org/2000/svg" enableBackground="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor"><g><rect fill="none" height="24" width="24" /></g><g><path d="M7.4,10h1.59v5c0,0.55,0.45,1,1,1h4c0.55,0,1-0.45,1-1v-5h1.59c0.89,0,1.34-1.08,0.71-1.71L12.7,3.7 c-0.39-0.39-1.02-0.39-1.41,0L6.7,8.29C6.07,8.92,6.51,10,7.4,10z M5,19c0,0.55,0.45,1,1,1h12c0.55,0,1-0.45,1-1s-0.45-1-1-1H6 C5.45,18,5,18.45,5,19z" /></g></svg>
+                                                                        <svg width="26" height="27" viewBox="0 0 26 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                            <path d="M7.23734 10.2302H6.07109C3.52734 10.2302 1.46484 12.2927 1.46484 14.8364L1.46484 20.9302C1.46484 23.4727 3.52734 25.5352 6.07109 25.5352H19.9836C22.5273 25.5352 24.5898 23.4727 24.5898 20.9302V14.8239C24.5898 12.2877 22.5336 10.2302 19.9973 10.2302H18.8186" stroke="#130F26" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                                                            <path d="M13.0273 1.73781V16.7891" stroke="#130F26" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                                                            <path d="M9.38281 5.39844L13.0266 1.73844L16.6716 5.39844" stroke="#130F26" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                                                        </svg>
                                                                     </button>
-                                                                    <div
+                                                                    <button
                                                                         type="button"
-                                                                        className="bg-white m-2 text-sm leading-4 font-medium text-gray-700"
+                                                                        className="bg-white ml-4 text-sm leading-4 font-medium text-gray-700 "
                                                                     >
-                                                                        <svg className="self-center" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor"><path d="M0 0h24v24H0V0z" fill="none" /><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v10zM9 9h6c.55 0 1 .45 1 1v8c0 .55-.45 1-1 1H9c-.55 0-1-.45-1-1v-8c0-.55.45-1 1-1zm6.5-5l-.71-.71c-.18-.18-.44-.29-.7-.29H9.91c-.26 0-.52.11-.7.29L8.5 4H6c-.55 0-1 .45-1 1s.45 1 1 1h12c.55 0 1-.45 1-1s-.45-1-1-1h-2.5z" /></svg>
-                                                                    </div>
-                                                                </dd>
+                                                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                            <g id="Iconly/Light/Delete">
+                                                                                <g id="Delete">
+                                                                                    <path id="Stroke 1" d="M19.3238 9.4668C19.3238 9.4668 18.7808 16.2018 18.4658 19.0388C18.3158 20.3938 17.4788 21.1878 16.1078 21.2128C13.4988 21.2598 10.8868 21.2628 8.27881 21.2078C6.95981 21.1808 6.13681 20.3768 5.98981 19.0458C5.67281 16.1838 5.13281 9.4668 5.13281 9.4668" stroke="#130F26" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                                                                    <path id="Stroke 3" d="M20.708 6.23828H3.75" stroke="#130F26" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                                                                    <path id="Stroke 5" d="M17.4386 6.239C16.6536 6.239 15.9776 5.684 15.8236 4.915L15.5806 3.699C15.4306 3.138 14.9226 2.75 14.3436 2.75H10.1106C9.53163 2.75 9.02363 3.138 8.87363 3.699L8.63063 4.915C8.47663 5.684 7.80063 6.239 7.01562 6.239" stroke="#130F26" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                                                                </g>
+                                                                            </g>
+                                                                        </svg>
+                                                                    </button>
+                                                                </div>
                                                             </div>
-                                                        </dd>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div className="col-span-12 sm:col-span-6">
-                                                    <div className="py-1 sm:py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                                        <dt className="text-sm font-bold text-gray-500 self-center text-right">Thumbnail:</dt>
-                                                        <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+
+                                                <div className="col-span-6 sm:col-span-3 sm:mr-2">
+                                                    <div className="py-1 sm:py-1 sm:grid sm:grid-cols-3 sm:gap-4">
+                                                        <div className="text-2xl font-bold text-tcolor self-top col-span-1 sm:col-span-1 self-center">Thumbnail:</div>
+                                                        <div className="mt-1 text-sm text-gray-900 sm:mt-0 col-span-2">
                                                             <div className="grid grid-cols-4 gap-4">
 
-                                                                <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-3">
-                                                                    <div className="flex text-sm text-gray-600">
-                                                                        <label htmlFor="srt-file-upload" className=" w-full relative inline-flex items-center space-x-2 px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-gray-50 hover:bg-gray-100">
-                                                                            <span>SRT File</span>
-                                                                            <input id="srt-file-upload" name="file-upload" type="file" className="sr-only"
-                                                                                onChange={(event) => {
-                                                                                    readFile(event, setThumbnail)
-                                                                                    event.target.value = null
-                                                                                }} />
+                                                                <div className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-3">
+                                                                    <div className="flex text-xl text-gray-600">
+                                                                        <label htmlFor="thumbnail-file-upload" className="text-xl w-full relative inline-flex items-center space-x-2 px-4 py-2 border border-bcolor text-sm font-medium rounded-md text-gray-700 hover:bg-gray-50 cursor-pointer">
+                                                                            <span>Browse</span>
+                                                                            <input id="thumbnail-file-upload" name="thumbnail-file-upload" type="file" className="sr-only" onChange={(event) => {
+                                                                                readFile(event, setThumbnail)
+                                                                                event.target.value = null
+                                                                            }} />
                                                                         </label>
                                                                     </div>
-
-                                                                </dd>
-                                                                <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-1 flex">
+                                                                </div>
+                                                                <div className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-1 flex">
                                                                     <button
                                                                         type="button"
-                                                                        className="bg-white ml-2  shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50"
+                                                                        className="bg-white ml-2 text-sm leading-4 font-medium text-gray-700 "
                                                                     >
-                                                                        <svg className="self-center" xmlns="http://www.w3.org/2000/svg" enableBackground="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor"><g><rect fill="none" height="24" width="24" /></g><g><path d="M7.4,10h1.59v5c0,0.55,0.45,1,1,1h4c0.55,0,1-0.45,1-1v-5h1.59c0.89,0,1.34-1.08,0.71-1.71L12.7,3.7 c-0.39-0.39-1.02-0.39-1.41,0L6.7,8.29C6.07,8.92,6.51,10,7.4,10z M5,19c0,0.55,0.45,1,1,1h12c0.55,0,1-0.45,1-1s-0.45-1-1-1H6 C5.45,18,5,18.45,5,19z" /></g></svg>
+                                                                        <svg width="26" height="27" viewBox="0 0 26 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                            <path d="M7.23734 10.2302H6.07109C3.52734 10.2302 1.46484 12.2927 1.46484 14.8364L1.46484 20.9302C1.46484 23.4727 3.52734 25.5352 6.07109 25.5352H19.9836C22.5273 25.5352 24.5898 23.4727 24.5898 20.9302V14.8239C24.5898 12.2877 22.5336 10.2302 19.9973 10.2302H18.8186" stroke="#130F26" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                                                            <path d="M13.0273 1.73781V16.7891" stroke="#130F26" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                                                            <path d="M9.38281 5.39844L13.0266 1.73844L16.6716 5.39844" stroke="#130F26" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                                                        </svg>
                                                                     </button>
                                                                     <button
                                                                         type="button"
-                                                                        className="bg-white ml-2 shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50"
+                                                                        className="bg-white ml-4 text-sm leading-4 font-medium text-gray-700 "
                                                                     >
-                                                                        <svg className="self-center" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor"><path d="M0 0h24v24H0V0z" fill="none" /><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v10zM9 9h6c.55 0 1 .45 1 1v8c0 .55-.45 1-1 1H9c-.55 0-1-.45-1-1v-8c0-.55.45-1 1-1zm6.5-5l-.71-.71c-.18-.18-.44-.29-.7-.29H9.91c-.26 0-.52.11-.7.29L8.5 4H6c-.55 0-1 .45-1 1s.45 1 1 1h12c.55 0 1-.45 1-1s-.45-1-1-1h-2.5z" /></svg>
+                                                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                            <g id="Iconly/Light/Delete">
+                                                                                <g id="Delete">
+                                                                                    <path id="Stroke 1" d="M19.3238 9.4668C19.3238 9.4668 18.7808 16.2018 18.4658 19.0388C18.3158 20.3938 17.4788 21.1878 16.1078 21.2128C13.4988 21.2598 10.8868 21.2628 8.27881 21.2078C6.95981 21.1808 6.13681 20.3768 5.98981 19.0458C5.67281 16.1838 5.13281 9.4668 5.13281 9.4668" stroke="#130F26" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                                                                    <path id="Stroke 3" d="M20.708 6.23828H3.75" stroke="#130F26" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                                                                    <path id="Stroke 5" d="M17.4386 6.239C16.6536 6.239 15.9776 5.684 15.8236 4.915L15.5806 3.699C15.4306 3.138 14.9226 2.75 14.3436 2.75H10.1106C9.53163 2.75 9.02363 3.138 8.87363 3.699L8.63063 4.915C8.47663 5.684 7.80063 6.239 7.01562 6.239" stroke="#130F26" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                                                                </g>
+                                                                            </g>
+                                                                        </svg>
                                                                     </button>
-                                                                </dd>
+                                                                </div>
                                                             </div>
-                                                        </dd>
-
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div className="col-span-12 sm:col-span-6">
-                                                    <div className="py-1 sm:py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                                        <dt className="text-sm font-bold text-gray-500 self-center text-right">On click:</dt>
-                                                        <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                                <div className="col-span-6 sm:col-span-3 sm:mr-2">
+                                                    <div className="py-1 sm:py-1 sm:grid sm:grid-cols-3 sm:gap-4">
+                                                        <div className="text-2xl font-bold text-tcolor self-top col-span-1 sm:col-span-1 self-center">On click:</div>
+                                                        <div className="mt-1 text-sm text-gray-900 sm:mt-0 col-span-2">
                                                             <select
                                                                 onChange={(e) => setOnClickType(e.target.value)}
                                                                 id="type"
                                                                 name="type"
-                                                                className="max-w-lg block  w-full shadow-sm sm:max-w-xs sm:text-sm bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2"
+                                                                className="max-w-lg block  w-full shadow-sm sm:max-w-xs sm:text-xl bg-white border border-bcolor rounded-md shadow-sm pl-3 pr-10 py-2"
                                                             >
                                                                 <option value="0">redirect</option>
                                                                 <option value="1">do nothing</option>
                                                             </select>
-                                                        </dd>
-
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 {
                                                     onClickType == 0 ?
-                                                        <div className="col-span-12 sm:col-span-6">
+                                                        <div className="col-span-6 sm:col-span-3 sm:ml-2">
                                                             <div className="py-1 sm:py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                                                                 <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-3">
                                                                     <input
@@ -455,38 +508,37 @@ export default function AddInsightManagement({ insightTypes, token }) {
                                                                         id="name"
                                                                         name="name"
                                                                         type='text'
-                                                                        className="rounded-md px-4 py-2 pr-14 text-sm w-full outline-none border focus:border-fgreen-700 duration-500"
+                                                                        className="rounded-md px-4 py-2 pr-14 text-xl w-full outline-none border border-bcolor focus:border-fgreen-700 duration-500"
                                                                     />
                                                                 </dd>
 
                                                             </div>
                                                         </div> : <></>
                                                 }
-
-
                                             </>
                                     }
 
+
                                 </div>
                             </div>
-                            <div className="pt-5">
-                                <div className="flex justify-end">
-                                    <a
-                                        type="button"
-                                        className="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50"
-                                    >
-                                        Cancel
-                                    </a>
-                                    <a
-                                        onClick={
-                                            e => add()
+                            <div className="px-4 py-3 bg-gray-50 text-center sm:px-6 align-center">
+                                <a onClick={
+                                    e => add()
+                                }
+                                    className="cursor-pointer w-32 bg-indigo-600 border border-transparent rounded-xl shadow-sm py-2 px-4 inline-flex justify-center text-xl font-bold text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                    style={
+                                        {
+                                            backgroundColor: '#2D9CDB'
                                         }
-                                        type="submit"
-                                        className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
-                                    >
-                                        Add
-                                    </a>
-                                </div>
+                                    }
+                                >
+                                    Post
+                                </a>
+                                <a href="#"
+                                    className="cursor-pointer w-32 ml-4 bg-bcolor border border-transparent rounded-xl shadow-sm py-2 px-4 inline-flex justify-center text-xl font-bold text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                    Cancel
+                                </a>
                             </div>
                         </div>
                     </main>
