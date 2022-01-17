@@ -25,11 +25,11 @@ export default function UpdateCourseManagement({ insightTypes, course, token }) 
   const [creatorName, setCreatorName] = useState(course.creator_name)
   const [label, setLabel] = useState(course.label)
   const [priceSubscriber, setPriceSubscriber] = useState(course.price_subscriber)
-  const [priceNonSubscriver, setPriceNonSubscriber] = useState(course.price_non_subscriber)
+  const [priceNonSubscriber, setPriceNonSubscriber] = useState(course.price_non_subscriber)
   const [validity, setValidity] = useState(course.course_validity_time)
   const [courseSummary, setCourseSummary] = useState(course.summary)
-  const [language, setLanguage] = useState('english')
-  const [subtitleLanguage, setSubtitleLanguage] = useState('english')
+  const [language, setLanguage] = useState('English')
+  const [subtitleLanguage, setSubtitleLanguage] = useState('English')
   const [cancellationTime, setCancellationTime] = useState(course.purchase)
   const [validityType, setValidityType] = useState(course.course_validity_type)
   const [loadingDialog, setLoadingDialog] = useState(false)
@@ -46,30 +46,28 @@ export default function UpdateCourseManagement({ insightTypes, course, token }) 
 
     const fetch = require("node-fetch")
 
-    var myHeaders = new Headers()
-    myHeaders.append("accesstoken", token)
+    var myHeaders = new Headers();
+    myHeaders.append("accesstoken", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZG1pbl9pZCI6MSwiaWF0IjoxNjQyNDExMTMzLCJleHAiOjE2NDI0MzI3MzN9.DmDBKKtpAUbo_wdL9yoPT9SbqltYLwKwDLkLBYl_TgM");
+    // myHeaders.append("Content-Type", "multipart/form-data");
 
-    console.log(wywtl)
     var formdata = new FormData();
+    formdata.append("course_id", course.course_id);
     formdata.append("course_name", courseName);
     formdata.append("creator_name", creatorName);
     formdata.append("label", label);
     formdata.append("price_subscriber", priceSubscriber);
-    formdata.append("price_non_subscriber", priceNonSubscriver);
+    formdata.append("price_non_subscriber", priceNonSubscriber);
     formdata.append("language", language);
     formdata.append("subtitle", subtitleLanguage);
-    formdata.append('purchase', cancellationTime)
+    formdata.append("purchase", "4");
     formdata.append("course_validity_time", validity);
     formdata.append("course_validity_type", validityType);
+    formdata.append("course_preview_type", coursePreviewType);
     formdata.append("summary", courseSummary);
     formdata.append("what_you_learn", wywtl);
     formdata.append("description", description);
     formdata.append("about", about);
-    formdata.append('course_preview_type', coursePreviewType)
-    // if (coursePreview != null)
-    //   formdata.append('course_preview', coursePreview, coursePreview.name)
-    // if (thumbnail != null)
-    //   formdata.append('preview_thumbnail', thumbnail, thumbnail.name)
+    // formdata.append("course_tags", "aws#serverless#aws serverless#serverlss#labmda#cloudwatch");
 
     var requestOptions = {
       method: 'POST',
@@ -78,7 +76,7 @@ export default function UpdateCourseManagement({ insightTypes, course, token }) 
       redirect: 'follow'
     };
 
-    fetch(Constants.BASE_URL + "api/admin/editCourse", requestOptions)
+    fetch("http://54.245.144.158:6689/api/admin/editCourse", requestOptions)
       .then(res => res.json())
       .then(
         json => {
@@ -94,6 +92,59 @@ export default function UpdateCourseManagement({ insightTypes, course, token }) 
         setLoadingDialog(false)
         console.log(err)
       })
+
+
+
+    // var myHeaders = new Headers()
+    // myHeaders.append("accesstoken", token)
+    // // myHeaders.append("Content-Type", "multipart/form-data")
+
+    // var formdata = new FormData();
+    // formdata.append("course_id", course.course_id);
+    // formdata.append("course_name", courseName);
+    // formdata.append("creator_name", creatorName);
+    // formdata.append("label", label);
+    // formdata.append("price_subscriber", priceSubscriber);
+    // formdata.append("price_non_subscriber", priceNonSubscriver);
+    // // formdata.append("language", language);
+    // // formdata.append("subtitle", subtitleLanguage);
+    // formdata.append("language", "English");
+    // formdata.append("subtitle", "English");
+
+    // formdata.append('purchase', cancellationTime)
+    // formdata.append("course_validity_time", validity);
+    // formdata.append("course_validity_type", validityType);
+    // formdata.append("summary", courseSummary);
+    // formdata.append("what_you_learn", wywtl);
+    // formdata.append("description", description);
+    // formdata.append("about", about);
+
+    // var requestOptions = {
+    //   method: 'POST',
+    //   headers: {
+    //     // "Content-Type": "multipart/form-data",
+    //     "accesstoken": token
+    //   },
+    //   body: formdata,
+    //   redirect: 'follow'
+    // };
+
+    // fetch(Constants.BASE_URL + "api/admin/editCourse", requestOptions)
+    //   .then(res => res.json())
+    //   .then(
+    //     json => {
+    //       setLoadingDialog(false)
+    //       console.log(json)
+    //       if (json.code == 200) {
+    //         router.back()
+    //       }
+    //     }
+    //   )
+    //   .catch(err => {
+    //     console.log('erro')
+    //     setLoadingDialog(false)
+    //     console.log(err)
+    //   })
   }
 
   const readFile = (event, set) => {
