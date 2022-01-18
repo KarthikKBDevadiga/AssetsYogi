@@ -36,11 +36,6 @@ export default function UpdateInsightManagement({ insightTypes, token, insight }
 		var myHeaders = new Headers()
 		myHeaders.append("accesstoken", token)
 
-		// if (title == null || description == null || authorName == null || tags == null || type == null || insightFile == null || thumbnail == null) {
-		// 	setLoadingDialog(false)
-		// 	return
-		// }
-
 		var formdata = new FormData();
 		formdata.append("insight_title", title);
 		formdata.append("insight_desc", description);
@@ -82,6 +77,35 @@ export default function UpdateInsightManagement({ insightTypes, token, insight }
 				setLoadingDialog(false)
 				console.log(err)
 			})
+	}
+
+	const update = () => {
+		setLoadingDialog(true)
+
+		const fetch = require("node-fetch")
+
+		var myHeaders = new Headers();
+		myHeaders.append("accesstoken", token);
+		// myHeaders.append("Content-Type", "multipart/form-data");
+
+		console.log(insight.insightlist.insight_id)
+		var formdata = new FormData();
+		formdata.append("insight_title", "React native updated with ruby");
+		formdata.append("insight_desc", "This is a react native dummy insight only created for testing purpose");
+		formdata.append("author_name", "John Blake");
+		formdata.append("insight_id", "2");
+
+		var requestOptions = {
+			method: 'POST',
+			headers: myHeaders,
+			body: formdata,
+			redirect: 'follow'
+		};
+
+		fetch("http://54.245.144.158:6689/api/admin/update_insight", requestOptions)
+			.then(response => response.text())
+			.then(result => console.log(result))
+			.catch(error => console.log('error', error));
 	}
 
 	const readFile = (event, set) => {
@@ -180,6 +204,7 @@ export default function UpdateInsightManagement({ insightTypes, token, insight }
 													onChange={(e) => setType(e.target.value)}
 													id="type"
 													name="type"
+													defaultValue={insight.insightlist.insight_type}
 													className="max-w-lg block  w-full shadow-sm sm:max-w-xs sm:text-xl bg-white border border-bcolor rounded-md shadow-sm pl-3 pr-10 py-2"
 												>
 													<option value="0">Post</option>
@@ -382,8 +407,8 @@ export default function UpdateInsightManagement({ insightTypes, token, insight }
 																autoComplete="country-name"
 																className="max-w-lg block  w-full shadow-sm sm:max-w-xs sm:text-xl bg-white border border-bcolor rounded-md shadow-sm pl-3 pr-10 py-2"
 															>
-																<option>Free Members</option>
-																<option>Premium Members</option>
+																<option value="free">Free Members</option>
+																<option value="premium">Premium Members</option>
 															</select>
 														</div>
 													</div>
@@ -526,7 +551,7 @@ export default function UpdateInsightManagement({ insightTypes, token, insight }
 							</div>
 							<div className="px-4 py-3 bg-gray-50 text-center sm:px-6 align-center">
 								<a onClick={
-									e => add()
+									e => update()
 								}
 									className="cursor-pointer w-32 bg-indigo-600 border border-transparent rounded-xl shadow-sm py-2 px-4 inline-flex justify-center text-xl font-bold text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
 									style={
@@ -585,6 +610,7 @@ export async function getServerSideProps(context) {
 			console.log(err)
 		})
 	console.log(insight)
+	console.log(token)
 	return {
 		props: {
 			insightTypes, token, insight
