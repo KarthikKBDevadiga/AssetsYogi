@@ -87,7 +87,7 @@ export default function AddCourseManagement({ insightTypes, token }) {
                     setLoadingDialog(false)
                     console.log(json)
                     if (json.code == 200) {
-                        // router.back()
+                        router.back()
                     }
                 }
             )
