@@ -12,7 +12,8 @@ module.exports = {
           DEFAULT: '#828282',
         },
         bluecolor: {
-          DEFAULT: '#2D9CDB'
+          DEFAULT: '#2D9CDB',
+          dark: '#113E57'
         },
         tcolor: {
           DEFAULT: '#4F4F4F'
