@@ -100,7 +100,7 @@ const NavigationLayout = ({ show, setShow, selectedId }) => {
 
                         <img
                             className="h-16 w-auto"
-                            src="../img/logo.png"
+                            src="/img/logo.png"
                             alt="Workflow"
                         />
                     </div>
