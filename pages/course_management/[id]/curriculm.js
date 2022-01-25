@@ -664,11 +664,13 @@ export default function CourseManagementList({ courseId, alreadySections, token 
                 >
                   Save
                 </div>
-                <a href="#"
+                <div onClick={() => {
+                  router.back()
+                }}
                   className="cursor-pointer  ml-4 bg-bcolor border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-bold text-white "
                 >
                   Cancel
-                </a>
+                </div>
               </div>
             </div>
 
