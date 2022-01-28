@@ -199,7 +199,7 @@ export default function AddInsightManagement({ insightTypes, subsTypes, token })
                                                     // onChange={(e) => setType(e.target.value)}
                                                     id="type"
                                                     name="type"
-                                                    className="max-w-lg block  w-full shadow-sm sm:max-w-xs sm:text-xl bg-white border border-bcolor rounded-md shadow-sm pl-3 pr-10 py-2"
+                                                    className="max-w-lg block  w-full shadow-sm sm:max-w-xs sm:text-xl bg-white border border-bcolor rounded-md shadow-sm pl-3 pr-10 py-2" multiple
                                                 >
                                                     {
                                                         subsTypes.map(s => {
