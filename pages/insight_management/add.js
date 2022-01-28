@@ -9,7 +9,7 @@ import MetaLayout from '../../components/ MetaLayout'
 import LoadingDialog from '../../components/LoadingDialog'
 import { useRouter } from 'next/dist/client/router'
 
-export default function AddInsightManagement({ insightTypes, token }) {
+export default function AddInsightManagement({ insightTypes, subsTypes, token }) {
 
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [type, setType] = useState(0);
@@ -169,6 +169,48 @@ export default function AddInsightManagement({ insightTypes, token }) {
                                             </div>
                                         </div>
                                     </div>
+
+
+                                    <div className="col-span-6 sm:col-span-3 sm:mr-2">
+                                        <div className="py-1 sm:py-1 sm:grid sm:grid-cols-3 sm:gap-4">
+                                            <div className="text-2xl font-bold text-tcolor self-top col-span-1 sm:col-span-1 self-center">Insight Category:</div>
+                                            <div className="mt-1 text-sm text-gray-900 sm:mt-0 col-span-2">
+                                                <select
+                                                    // onChange={(e) => setType(e.target.value)}
+                                                    id="type"
+                                                    name="type"
+                                                    className="max-w-lg block  w-full shadow-sm sm:max-w-xs sm:text-xl bg-white border border-bcolor rounded-md shadow-sm pl-3 pr-10 py-2"
+                                                >
+                                                    {
+                                                        insightTypes.map(i => {
+                                                            return <option value="0">{i.name}</option>
+                                                        })
+                                                    }
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="col-span-6 sm:col-span-3 sm:ml-2">
+                                        <div className="py-1 sm:py-1 sm:grid sm:grid-cols-3 sm:gap-4">
+                                            <div className="text-2xl font-bold text-tcolor self-top col-span-1 sm:col-span-1 self-center">Available For Plans:</div>
+                                            <div className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                                <select
+                                                    // onChange={(e) => setType(e.target.value)}
+                                                    id="type"
+                                                    name="type"
+                                                    className="max-w-lg block  w-full shadow-sm sm:max-w-xs sm:text-xl bg-white border border-bcolor rounded-md shadow-sm pl-3 pr-10 py-2"
+                                                >
+                                                    {
+                                                        subsTypes.map(s => {
+                                                            return <option>{s.title}</option>
+                                                        })
+                                                    }
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     <div className="col-span-6">
                                         <div className="py-1 sm:py-1 sm:grid sm:grid-cols-12 sm:gap-4">
                                             <div className="text-2xl font-bold text-tcolor self-top col-span-2 sm:col-span-2 self-center">Type:</div>
@@ -590,9 +632,20 @@ export async function getServerSideProps(context) {
         .catch(err => {
             console.log(err)
         })
+    const subsTypes = await fetch(Constants.BASE_URL + 'api/admin/list_subscription', {
+        method: "get",
+        headers: {
+            "Content-Type": "application/json",
+            "accesstoken": token
+        }
+    }).then(res => res.json())
+        .then(json => json.result)
+        .catch(err => {
+            console.log(err)
+        })
     return {
         props: {
-            insightTypes, token
+            insightTypes, subsTypes, token
         },
     };
 }

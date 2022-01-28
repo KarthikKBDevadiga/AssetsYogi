@@ -9,7 +9,7 @@ import MetaLayout from '../../components/ MetaLayout'
 import LoadingDialog from '../../components/LoadingDialog'
 import { useRouter } from 'next/dist/client/router'
 
-export default function UpdateInsightManagement({ insightTypes, token, insight }) {
+export default function UpdateInsightManagement({ insightTypes, subsTypes, token, insight }) {
 
 	const [sidebarOpen, setSidebarOpen] = useState(false)
 	const [type, setType] = useState(insight.insightlist.insight_type);
@@ -205,6 +205,45 @@ export default function UpdateInsightManagement({ insightTypes, token, insight }
 													type='text'
 													className="rounded-lg px-4 py-2 pr-4 text-xl w-full outline-none border border-bcolor focus:border-fgreen-700 duration-500"
 												/>
+											</div>
+										</div>
+									</div>
+									<div className="col-span-6 sm:col-span-3 sm:mr-2">
+										<div className="py-1 sm:py-1 sm:grid sm:grid-cols-3 sm:gap-4">
+											<div className="text-2xl font-bold text-tcolor self-top col-span-1 sm:col-span-1 self-center">Insight Category:</div>
+											<div className="mt-1 text-sm text-gray-900 sm:mt-0 col-span-2">
+												<select
+													// onChange={(e) => setType(e.target.value)}
+													id="type"
+													name="type"
+													className="max-w-lg block  w-full shadow-sm sm:max-w-xs sm:text-xl bg-white border border-bcolor rounded-md shadow-sm pl-3 pr-10 py-2"
+												>
+													{
+														insightTypes.map(i => {
+															return <option value="0">{i.name}</option>
+														})
+													}
+												</select>
+											</div>
+										</div>
+									</div>
+
+									<div className="col-span-6 sm:col-span-3 sm:ml-2">
+										<div className="py-1 sm:py-1 sm:grid sm:grid-cols-3 sm:gap-4">
+											<div className="text-2xl font-bold text-tcolor self-top col-span-1 sm:col-span-1 self-center">Available For Plans:</div>
+											<div className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+												<select
+													// onChange={(e) => setType(e.target.value)}
+													id="type"
+													name="type"
+													className="max-w-lg block  w-full shadow-sm sm:max-w-xs sm:text-xl bg-white border border-bcolor rounded-md shadow-sm pl-3 pr-10 py-2"
+												>
+													{
+														subsTypes.map(s => {
+															return <option>{s.title}</option>
+														})
+													}
+												</select>
 											</div>
 										</div>
 									</div>
@@ -625,6 +664,17 @@ export async function getServerSideProps(context) {
 		.catch(err => {
 			console.log(err)
 		})
+	const subsTypes = await fetch(Constants.BASE_URL + 'api/admin/list_subscription', {
+		method: "get",
+		headers: {
+			"Content-Type": "application/json",
+			"accesstoken": token
+		}
+	}).then(res => res.json())
+		.then(json => json.result)
+		.catch(err => {
+			console.log(err)
+		})
 	const insight = await fetch(Constants.BASE_URL + 'api/admin/insight_details/' + context.query.id, {
 		method: "get",
 		headers: {
@@ -640,7 +690,7 @@ export async function getServerSideProps(context) {
 	console.log(token)
 	return {
 		props: {
-			insightTypes, token, insight
+			insightTypes, subsTypes, token, insight
 		},
 	};
 }
