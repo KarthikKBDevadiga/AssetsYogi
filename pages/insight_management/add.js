@@ -199,7 +199,7 @@ export default function AddInsightManagement({ insightTypes, token }) {
                                                                 <div className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-3">
                                                                     <div className="flex text-xl text-gray-600">
                                                                         <label htmlFor="insight-file-upload" className="text-xl w-full relative inline-flex items-center space-x-2 px-4 py-2 border border-bcolor text-sm font-medium rounded-md text-gray-700 hover:bg-gray-50 cursor-pointer">
-                                                                            <span>Browse</span>
+                                                                            <span>{insightFile ? insightFile.name : 'Browse'}</span>
                                                                             <input id="insight-file-upload" name="file-upload" type="file" className="sr-only" onChange={(event) => {
                                                                                 readFile(event, setInsightFile)
                                                                                 event.target.value = null
@@ -218,9 +218,14 @@ export default function AddInsightManagement({ insightTypes, token }) {
                                                                             <path d="M9.38281 5.39844L13.0266 1.73844L16.6716 5.39844" stroke="#130F26" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                                                                         </svg>
                                                                     </button>
-                                                                    <button
+                                                                    <div
+                                                                        onClick={
+                                                                            () => {
+                                                                                setInsightFile(null)
+                                                                            }
+                                                                        }
                                                                         type="button"
-                                                                        className="bg-white ml-4 text-sm leading-4 font-medium text-gray-700 "
+                                                                        className="bg-white ml-4 text-sm leading-4 font-medium text-gray-700 cursor-pointer self-center"
                                                                     >
                                                                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                                             <g id="Iconly/Light/Delete">
@@ -231,7 +236,7 @@ export default function AddInsightManagement({ insightTypes, token }) {
                                                                                 </g>
                                                                             </g>
                                                                         </svg>
-                                                                    </button>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -247,7 +252,7 @@ export default function AddInsightManagement({ insightTypes, token }) {
                                                                 <div className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-3">
                                                                     <div className="flex text-xl text-gray-600">
                                                                         <label htmlFor="subtitle-file-upload" className="text-xl w-full relative inline-flex items-center space-x-2 px-4 py-2 border border-bcolor text-sm font-medium rounded-md text-gray-700 hover:bg-gray-50 cursor-pointer">
-                                                                            <span>SRT File</span>
+                                                                            <span>{subtitle ? subtitle.name : 'SRT File'}</span>
                                                                             <input id="subtitle-file-upload" name="subtitle-file-upload" type="file" className="sr-only" onChange={(event) => {
                                                                                 readFile(event, setSubtitle)
                                                                                 event.target.value = null
@@ -266,9 +271,14 @@ export default function AddInsightManagement({ insightTypes, token }) {
                                                                             <path d="M9.38281 5.39844L13.0266 1.73844L16.6716 5.39844" stroke="#130F26" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                                                                         </svg>
                                                                     </button>
-                                                                    <button
+                                                                    <div
+                                                                        onClick={
+                                                                            () => {
+                                                                                setSubtitle(null)
+                                                                            }
+                                                                        }
                                                                         type="button"
-                                                                        className="bg-white ml-4 text-sm leading-4 font-medium text-gray-700 "
+                                                                        className="bg-white ml-4 text-sm leading-4 font-medium text-gray-700 cursor-pointer self-center"
                                                                     >
                                                                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                                             <g id="Iconly/Light/Delete">
@@ -279,7 +289,7 @@ export default function AddInsightManagement({ insightTypes, token }) {
                                                                                 </g>
                                                                             </g>
                                                                         </svg>
-                                                                    </button>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -330,7 +340,7 @@ export default function AddInsightManagement({ insightTypes, token }) {
                                                                 <div className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-3">
                                                                     <div className="flex text-xl text-gray-600">
                                                                         <label htmlFor="thumbnail-file-upload" className="text-xl w-full relative inline-flex items-center space-x-2 px-4 py-2 border border-bcolor text-sm font-medium rounded-md text-gray-700 hover:bg-gray-50 cursor-pointer">
-                                                                            <span>Browse</span>
+                                                                            <span>{thumbnail ? thumbnail.name : 'Browse'}</span>
                                                                             <input id="thumbnail-file-upload" name="thumbnail-file-upload" type="file" className="sr-only" onChange={(event) => {
                                                                                 readFile(event, setThumbnail)
                                                                                 event.target.value = null
@@ -349,9 +359,12 @@ export default function AddInsightManagement({ insightTypes, token }) {
                                                                             <path d="M9.38281 5.39844L13.0266 1.73844L16.6716 5.39844" stroke="#130F26" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                                                                         </svg>
                                                                     </button>
-                                                                    <button
+                                                                    <div
+                                                                        onClick={() => {
+                                                                            setThumbnail(null)
+                                                                        }}
                                                                         type="button"
-                                                                        className="bg-white ml-4 text-sm leading-4 font-medium text-gray-700 "
+                                                                        className="bg-white ml-4 text-sm leading-4 font-medium text-gray-700 cursor-pointer self-center"
                                                                     >
                                                                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                                             <g id="Iconly/Light/Delete">
@@ -362,7 +375,7 @@ export default function AddInsightManagement({ insightTypes, token }) {
                                                                                 </g>
                                                                             </g>
                                                                         </svg>
-                                                                    </button>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -395,7 +408,7 @@ export default function AddInsightManagement({ insightTypes, token }) {
                                                                 <div className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-3">
                                                                     <div className="flex text-xl text-gray-600">
                                                                         <label htmlFor="adv-file-upload" className="text-xl w-full relative inline-flex items-center space-x-2 px-4 py-2 border border-bcolor text-sm font-medium rounded-md text-gray-700 hover:bg-gray-50 cursor-pointer">
-                                                                            <span>Browse</span>
+                                                                            <span>{insightFile ? insightFile.name : 'Browse'}</span>
                                                                             <input id="adv-file-upload" name="adv-file-upload" type="file" className="sr-only" onChange={(event) => {
                                                                                 readFile(event, setInsightFile)
                                                                                 event.target.value = null
@@ -414,9 +427,12 @@ export default function AddInsightManagement({ insightTypes, token }) {
                                                                             <path d="M9.38281 5.39844L13.0266 1.73844L16.6716 5.39844" stroke="#130F26" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                                                                         </svg>
                                                                     </button>
-                                                                    <button
+                                                                    <div
+                                                                        onClick={() => {
+                                                                            setInsightFile(null)
+                                                                        }}
                                                                         type="button"
-                                                                        className="bg-white ml-4 text-sm leading-4 font-medium text-gray-700 "
+                                                                        className="bg-white ml-4 text-sm leading-4 font-medium text-gray-700 cursor-pointer self-center"
                                                                     >
                                                                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                                             <g id="Iconly/Light/Delete">
@@ -427,7 +443,7 @@ export default function AddInsightManagement({ insightTypes, token }) {
                                                                                 </g>
                                                                             </g>
                                                                         </svg>
-                                                                    </button>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -443,7 +459,7 @@ export default function AddInsightManagement({ insightTypes, token }) {
                                                                 <div className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-3">
                                                                     <div className="flex text-xl text-gray-600">
                                                                         <label htmlFor="thumbnail-file-upload" className="text-xl w-full relative inline-flex items-center space-x-2 px-4 py-2 border border-bcolor text-sm font-medium rounded-md text-gray-700 hover:bg-gray-50 cursor-pointer">
-                                                                            <span>Browse</span>
+                                                                            <span>{thumbnail ? thumbnail.name : "Browse"}</span>
                                                                             <input id="thumbnail-file-upload" name="thumbnail-file-upload" type="file" className="sr-only" onChange={(event) => {
                                                                                 readFile(event, setThumbnail)
                                                                                 event.target.value = null
@@ -462,9 +478,12 @@ export default function AddInsightManagement({ insightTypes, token }) {
                                                                             <path d="M9.38281 5.39844L13.0266 1.73844L16.6716 5.39844" stroke="#130F26" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                                                                         </svg>
                                                                     </button>
-                                                                    <button
+                                                                    <div
+                                                                        onClick={() => {
+                                                                            setThumbnail(null)
+                                                                        }}
                                                                         type="button"
-                                                                        className="bg-white ml-4 text-sm leading-4 font-medium text-gray-700 "
+                                                                        className="bg-white ml-4 text-sm leading-4 font-medium text-gray-700 cursor-pointer self-center"
                                                                     >
                                                                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                                             <g id="Iconly/Light/Delete">
@@ -475,7 +494,7 @@ export default function AddInsightManagement({ insightTypes, token }) {
                                                                                 </g>
                                                                             </g>
                                                                         </svg>
-                                                                    </button>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>

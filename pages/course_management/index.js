@@ -138,7 +138,7 @@ export default function CourseManagementList({ data, token }) {
             method: "post",
             body: JSON.stringify(body),
             headers: {
-                // "Content-Type": "application/json",
+                "Content-Type": "application/json",
                 "accesstoken": token
             }
         })
