@@ -23,9 +23,18 @@ export default function UpdateInsightManagement({ insightTypes, subsTypes, token
   const [insightFile, setInsightFile] = useState()
   const [thumbnail, setThumbnail] = useState()
   const [subtitle, setSubtitle] = useState()
-  const [selectedSubscriptions, setSelectedSubscriptions] = useState([])
+  const [selectedInsightType, setSelectedInsightType] = useState(insightTypes[0].id)
   // const [advFile, setAdvFile] = useState()
   // const [srtFile, setSRTFile] = useState()
+
+  const alreadySelectedPlans = []
+  insight.insightlist.available_for_plans.split(',').map(item => {
+    const planId = parseInt(item, 10)
+    console.log(planId)
+    const plan = insightTypes.find(i => i.id == planId)
+    alreadySelectedPlans.push(plan)
+  })
+  const [selectedSubscriptions, setSelectedSubscriptions] = useState(alreadySelectedPlans)
 
   const router = useRouter()
 
@@ -98,21 +107,29 @@ export default function UpdateInsightManagement({ insightTypes, subsTypes, token
     console.log(selectedSubscriptions)
   }
 
-  const update = () => {
+
+
+  const updateInsight = () => {
     setLoadingDialog(true)
-
-    const fetch = require("node-fetch")
-
     var myHeaders = new Headers();
     myHeaders.append("accesstoken", token);
     // myHeaders.append("Content-Type", "multipart/form-data");
 
-    console.log(insight.insightlist.insight_id)
     var formdata = new FormData();
-    formdata.append("insight_title", "React native updated with ruby");
-    formdata.append("insight_desc", "This is a react native dummy insight only created for testing purpose");
-    formdata.append("author_name", "John Blake");
-    formdata.append("insight_id", "2");
+    formdata.append("insight_title", title);
+    formdata.append("insight_desc", description);
+    formdata.append("author_name", authorName);
+    formdata.append("tags", "tag1#tag2#tag3#tag4");
+    formdata.append("type", type);
+    formdata.append("preview_non_subscribers", "1");
+    formdata.append("video_availablity", "free");
+    formdata.append("insight  _id", insight.insightlist.insight_id);
+    const plans = []
+    selectedSubscriptions.map(s => {
+      plans.push(s.id)
+    })
+    formdata.append("insight_type", selectedInsightType);
+    formdata.append("available_for_plans", plans);
 
     var requestOptions = {
       method: 'POST',
@@ -138,7 +155,6 @@ export default function UpdateInsightManagement({ insightTypes, subsTypes, token
         console.log(err)
       })
   }
-
   const readFile = (event, set) => {
     const fileList = event.target.files;
     if (fileList != null && fileList.length == 1) {
@@ -232,14 +248,14 @@ export default function UpdateInsightManagement({ insightTypes, subsTypes, token
                       <div className="text-2xl font-bold text-tcolor self-top col-span-1 sm:col-span-1 self-center">Insight Category:</div>
                       <div className="mt-1 text-sm text-gray-900 sm:mt-0 col-span-2">
                         <select
-                          // onChange={(e) => setType(e.target.value)}
+                          onChange={(e) => setSelectedInsightType(e.target.value)}
                           id="type"
                           name="type"
                           className="max-w-lg block  w-full shadow-sm sm:max-w-xs sm:text-xl bg-white border border-bcolor rounded-md shadow-sm pl-3 pr-10 py-2"
                         >
                           {
                             insightTypes.map(i => {
-                              return <option value="0">{i.name}</option>
+                              return <option value={i.id}>{i.name}</option>
                             })
                           }
                         </select>
@@ -254,9 +270,12 @@ export default function UpdateInsightManagement({ insightTypes, subsTypes, token
                         <fieldset className="space-y-2">
                           {
                             subsTypes.map(s => {
+                              const plan = selectedSubscriptions.find(p => p.id == s.id)
+
                               return <div className="relative flex items-start">
                                 <div className="flex items-center h-5 mt-auto mb-auto">
                                   <input
+                                    checked={plan != null}
                                     onChange={(event) => {
                                       addSubscription(event, s)
                                     }}
@@ -649,7 +668,7 @@ export default function UpdateInsightManagement({ insightTypes, subsTypes, token
               </div>
               <div className="px-4 py-3 bg-gray-50 text-center sm:px-6 align-center">
                 <a onClick={
-                  e => update()
+                  e => updateInsight()
                 }
                   className="cursor-pointer w-32 bg-indigo-600 border border-transparent rounded-xl shadow-sm py-2 px-4 inline-flex justify-center text-xl font-bold text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                   style={
