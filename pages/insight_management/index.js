@@ -280,7 +280,7 @@ export default function InsightManagementList({ data, insightTypes, token }) {
                                                                                         <Menu.Item>
                                                                                             {({ active }) => (
                                                                                                 <a
-                                                                                                    href={"/insight_management/update?id=" + d.insight_id}
+                                                                                                    href={"/insight_management/" + d.insight_id + '/update'}
                                                                                                     className={classNames(
                                                                                                         active ? 'hover:bg-yellow-400 text-gray-900' : 'text-gray-700',
                                                                                                         'block px-4 py-2 text-sm text-center duration-500 font-bold'

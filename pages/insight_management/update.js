@@ -23,6 +23,7 @@ export default function UpdateInsightManagement({ insightTypes, subsTypes, token
 	const [insightFile, setInsightFile] = useState()
 	const [thumbnail, setThumbnail] = useState()
 	const [subtitle, setSubtitle] = useState()
+	const [selectedSubscriptions, setSelectedSubscriptions] = useState([])
 	// const [advFile, setAdvFile] = useState()
 	// const [srtFile, setSRTFile] = useState()
 
@@ -77,6 +78,24 @@ export default function UpdateInsightManagement({ insightTypes, subsTypes, token
 				setLoadingDialog(false)
 				console.log(err)
 			})
+	}
+
+	const addSubscription = (event, subscription) => {
+
+		const target = event.target;
+		const value = target.type === 'checkbox' ? target.checked : target.value;
+		const name = target.name;
+		var temp = selectedSubscriptions;
+		if (temp.includes(subscription) && !value) {
+			var index = temp.indexOf(subscription);
+			if (index > -1) {
+				temp.splice(index, 1)
+			}
+		} else if (!temp.includes(subscription) && value) {
+			temp.push(subscription)
+		}
+		setSelectedSubscriptions(temp)
+		console.log(selectedSubscriptions)
 	}
 
 	const update = () => {
@@ -230,20 +249,33 @@ export default function UpdateInsightManagement({ insightTypes, subsTypes, token
 
 									<div className="col-span-6 sm:col-span-3 sm:ml-2">
 										<div className="py-1 sm:py-1 sm:grid sm:grid-cols-3 sm:gap-4">
-											<div className="text-2xl font-bold text-tcolor self-top col-span-1 sm:col-span-1 self-center">Available For Plans:</div>
+											<div className="text-2xl font-bold text-tcolor self-top col-span-1 sm:col-span-1">Available For Plans:</div>
 											<div className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-												<select
-													// onChange={(e) => setType(e.target.value)}
-													id="type"
-													name="type"
-													className="max-w-lg block  w-full shadow-sm sm:max-w-xs sm:text-xl bg-white border border-bcolor rounded-md shadow-sm pl-3 pr-10 py-2"
-												>
+												<fieldset className="space-y-2">
 													{
 														subsTypes.map(s => {
-															return <option>{s.title}</option>
+															return <div className="relative flex items-start">
+																<div className="flex items-center h-5">
+																	<input
+																		onChange={(event) => {
+																			addSubscription(event, s)
+																		}}
+																		id={"subscription_" + s.id}
+																		name={"subscription_" + s.id}
+																		type="checkbox"
+																		className="h-4 w-4 text-indigo-600 border-gray-300 rounded"
+																	/>
+																</div>
+																<div className="ml-3 text-lg">
+																	<label htmlFor={"subscription_" + s.id} className="font-medium text-gray-700">
+																		{s.title}
+																	</label>
+																</div>
+															</div>
 														})
 													}
-												</select>
+
+												</fieldset>
 											</div>
 										</div>
 									</div>

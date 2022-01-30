@@ -23,8 +23,27 @@ export default function AddInsightManagement({ insightTypes, subsTypes, token })
     const [insightFile, setInsightFile] = useState()
     const [thumbnail, setThumbnail] = useState()
     const [subtitle, setSubtitle] = useState()
+    const [selectedSubscriptions, setSelectedSubscriptions] = useState([])
     // const [advFile, setAdvFile] = useState()
     // const [srtFile, setSRTFile] = useState()
+
+    const addSubscription = (event, subscription) => {
+
+        const target = event.target;
+        const value = target.type === 'checkbox' ? target.checked : target.value;
+        const name = target.name;
+        var temp = selectedSubscriptions;
+        if (temp.includes(subscription) && !value) {
+            var index = temp.indexOf(subscription);
+            if (index > -1) {
+                temp.splice(index, 1)
+            }
+        } else if (!temp.includes(subscription) && value) {
+            temp.push(subscription)
+        }
+        setSelectedSubscriptions(temp)
+        console.log(selectedSubscriptions)
+    }
 
     const router = useRouter()
 
@@ -193,9 +212,9 @@ export default function AddInsightManagement({ insightTypes, subsTypes, token })
 
                                     <div className="col-span-6 sm:col-span-3 sm:ml-2">
                                         <div className="py-1 sm:py-1 sm:grid sm:grid-cols-3 sm:gap-4">
-                                            <div className="text-2xl font-bold text-tcolor self-top col-span-1 sm:col-span-1 self-center">Available For Plans:</div>
+                                            <div className="text-2xl font-bold text-tcolor self-top col-span-1 sm:col-span-1">Available For Plans:</div>
                                             <div className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                                                <select
+                                                {/* <select
                                                     // onChange={(e) => setType(e.target.value)}
                                                     id="type"
                                                     name="type"
@@ -206,7 +225,32 @@ export default function AddInsightManagement({ insightTypes, subsTypes, token })
                                                             return <option>{s.title}</option>
                                                         })
                                                     }
-                                                </select>
+                                                </select> */}
+                                                <fieldset className="space-y-2">
+                                                    {
+                                                        subsTypes.map(s => {
+                                                            return <div className="relative flex items-start">
+                                                                <div className="flex items-center h-5">
+                                                                    <input
+                                                                        onChange={(event) => {
+                                                                            addSubscription(event, s)
+                                                                        }}
+                                                                        id={"subscription_" + s.id}
+                                                                        name={"subscription_" + s.id}
+                                                                        type="checkbox"
+                                                                        className="h-4 w-4 text-indigo-600 border-gray-300 rounded"
+                                                                    />
+                                                                </div>
+                                                                <div className="ml-3 text-lg">
+                                                                    <label htmlFor={"subscription_" + s.id} className="font-medium text-gray-700">
+                                                                        {s.title}
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        })
+                                                    }
+
+                                                </fieldset>
                                             </div>
                                         </div>
                                     </div>
@@ -643,6 +687,7 @@ export async function getServerSideProps(context) {
         .catch(err => {
             console.log(err)
         })
+    console.log(subsTypes)
     return {
         props: {
             insightTypes, subsTypes, token
