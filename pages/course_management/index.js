@@ -438,7 +438,7 @@ export default function CourseManagementList({ data, token }) {
                                                                                         <Menu.Item>
                                                                                             {({ active }) => (
                                                                                                 <a
-                                                                                                    href="#"
+                                                                                                    href={"/course_management/" + d.course_id + "/resources"}
                                                                                                     className={classNames(
                                                                                                         active ? 'bg-yellow-400 text-gray-900' : 'text-gray-700',
                                                                                                         'block px-4 py-2 text-sm text-center duration-500 font-bold'
