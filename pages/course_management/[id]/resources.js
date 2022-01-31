@@ -460,8 +460,7 @@ export async function getServerSideProps(context) {
 
   const fetch = require("node-fetch")
   const body = {
-    // "course_id": context.params.id
-    "course_id": 49
+    "course_id": context.params.id
   }
 
   const resources = await fetch(Constants.BASE_URL + "api/admin/list_course_resourse", {
