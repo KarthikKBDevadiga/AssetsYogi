@@ -177,6 +177,7 @@ export default function CourseManagementList({ courseId, alreadySections, token 
         headers: { "Content-Type": "application/json", "accesstoken": token }
       }).then(res => res.json()).then(
         async json => {
+          console.log(json.code)
           if (json.code == 200) {
             const promises = await section.chapters.map(async chapter => {
               await saveChapter(json.result, chapter)

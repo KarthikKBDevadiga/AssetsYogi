@@ -18,7 +18,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function CourseManagementList({ data, token }) {
+export default function CourseManagementList({ data, courseId, token }) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [deleteDialog, setDeleteDialog] = useState(false)
   const [unpublishDialog, setUnpublishDialog] = useState(false)
@@ -30,6 +30,39 @@ export default function CourseManagementList({ data, token }) {
   const router = useRouter()
   const [enabled, setEnabled] = useState(data.ratingstatus.allow_rating == 0 ? true : false)
 
+  const updateStatus = (status) => {
+    setEnabled(status)
+    setLoadingDialog(true)
+
+    const fetch = require("node-fetch")
+
+    const body = {
+      "status": status ? 0 : 1,
+      "course_id": courseId
+    }
+
+    fetch(Constants.BASE_URL + "api/admin/change_rating_status", {
+      method: "post",
+      body: JSON.stringify(body),
+      headers: {
+        "Content-Type": "application/json",
+        "accesstoken": token
+      }
+    })
+      .then(res => res.json())
+      .then(
+        json => {
+          setLoadingDialog(false)
+          if (json.code == 200) {
+            router.reload(window.location.pathname)
+          }
+        }
+      )
+      .catch(err => {
+        setLoadingDialog(false)
+        console.log(err)
+      })
+  }
   return (
     <>
       <MetaLayout />
@@ -53,7 +86,7 @@ export default function CourseManagementList({ data, token }) {
                     </span>
                     <Switch
                       checked={enabled}
-                      onChange={setEnabled}
+                      onChange={updateStatus}
                       className={classNames(
                         enabled ? 'bg-indigo-600' : 'bg-gray-200',
                         'relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
@@ -183,6 +216,7 @@ export default function CourseManagementList({ data, token }) {
         </div>
       </div>
 
+      <LoadingDialog showDialog={loadingDialog} setShowDialog={setLoadingDialog} />
     </>
   )
 }
@@ -221,7 +255,7 @@ export async function getServerSideProps(context) {
   console.log(data)
   return {
     props: {
-      data, token
+      data, courseId, token
     },
   };
 }
