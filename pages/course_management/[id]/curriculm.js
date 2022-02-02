@@ -441,13 +441,17 @@ export default function CourseManagementList({ courseId, alreadySections, token 
                                                     updateChapterFile(i, j, event)
                                                   }} />
                                               </label> :
-                                              <Link href={c.contentUrl} passHref={true} target="_blank" >
-                                                <a target="_blank">
-                                                  <div className='px-4 py-2 border border-bcolor rounded-md' >
-                                                    Chapter File
-                                                  </div>
-                                                </a>
-                                              </Link>
+
+                                              c.contentUrl != null ?
+                                                <Link href={c.contentUrl} passHref={true} target="_blank" >
+                                                  <a target="_blank">
+                                                    <div className='px-4 py-2 border border-bcolor rounded-md' >
+                                                      Chapter File
+                                                    </div>
+                                                  </a>
+                                                </Link> : <></>
+
+
                                           }
 
                                         </div>
