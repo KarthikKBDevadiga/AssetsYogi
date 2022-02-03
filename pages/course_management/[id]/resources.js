@@ -105,10 +105,11 @@ export default function ResourcesList({ courseId, resources, token, sections }) 
     const body = {
       "resource_id": selectedResource.resource_id
     }
+    console.log(body)
     await fetch(Constants.BASE_URL + "api/admin/delete_course_resourse", {
       method: "post",
       body: JSON.stringify(body),
-      headers: { "accesstoken": token }
+      headers: { "accesstoken": token, "Content-Type": "application/json" }
     })
       .then(res => res.json())
       .then(
@@ -117,7 +118,7 @@ export default function ResourcesList({ courseId, resources, token, sections }) 
           console.log(json)
           if (json.code == 200) {
             // router.back()
-            router.reload(window.location.pathname)
+            // router.reload(window.location.pathname)
 
           }
         }
