@@ -23,8 +23,6 @@ export default function ResourcesList({ courseId, resources, token, sections }) 
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [searchText, setSearchText] = useState('')
   const [deleteDialog, setDeleteDialog] = useState(false)
-  const [unpublishDialog, setUnpublishDialog] = useState(false)
-  const [publishDialog, setPublishDialog] = useState(false)
   const [loadingDialog, setLoadingDialog] = useState(false)
   const [addDialog, setAddDialog] = useState(false)
   const [selectedSection, setSelectedSection] = useState(sections[0]);
@@ -34,6 +32,7 @@ export default function ResourcesList({ courseId, resources, token, sections }) 
   const [resourceName, setResourceName] = useState('');
   const [selectedChapter, setSelectedChapter] = useState(chaptersArray[0]);
 
+  const [selectedResource, setSelectedResource] = useState()
 
 
   const router = useRouter()
@@ -96,6 +95,36 @@ export default function ResourcesList({ courseId, resources, token, sections }) 
         console.log(err)
       })
 
+  }
+
+  const deleteResource = async () => {
+    setDeleteDialog(false)
+    setLoadingDialog(true)
+
+    const fetch = require("node-fetch")
+    const body = {
+      "resource_id": selectedResource.resource_id
+    }
+    await fetch(Constants.BASE_URL + "api/admin/delete_course_resourse", {
+      method: "post",
+      body: JSON.stringify(body),
+      headers: { "accesstoken": token }
+    })
+      .then(res => res.json())
+      .then(
+        json => {
+          setLoadingDialog(false)
+          console.log(json)
+          if (json.code == 200) {
+            // router.back()
+            router.reload(window.location.pathname)
+
+          }
+        }
+      )
+      .catch(err => {
+        return 'Error'
+      })
   }
   return (
     <>
@@ -250,15 +279,18 @@ export default function ResourcesList({ courseId, resources, token, sections }) 
                                             <div className='w-full h-px bg-black'></div>
                                             <Menu.Item>
                                               {({ active }) => (
-                                                <a
-                                                  href='#'
+                                                <div
+                                                  onClick={() => {
+                                                    setSelectedResource(r)
+                                                    setDeleteDialog(true)
+                                                  }}
                                                   className={classNames(
                                                     active ? 'bg-yellow-400 text-gray-900' : 'text-gray-700',
                                                     'block px-4 py-2 text-sm text-center duration-500 font-bold cursor-pointer'
                                                   )}
                                                 >
                                                   Delete
-                                                </a>
+                                                </div>
                                               )}
                                             </Menu.Item>
                                           </div>
@@ -278,8 +310,8 @@ export default function ResourcesList({ courseId, resources, token, sections }) 
               </div>
             </div>
           </main>
-        </div>
-      </div>
+        </div >
+      </div >
 
       <Transition.Root show={deleteDialog} as={Fragment}>
         <Dialog as="div" className="fixed z-10 inset-0 overflow-y-auto" onClose={setDeleteDialog}>
@@ -324,12 +356,12 @@ export default function ResourcesList({ courseId, resources, token, sections }) 
 
                   <div className="mt-3 text-center sm:mt-0 sm:text-left w-full">
                     <Dialog.Title as="h3" className="text-lg leading-6 font-medium text-gray-900">
-                      Delete Insight
+                      Delete Resource
                     </Dialog.Title>
                     <div className='mt-4 h-px w-full bg-black'></div>
                     <div className="mt-2">
                       <p className="text-sm text-gray-500">
-                        Are you sure, you want to delete this insight?
+                        Are you sure, you want to delete this resource?
                       </p>
                     </div>
                   </div>
@@ -338,7 +370,7 @@ export default function ResourcesList({ courseId, resources, token, sections }) 
                   <button
                     type="button"
                     className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 sm:ml-3 sm:w-auto sm:text-sm"
-                    onClick={() => deleteInsight()}
+                    onClick={() => deleteResource()}
                   >
                     Delete
                   </button>
@@ -356,156 +388,6 @@ export default function ResourcesList({ courseId, resources, token, sections }) 
         </Dialog>
       </Transition.Root>
 
-
-      <Transition.Root show={unpublishDialog} as={Fragment}>
-        <Dialog as="div" className="fixed z-10 inset-0 overflow-y-auto" onClose={setUnpublishDialog}>
-          <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-            <Transition.Child
-              as={Fragment}
-              enter="ease-out duration-300"
-              enterFrom="opacity-0"
-              enterTo="opacity-100"
-              leave="ease-in duration-200"
-              leaveFrom="opacity-100"
-              leaveTo="opacity-0"
-            >
-              <Dialog.Overlay className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
-            </Transition.Child>
-
-            {/* This element is to trick the browser into centering the modal contents. */}
-            <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">
-              &#8203;
-            </span>
-            <Transition.Child
-              as={Fragment}
-              enter="ease-out duration-300"
-              enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-              enterTo="opacity-100 translate-y-0 sm:scale-100"
-              leave="ease-in duration-200"
-              leaveFrom="opacity-100 translate-y-0 sm:scale-100"
-              leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-            >
-              <div className="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6">
-                <div className="hidden sm:block absolute top-0 right-0 pt-4 pr-4">
-                  <button
-                    type="button"
-                    className="bg-white rounded-md text-gray-400 hover:text-gray-500"
-                    onClick={() => setUnpublishDialog(false)}
-                  >
-                    <span className="sr-only">Close</span>
-                    <XIcon className="h-6 w-6" aria-hidden="true" />
-                  </button>
-                </div>
-                <div className="sm:flex sm:items-start">
-
-                  <div className="mt-3 text-center sm:mt-0 sm:text-left w-full">
-                    <Dialog.Title as="h3" className="text-lg leading-6 font-medium text-gray-900">
-                      Unpublish Insight
-                    </Dialog.Title>
-                    <div className='mt-4 h-px w-full bg-black'></div>
-                    <div className="mt-2">
-                      <p className="text-sm text-gray-500">
-                        Are you sure, you want to unpublish this insight?
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div className="mt-5 sm:mt-8 sm:flex sm:flex-row-reverse">
-                  <button
-                    type="button"
-                    className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 sm:ml-3 sm:w-auto sm:text-sm"
-                    onClick={() => unpublishInsight()}
-                  >
-                    Unpublish
-                  </button>
-                  <button
-                    type="button"
-                    className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:text-gray-500 sm:mt-0 sm:w-auto sm:text-sm"
-                    onClick={() => setUnpublishDialog(false)}
-                  >
-                    Cancel
-                  </button>
-                </div>
-              </div>
-            </Transition.Child>
-          </div>
-        </Dialog>
-      </Transition.Root>
-
-      <Transition.Root show={publishDialog} as={Fragment}>
-        <Dialog as="div" className="fixed z-10 inset-0 overflow-y-auto" onClose={setPublishDialog}>
-          <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-            <Transition.Child
-              as={Fragment}
-              enter="ease-out duration-300"
-              enterFrom="opacity-0"
-              enterTo="opacity-100"
-              leave="ease-in duration-200"
-              leaveFrom="opacity-100"
-              leaveTo="opacity-0"
-            >
-              <Dialog.Overlay className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
-            </Transition.Child>
-
-            {/* This element is to trick the browser into centering the modal contents. */}
-            <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">
-              &#8203;
-            </span>
-            <Transition.Child
-              as={Fragment}
-              enter="ease-out duration-300"
-              enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-              enterTo="opacity-100 translate-y-0 sm:scale-100"
-              leave="ease-in duration-200"
-              leaveFrom="opacity-100 translate-y-0 sm:scale-100"
-              leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-            >
-              <div className="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6">
-                <div className="hidden sm:block absolute top-0 right-0 pt-4 pr-4">
-                  <button
-                    type="button"
-                    className="bg-white rounded-md text-gray-400 hover:text-gray-500"
-                    onClick={() => setUnpublishDialog(false)}
-                  >
-                    <span className="sr-only">Close</span>
-                    <XIcon className="h-6 w-6" aria-hidden="true" />
-                  </button>
-                </div>
-                <div className="sm:flex sm:items-start">
-
-                  <div className="mt-3 text-center sm:mt-0 sm:text-left w-full">
-                    <Dialog.Title as="h3" className="text-lg leading-6 font-medium text-gray-900">
-                      Publish Insight
-                    </Dialog.Title>
-                    <div className='mt-4 h-px w-full bg-black'></div>
-                    <div className="mt-2">
-                      <p className="text-sm text-gray-500">
-                        Are you sure, you want to publish this insight?
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div className="mt-5 sm:mt-8 sm:flex sm:flex-row-reverse">
-                  <button
-                    type="button"
-                    className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 sm:ml-3 sm:w-auto sm:text-sm"
-                    onClick={() => publishInsight()}
-                  >
-                    Publish
-                  </button>
-                  <button
-                    type="button"
-                    className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:text-gray-500 sm:mt-0 sm:w-auto sm:text-sm"
-                    onClick={() => setPublishDialog(false)}
-                  >
-                    Cancel
-                  </button>
-                </div>
-              </div>
-            </Transition.Child>
-          </div>
-        </Dialog>
-      </Transition.Root>
 
       <Transition.Root show={addDialog} as={Fragment}>
         <Dialog as="div" className="fixed z-10 inset-0 overflow-y-auto" onClose={setAddDialog}>
@@ -736,7 +618,7 @@ export async function getServerSideProps(context) {
     .catch(err => {
       console.log(err)
     })
-  console.log(sections)
+  console.log(resources)
   return {
     props: {
       token, resources, sections, courseId

@@ -52,7 +52,7 @@ const Constants = {
         {
             id: 7,
             name: 'Banners Management',
-            href: '#',
+            href: '/banner_management',
             icon: BannerManagement
         },
         {
